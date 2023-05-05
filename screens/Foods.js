@@ -7,7 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 const FoodsScreen = () => {
@@ -34,18 +34,34 @@ const FoodsScreen = () => {
     console.log("Add food");
   };
 
+  const formatNutrition = (nutriments) => {
+    const energy = nutriments["energy-kcal_100g"]
+      ? `${Math.round(nutriments["energy-kcal_100g"])} kcal | `
+      : "";
+    const protein = nutriments.proteins_100g
+      ? `${Math.round(nutriments.proteins_100g)}g Protein | `
+      : "";
+    const carb = nutriments.carbohydrates_100g
+      ? `${Math.round(nutriments.carbohydrates_100g)}g Carb | `
+      : "";
+    const fat = nutriments.fat_100g
+      ? `${Math.round(nutriments.fat_100g)}g Fat`
+      : "";
+
+    return energy + protein + carb + fat;
+  };
+
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.foodItem}>
-      <Image
-              source={{ uri: item.image_small_url }}
-              style={{ width: 50, height: 50 }}
-            />
-      <Text style={styles.foodName}>
-        {item.product_name}, {item.brands}
-      </Text>
-      <Text
-        style={styles.foodNutrition}
-      >{`${item.nutriments["energy-kcal_100g"]} kcal | ${item.nutriments.proteins_100g}g Protein | ${item.nutriments.carbohydrates_100g}g Carb | ${item.nutriments.fat_100g}g Fat`}</Text>
+      <Image source={{ uri: item.image_small_url }} style={styles.foodImage} />
+      <View style={styles.foodInfo}>
+        <Text style={styles.foodName}>
+          {item.product_name}, {item.brands}
+        </Text>
+        <Text style={styles.foodNutrition}>
+          {formatNutrition(item.nutriments)}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -53,7 +69,7 @@ const FoodsScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleAddFood}>
-          <Text style={styles.addFoodButton}>+ Add Food</Text>
+          <Text style={styles.addFoodButton}>+ Add Custom Food</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.searchBar}>
@@ -125,6 +141,17 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  foodImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  foodInfo: {
+    flex: 1,
+    flexDirection: 'column',
   },
   foodName: {
     fontWeight: "bold",
