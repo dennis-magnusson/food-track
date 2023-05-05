@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import * as React from "react";
+import FoodsScreen from "./screens/Foods";
+import TodayStack from "./screens/TodayStack";
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen
+          name="Log"
+          component={TodayStack}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="add" size={24} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Foods"
+          component={FoodsScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="food-apple-outline"
+                size={24}
+                color="black"
+              />
+            ),
+          }}
+        />
+        
+      </Tab.Navigator>
+    </NavigationContainer>
   );
+  // <Tab.Screen name="Calendar" component={CalendarScreen} />
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
