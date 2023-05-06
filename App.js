@@ -2,7 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
-import FoodsScreen from "./screens/Foods";
+import FoodsScreen from "./screens/FoodsScreen";
 import TodayStack from "./screens/TodayStack";
 
 const Tab = createBottomTabNavigator();
