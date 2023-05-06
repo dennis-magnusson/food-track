@@ -9,29 +9,65 @@ const TodayScreen = ({ navigation }) => {
   const nutrientsData = {
     totalProtein: 10,
     totalCarbs: 10,
-    totalFats: 10,
+    totalFat: 10,
     goalProtein: 150,
     goalCarbs: 100,
-    goalFats: 50,
+    goalFat: 50,
   }
 
   const calorieData = {
     meals: [
       {
         name: 'Breakfast',
-        calories: 312,
+        foods: [
+          {
+            name: 'Banana',
+            amount_grams: 120,
+            calories_kcal: 63,
+            protein: 2,
+            fat: 0,
+            carbs: 23
+          }
+        ]
       },
       {
         name: 'Lunch',
-        calories: 731,
+        foods: [
+          {
+            name: 'Banana',
+            amount_grams: 120,
+            calories_kcal: 63,
+            protein: 2,
+            fat: 0,
+            carbs: 23
+          }
+        ]
       },
       {
         name: 'Dinner',
-        calories: 687,
+        foods: [
+          {
+            name: 'Banana',
+            amount_grams: 120,
+            calories_kcal: 63,
+            protein: 2,
+            fat: 0,
+            carbs: 23
+          }
+        ]
       },
       {
         name: 'Snack',
-        calories: 312,
+        foods: [
+          {
+            name: 'Banana',
+            amount_grams: 120,
+            calories_kcal: 63,
+            protein: 2,
+            fat: 0,
+            carbs: 23
+          }
+        ]
       }
     ]
   }
@@ -46,7 +82,7 @@ const TodayScreen = ({ navigation }) => {
         <CalorieProgress calorieData={calorieData} />
         <NutrientSummary nutrientsData={nutrientsData} />
         {calorieData.meals.map((meal, index) =>
-            <MealBox key={index} meal={meal} handlePress={handleMealPress}/>
+            <MealBox key={index} meal={meal} handlePress={handleMealPress} />
         )}
       </ScrollView>
     </SafeAreaView>

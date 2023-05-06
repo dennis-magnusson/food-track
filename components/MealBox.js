@@ -3,6 +3,9 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const MealBox = ({ meal, handlePress }) => {
+
+  const totalCalories = meal.foods.reduce((partialSum, f) => partialSum + f.calories_kcal, 0)
+
   return (
     <TouchableOpacity
       style={styles.mealBox}
@@ -10,7 +13,7 @@ const MealBox = ({ meal, handlePress }) => {
     >
       <View>
         <Text style={styles.mealBoxTitle}>{meal.name}</Text>
-        <Text style={styles.nutritionInfo}>{meal.calories} kcal</Text>
+        <Text style={styles.nutritionInfo}>{totalCalories} kcal</Text>
       </View>
       <View>
         <Ionicons name="add-circle-outline" size={38} color="black" />
