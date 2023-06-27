@@ -6,15 +6,24 @@ const NutrientSummary = ({ nutrientsData }) => {
   const {
     totalProtein,
     totalCarbs,
-    totalFats,
-    goalFats,
+    totalFat,
+    goalFat,
     goalCarbs,
     goalProtein,
   } = nutrientsData;
 
-  const proteinProgress = totalProtein / goalProtein;
-  const carbProgress = totalCarbs / goalCarbs;
-  const fatProgress = totalFats / goalFats;
+  const calculateProgress = (total, goal) => {
+    const progress = total / goal;
+    return isNaN(progress) ? 0 : progress;
+  }
+
+  const proteinProgress = calculateProgress(totalProtein, goalProtein);
+  const carbProgress = calculateProgress(totalCarbs, goalCarbs);
+  const fatProgress = calculateProgress(totalFat, goalFat);
+
+  const proteinColor = "#1565C0"
+  const carbsColor = "#F44336"
+  const fatColor = "#00897B"
 
   return (
     <View style={styles.nutrientSummary}>
@@ -23,7 +32,7 @@ const NutrientSummary = ({ nutrientsData }) => {
           <Text style={styles.nutrientNameText}>Protein</Text>
           <ProgressBar
             progress={proteinProgress}
-            color="#1565C0"
+            color={proteinColor}
             height={6}
             borderRadius={10}
             width={null}
@@ -36,7 +45,7 @@ const NutrientSummary = ({ nutrientsData }) => {
           <Text style={styles.nutrientNameText}>Carbs</Text>
           <ProgressBar
             progress={carbProgress}
-            color="#F44336"
+            color={carbsColor}
             height={6}
             borderRadius={10}
             width={null}
@@ -46,16 +55,16 @@ const NutrientSummary = ({ nutrientsData }) => {
           </Text>
         </View>
         <View style={styles.nutrientProgressBarContainer}>
-          <Text style={styles.nutrientNameText}>Fats</Text>
+          <Text style={styles.nutrientNameText}>Fat</Text>
           <ProgressBar
             progress={fatProgress}
-            color="#00897B"
+            color={fatColor}
             height={6}
             borderRadius={10}
             width={null}
           />
           <Text style={styles.nutrientProportionText}>
-            {totalFats} / {goalFats}g
+            {totalFat} / {goalFat}g
           </Text>
         </View>
       </View>
