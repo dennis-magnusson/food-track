@@ -1,3 +1,3 @@
-# README
+# FoodTrack
 
-This is a food tracker app with React Native Expo
+Food tracker app with React Native Expo
