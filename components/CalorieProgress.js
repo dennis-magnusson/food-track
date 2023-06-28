@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { colors } from "../theme";
 
 const CalorieProgress = () => {
   const totalCalories = 1113;
@@ -10,14 +11,16 @@ const CalorieProgress = () => {
   return (
     <View style={styles.container}>
       <Text>Calories</Text>
-      <Text>{totalCalories} / {calorieGoal} kcal</Text>
+      <Text>
+        {totalCalories} / {calorieGoal} kcal
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: colors.accentBackground,
     width: "90%",
     height: 190,
     borderRadius: 10,

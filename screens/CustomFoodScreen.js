@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { colors } from "../theme";
 
 const CustomFoodScreen = () => {
   const [foodName, setFoodName] = useState("");
@@ -10,7 +11,9 @@ const CustomFoodScreen = () => {
 
   const handleSubmit = () => {
     // handle form submission, e.g. save data to database
-    console.log(`Submitted: ${foodName} - ${calories} kcal, ${protein}g protein, ${carbs}g carbs, ${fat}g fat`);
+    console.log(
+      `Submitted: ${foodName} - ${calories} kcal, ${protein}g protein, ${carbs}g carbs, ${fat}g fat`
+    );
   };
 
   return (
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: colors.lightBackground,
   },
   label: {
     fontSize: 16,
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colors.accent,
     borderRadius: 5,
     padding: 10,
     marginVertical: 10,

@@ -1,18 +1,36 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import FoodsList from "../components/FoodsList";
+import MySafeAreaView from "../components/MySafeAreaView";
+import SearchFood from "../components/SearchFood";
+import { colors } from "../theme";
 
 const MealScreen = ({ navigation, route }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  navigation.setOptions({ title: route.params.mealData.name})
+  const meal = [
+    {
+      name: "Banana",
+      amount_value: 120,
+      amount_units: "g",
+      calories_kcal: 63,
+      protein_grams: 2,
+      fat_grams: 0,
+      carbs_grams: 23,
+    },
+    {
+      name: "Peanut butter",
+      amount_value: 15,
+      amount_units: "ml",
+      calories_kcal: 100,
+      protein_grams: 4,
+      fat_grams: 5,
+      carbs_grams: 1,
+    },
+  ];
+
+  navigation.setOptions({ title: route.params.mealData.name });
 
   const searchFoods = async () => {
     setIsLoading(true);
@@ -21,7 +39,11 @@ const MealScreen = ({ navigation, route }) => {
         `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${searchQuery}&page_size=20&json=true`
       );
       const data = await response.json();
-      navigation.navigate("Search Results", { results: data.products, isLoading, searchQuery }); // navigate to the SearchResults screen and pass the search results as a parameter
+      navigation.navigate("Search Results", {
+        results: data.products,
+        isLoading,
+        searchQuery,
+      }); // navigate to the SearchResults screen and pass the search results as a parameter
     } catch (error) {
       console.error(error);
     } finally {
@@ -34,65 +56,50 @@ const MealScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleAddFood}>
-          <Text style={styles.addFoodButton}>+ Add Custom Food</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search for a food"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onSubmitEditing={searchFoods}
-        />
-        <TouchableOpacity style={styles.searchButton} onPress={searchFoods}>
-          <Text style={styles.searchButtonText}>Search</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <MySafeAreaView>
+      <ScrollView contentContainerStyle={styles.containerInner}>
+        <FoodsList meal={meal} />
+      </ScrollView>
+      <SearchFood />
+      <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
+        <Text style={styles.addButtonLabel}>+ Add Custom Food</Text>
+      </TouchableOpacity>
+    </MySafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  containerInner: {
+    paddingTop: 16,
+    backgroundColor: colors.lightBackground,
   },
-  header: {
-    backgroundColor: "#f0f0f0",
-    padding: 20,
-    alignItems: "flex-end",
+  foodItem: {
+    backgroundColor: colors.accentBackground,
+    borderRadius: 10,
+    marginHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 8,
+    padding: 16,
+    elevation: 2,
   },
-  addFoodButton: {
-    color: "blue",
+  foodName: {
+    fontSize: 16,
     fontWeight: "bold",
   },
-  searchBar: {
-    flexDirection: "row",
+  calories: {
+    fontSize: 14,
+  },
+
+  addButton: {
+    backgroundColor: colors.accent,
+    padding: 20,
+    marginBottom: 10,
+    marginHorizontal: 10,
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginRight: 10,
-  },
-  searchButton: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-  },
-  searchButtonText: {
-    color: "#fff",
+  addButtonLabel: {
+    color: colors.lightText,
     fontWeight: "bold",
   },
 });

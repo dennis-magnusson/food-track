@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
+import { colors } from "../theme";
 
 const NutrientSummary = ({ nutrientsData }) => {
   const {
@@ -15,15 +16,11 @@ const NutrientSummary = ({ nutrientsData }) => {
   const calculateProgress = (total, goal) => {
     const progress = total / goal;
     return isNaN(progress) ? 0 : progress;
-  }
+  };
 
   const proteinProgress = calculateProgress(totalProtein, goalProtein);
   const carbProgress = calculateProgress(totalCarbs, goalCarbs);
   const fatProgress = calculateProgress(totalFat, goalFat);
-
-  const proteinColor = "#1565C0"
-  const carbsColor = "#F44336"
-  const fatColor = "#00897B"
 
   return (
     <View style={styles.nutrientSummary}>
@@ -32,7 +29,7 @@ const NutrientSummary = ({ nutrientsData }) => {
           <Text style={styles.nutrientNameText}>Protein</Text>
           <ProgressBar
             progress={proteinProgress}
-            color={proteinColor}
+            color={colors.proteinColor}
             height={6}
             borderRadius={10}
             width={null}
@@ -45,7 +42,7 @@ const NutrientSummary = ({ nutrientsData }) => {
           <Text style={styles.nutrientNameText}>Carbs</Text>
           <ProgressBar
             progress={carbProgress}
-            color={carbsColor}
+            color={colors.carbsColor}
             height={6}
             borderRadius={10}
             width={null}
@@ -58,7 +55,7 @@ const NutrientSummary = ({ nutrientsData }) => {
           <Text style={styles.nutrientNameText}>Fat</Text>
           <ProgressBar
             progress={fatProgress}
-            color={fatColor}
+            color={colors.fatColor}
             height={6}
             borderRadius={10}
             width={null}
@@ -74,7 +71,7 @@ const NutrientSummary = ({ nutrientsData }) => {
 
 const styles = StyleSheet.create({
   nutrientSummary: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: colors.accentBackground,
     width: "90%",
     height: 90,
     borderRadius: 10,
