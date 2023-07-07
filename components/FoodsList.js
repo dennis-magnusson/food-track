@@ -8,14 +8,14 @@ const FoodsList = ({ foods }) => {
         <TouchableOpacity key={index} onPress={() => {}}>
           <View style={styles.foodItem}>
             <Text style={styles.foodName}>
-              {food.name}{" "}
+              {food.name}
               {food.amount_value
                 ? ", " + food.amount_value + food.amount_units
                 : " "}
             </Text>
             <Text style={styles.calories}>
-              {food.calories} kcal, {food.protein}g Protein | {food.carbs}g
-              Carbs | {food.fat}g Fat
+              {food.calories_kcal} kcal, {food.protein_grams}g Protein |{" "}
+              {food.carbs_grams}g Carbs | {food.fat_grams}g Fat
             </Text>
           </View>
         </TouchableOpacity>
