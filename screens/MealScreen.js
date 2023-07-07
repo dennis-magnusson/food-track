@@ -54,23 +54,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     backgroundColor: colors.lightBackground,
   },
-  foodItem: {
-    backgroundColor: colors.accentBackground,
-    borderRadius: 10,
-    marginHorizontal: 16,
-    marginTop: 8,
-    marginBottom: 8,
-    padding: 16,
-    elevation: 2,
-  },
-  foodName: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  calories: {
-    fontSize: 14,
-  },
-
   addButton: {
     marginHorizontal: 10,
   },
