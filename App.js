@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import { useEffect } from "react";
+import AppProvider from "./context/AppProvider";
 import { initializeDatabase } from "./db";
 import AppNavigator from "./navigation/AppNavigator";
 
@@ -15,11 +16,12 @@ function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </AppProvider>
   );
-  // <Tab.Screen name="Calendar" component={CalendarScreen} />
 }
 
 export default App;
