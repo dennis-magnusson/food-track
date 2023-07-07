@@ -1,15 +1,23 @@
-import React from "react";
-import {
-  SafeAreaView,
-  Text
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView } from "react-native";
+import FoodsList from "../components/FoodsList";
+import MySafeAreaView from "../components/MySafeAreaView";
+import { fetchAllFoods } from "../db";
 
-const FoodsScreen = ({ navigation }) => {
+const FoodsScreen = () => {
+  const [foods, setFoods] = useState([]);
+  useEffect(() => {
+    fetchAllFoods()
+      .then((foods) => setFoods(foods))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
-    <SafeAreaView>
-      <Text>Foods screen</Text>
-    </SafeAreaView>
+    <MySafeAreaView>
+      <ScrollView>
+        <FoodsList foods={foods} />
+      </ScrollView>
+    </MySafeAreaView>
   );
 };
 

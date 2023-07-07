@@ -2,12 +2,20 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
+import { useEffect } from "react";
+import { initializeDatabase } from "./db";
 import FoodsScreen from "./screens/FoodsScreen";
 import TodayStack from "./screens/TodayStack";
 
 const Tab = createBottomTabNavigator();
 
 function App() {
+  useEffect(() => {
+    initializeDatabase().catch((error) =>
+      console.log("Error initializing database: ", error)
+    );
+  }, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -37,7 +45,6 @@ function App() {
             ),
           }}
         />
-        
       </Tab.Navigator>
     </NavigationContainer>
   );
