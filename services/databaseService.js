@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import * as SQLite from "expo-sqlite";
 import {
   CREATE_TABLE_FOODS,
@@ -5,10 +6,12 @@ import {
   CREATE_TABLE_RECIPES,
   CREATE_TABLE_RECIPE_FOODS,
   FETCH_ALL_FOODS,
+  FETCH_MEALS_BY_DATE_AND_TYPE,
   INSERT_FOOD,
+  INSERT_MEAL,
 } from "./sql";
 
-const db = SQLite.openDatabase("mydb.db");
+const db = SQLite.openDatabase("food-track.db");
 
 const database = {
   init: () => {
@@ -138,6 +141,89 @@ const database = {
         }
       );
     });
+  },
+  getOrCreateMeals: async (date) => {
+    const mealTypes = ["breakfast", "lunch", "dinner", "snack"];
+    const formattedDate = format(date, "yyyy-MM-dd");
+
+    try {
+      const meals = await db.transaction(async (tx) => {
+        const existingMeals = await fetchExistingMeals(
+          tx,
+          formattedDate,
+          mealTypes
+        );
+        const createdMeals = await createMissingMeals(
+          tx,
+          formattedDate,
+          mealTypes,
+          existingMeals
+        );
+        return [...existingMeals, ...createdMeals];
+      });
+
+      return meals;
+    } catch (error) {
+      throw new Error(
+        "Failed to get or create meals for the specified date: " + error
+      );
+    }
+  },
+
+  // Helper function to fetch existing meals for the given date and meal types
+  fetchExistingMeals: async (tx, date, mealTypes) => {
+    const meals = [];
+
+    for (const mealType of mealTypes) {
+      const meal = await new Promise((resolve, reject) => {
+        tx.executeSql(
+          FETCH_MEALS_BY_DATE_AND_TYPE,
+          [date, mealType],
+          (_, { rows }) => {
+            const meal = rows._array[0];
+            resolve(meal);
+          },
+          (_, error) => {
+            reject(error);
+          }
+        );
+      });
+
+      if (meal) {
+        meals.push(meal);
+      }
+    }
+
+    return meals;
+  },
+
+  // Helper function to create missing meals for the given date and meal types
+  createMissingMeals: async (tx, date, mealTypes, existingMeals) => {
+    const meals = [];
+
+    for (const mealType of mealTypes) {
+      const mealExists = existingMeals.some((meal) => meal.type === mealType);
+
+      if (!mealExists) {
+        const newMeal = await new Promise((resolve, reject) => {
+          tx.executeSql(
+            INSERT_MEAL,
+            [date, mealType],
+            (_, { insertId }) => {
+              const createdMeal = { id: insertId, date, type: mealType };
+              resolve(createdMeal);
+            },
+            (_, error) => {
+              reject(error);
+            }
+          );
+        });
+
+        meals.push(newMeal);
+      }
+    }
+
+    return meals;
   },
 };
 

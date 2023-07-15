@@ -54,6 +54,14 @@ export const INSERT_FOOD = `
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
+export const INSERT_MEAL = `
+  INSERT INTO Meal (date, type) VALUES (?, ?)
+`;
+
 export const FETCH_ALL_FOODS = `
   SELECT * FROM Food
+`;
+
+export const FETCH_MEALS_BY_DATE_AND_TYPE = `
+  SELECT * FROM Meal WHERE date = ? AND type = ?
 `;
