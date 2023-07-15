@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import FoodsList from "../components/FoodsList";
 import MyButton from "../components/MyButton";
 import MySafeAreaView from "../components/MySafeAreaView";
 import SearchFood from "../components/SearchFood";
+import AppContext from "../context/AppContext";
 import { colors } from "../theme";
 
 const MealScreen = ({ navigation, route }) => {
+  const data = useContext(AppContext);
+  console.log(data);
   const meal = [
     {
       name: "Banana",
