@@ -34,7 +34,8 @@ export const CREATE_TABLE_RECIPE_FOODS = `
 export const CREATE_TABLE_MEALS = `
   CREATE TABLE IF NOT EXISTS Meal (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date TEXT NOT NULL
+    date TEXT NOT NULL,
+    type TEXT CHECK(type IN ('breakfast', 'lunch', 'dinner', 'snack')) NOT NULL
   )
 `;
 
