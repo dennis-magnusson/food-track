@@ -3,15 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
 import { colors } from "../theme";
 
-const NutrientSummary = ({ nutrientsData }) => {
-  const {
-    totalProtein,
-    totalCarbs,
-    totalFat,
-    goalFat,
-    goalCarbs,
-    goalProtein,
-  } = nutrientsData;
+const NutrientSummary = () => {
+  const totalProtein = 10;
+  const totalCarbs = 10;
+  const totalFat = 10;
+  const goalProtein = 150;
+  const goalCarbs = 100;
+  const goalFat = 50;
 
   const calculateProgress = (total, goal) => {
     const progress = total / goal;

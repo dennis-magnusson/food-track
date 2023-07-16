@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme";
+import NutrientSummary from "./NutrientSummary";
 
-const CalorieProgress = () => {
+const DailyTotals = (): JSX.Element => {
   const totalCalories = 1113;
   const calorieGoal = 2000;
   const caloriesLeft = calorieGoal - totalCalories;
@@ -14,6 +15,7 @@ const CalorieProgress = () => {
       <Text>
         {totalCalories} / {calorieGoal} kcal
       </Text>
+      <NutrientSummary />
     </View>
   );
 };
@@ -32,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalorieProgress;
+export default DailyTotals;

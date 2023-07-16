@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import FoodsList from "../components/FoodsList";
 import MyButton from "../components/MyButton";
 import MySafeAreaView from "../components/MySafeAreaView";
@@ -7,9 +8,10 @@ import SearchFood from "../components/SearchFood";
 import AppContext from "../context/AppContext";
 import { colors } from "../theme";
 
-const MealScreen = ({ navigation, route }) => {
+const AddEntryScreen = () => {
+  const navigation = useNavigation();
   const data = useContext(AppContext);
-  console.log(data);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const meal = [
     {
       name: "Banana",
@@ -31,23 +33,29 @@ const MealScreen = ({ navigation, route }) => {
     },
   ];
 
-  navigation.setOptions({ title: route.params.mealData.name });
+  navigation.setOptions({ title: "Add food" });
 
   const handleAddCustomFood = () => {
-    navigation.navigate("Custom Food");
+    // navigation.navigate("Custom Food");
   };
 
   return (
     <MySafeAreaView>
-      <ScrollView contentContainerStyle={styles.containerInner}>
-        <FoodsList foods={meal} />
-      </ScrollView>
-      <SearchFood />
-      <MyButton
-        text="+ Add Custom Food"
-        style={styles.addButton}
-        onPress={handleAddCustomFood}
-      />
+      <View>
+        <ScrollView contentContainerStyle={styles.containerInner}>
+          <FoodsList foods={meal} />
+        </ScrollView>
+        <SearchFood
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          searchFoods={undefined}
+        />
+        <MyButton
+          text="+ Add Custom Food"
+          style={styles.addButton}
+          onPress={handleAddCustomFood}
+        />
+      </View>
     </MySafeAreaView>
   );
 };
@@ -62,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MealScreen;
+export default AddEntryScreen;

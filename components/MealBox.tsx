@@ -2,18 +2,29 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme";
+import { Meal } from "../types";
 
-const MealBox = ({ meal, handlePress }) => {
-  const totalCalories = meal.foods.reduce(
-    (partialSum, f) => partialSum + f.calories_kcal,
-    0
-  );
+interface MealBoxProps {
+  meal: Meal;
+  handleMealPress: (meal: Meal) => void;
+}
+
+const MealBox = ({ meal, handleMealPress }: MealBoxProps): JSX.Element => {
+  const totalCalories = 66;
 
   return (
-    <TouchableOpacity style={styles.mealBox} onPress={() => handlePress(meal)}>
+    <TouchableOpacity
+      style={styles.mealBox}
+      onPress={() => handleMealPress(meal)}
+    >
       <View>
-        <Text style={styles.mealBoxTitle}>{meal.name}</Text>
-        <Text style={styles.nutritionInfo}>{totalCalories} kcal</Text>
+        <Text style={styles.mealBoxTitle}>{meal.type}</Text>
+        {meal.foodEntries.map((entry, index) => (
+          <Text key={index} style={styles.nutritionInfo}>
+            {entry.food.name}, {entry.amount}
+            {entry.food.per100unit}
+          </Text>
+        ))}
       </View>
       <View>
         <Ionicons name="add-circle-outline" size={38} color="black" />
@@ -28,19 +39,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: colors.accentBackground,
     width: "90%",
-    height: 140,
     borderRadius: 10,
     marginBottom: 20,
-    paddingHorizontal: 20,
+    padding: 20,
     justifyContent: "space-between",
     alignItems: "center",
   },
   mealBoxTitle: {
     fontSize: 20,
     fontWeight: "bold",
+    marginBottom: 5,
   },
   nutritionInfo: {
-    fontSize: 16,
+    fontSize: 12,
   },
 });
 
