@@ -1,25 +1,37 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme";
+import { FoodEntry } from "../types";
+import { calculateNutrition } from "../utils/getTotals";
 
-const FoodsList = ({ foods }) => {
+interface FoodsListProps {
+  foods: FoodEntry[];
+}
+
+const FoodsList = ({ foods }: FoodsListProps): JSX.Element => {
   return (
     <View style={styles.foodContainer}>
-      {foods.map((food, index) => (
-        <TouchableOpacity key={index} onPress={() => {}}>
-          <View style={styles.foodItem}>
-            <Text style={styles.foodName}>
-              {food.name}
-              {food.amount_value
-                ? ", " + food.amount_value + food.amount_units
-                : " "}
-            </Text>
-            <Text style={styles.calories}>
-              {food.calories_kcal} kcal, {food.protein_grams}g Protein |{" "}
-              {food.carbs_grams}g Carbs | {food.fat_grams}g Fat
-            </Text>
-          </View>
-        </TouchableOpacity>
-      ))}
+      {foods.map((foodEntry, index) => {
+        const { food, amount } = foodEntry;
+        const calories = calculateNutrition(food.calories, amount);
+        const protein = calculateNutrition(food.protein, amount);
+        const fat = calculateNutrition(food.fat, amount);
+        const carbs = calculateNutrition(food.carbs, amount);
+
+        return (
+          <TouchableOpacity key={index} onPress={() => {}}>
+            <View style={styles.foodItem}>
+              <Text style={styles.foodName}>
+                {food.name}
+                {", " + amount + food.per100unit}
+              </Text>
+              <Text style={styles.calories}>
+                {calories} kcal, {protein}g Protein | {carbs}g Carbs | {fat}g
+                Fat
+              </Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };

@@ -11,7 +11,9 @@ const TodayScreen = (): JSX.Element => {
   const navigation = useNavigation();
 
   const handleMealPress = (meal: Meal): void => {
-    navigation.navigate("Add Food");
+    navigation.navigate("Add Food", {
+      meal,
+    });
   };
 
   return (
