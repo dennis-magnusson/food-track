@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { DayContext } from "../context/AppContext";
-import { Meal } from "../types";
+import { DayContextType, Meal, MealType } from "../types";
 import MealBox from "./MealBox";
 
 interface MealBoxProps {
@@ -8,13 +8,13 @@ interface MealBoxProps {
 }
 
 const MealsList = ({ handleMealPress }: MealBoxProps): JSX.Element => {
-  const { meals } = useContext(DayContext);
+  const { meals }: DayContextType = useContext(DayContext);
   return (
     <>
       {Object.entries(meals).map(([mealType, foodEntries]) => (
         <MealBox
           key={mealType}
-          meal={{ type: mealType, foodEntries }}
+          meal={{ type: mealType as MealType, foodEntries }}
           handleMealPress={handleMealPress}
         />
       ))}
