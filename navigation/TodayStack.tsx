@@ -6,7 +6,7 @@ const TodayStack = (): JSX.Element => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Today">
       <Stack.Screen name="Today" component={TodayScreen} />
       <Stack.Screen name="Add Food" component={AddEntryScreen} />
     </Stack.Navigator>
