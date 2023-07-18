@@ -7,6 +7,10 @@ type Totals = {
   totalProtein: number;
 };
 
+export function calculateNutrition(nutrition: number, amount: number) {
+  return (nutrition * amount) / 100;
+}
+
 export function getTotals(day: DayContextType): Totals {
   let totalCalories = 0;
   let totalCarbs = 0;
