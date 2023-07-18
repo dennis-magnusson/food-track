@@ -2,16 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme";
-import { Meal } from "../types";
+import { FoodEntry, Meal, MealType } from "../types";
 
 interface MealBoxProps {
-  meal: Meal;
+  meal: { type: MealType; foodEntries: FoodEntry[] };
   handleMealPress: (meal: Meal) => void;
 }
 
 const MealBox = ({ meal, handleMealPress }: MealBoxProps): JSX.Element => {
-  const totalCalories = 66;
-
   return (
     <TouchableOpacity
       style={styles.mealBox}

@@ -1,5 +1,5 @@
 import { createContext } from "react";
+import { DayContextType } from "../types";
 
-const AppContext = createContext({});
-
-export default AppContext;
+export const DayContext = createContext<DayContextType>(null);
+export const DayDispatchContext = createContext(null);

@@ -15,12 +15,16 @@ export type FoodEntry = {
   amount: number;
 };
 
-export type Meal = {
-  type: "breakfast" | "lunch" | "dinner" | "snack";
-  foodEntries: FoodEntry[];
-};
+export type Meal = FoodEntry[];
 
-export type DayContext = {
+export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
+
+export type DayContextType = {
   date: string;
-  meals: Meal[];
+  meals: {
+    breakfast: Meal;
+    lunch: Meal;
+    dinner: Meal;
+    snack: Meal;
+  };
 };
