@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { DayContext } from "../context/AppContext";
 import { colors } from "../theme";
+import { getTotals } from "../utils/getTotals";
 import NutrientSummary from "./NutrientSummary";
 
 const DailyTotals = (): JSX.Element => {
-  const totalCalories = 1113;
-  const calorieGoal = 2000;
-  const caloriesLeft = calorieGoal - totalCalories;
-  const calorieProgress = totalCalories / calorieGoal;
+  const day = useContext(DayContext);
+  const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
+  const calorieGoal = 2500;
 
   return (
     <View style={styles.container}>
@@ -15,7 +16,11 @@ const DailyTotals = (): JSX.Element => {
       <Text>
         {totalCalories} / {calorieGoal} kcal
       </Text>
-      <NutrientSummary />
+      <NutrientSummary
+        totalCarbs={totalCarbs}
+        totalFat={totalFat}
+        totalProtein={totalProtein}
+      />
     </View>
   );
 };
