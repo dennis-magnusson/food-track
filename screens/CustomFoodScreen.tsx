@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput } from "react-native";
 import MyButton from "../components/MyButton";
 import MySafeAreaView from "../components/MySafeAreaView";
+import { insertFood } from "../services/databaseService";
 import { colors } from "../theme";
 
 const CustomFoodScreen = ({ navigation }) => {
@@ -46,7 +47,23 @@ const CustomFoodScreen = ({ navigation }) => {
     const fiberNum = parseFloat(fiber || "0"); // Default to 0 if not provided
     const saltNum = parseFloat(salt || "0");
 
+    const food = {
+      name: foodName,
+      calories: caloriesNum,
+      protein: proteinNum,
+      carbs: carbsNum,
+      fat: fatNum,
+      sugar: sugarNum,
+      fiber: fiberNum,
+      salt: saltNum,
+      per100unit: per100unit,
+    };
+
     // Add to database
+    insertFood(food);
+
+    resetForm();
+    navigation.goBack();
   }
 
   return (
