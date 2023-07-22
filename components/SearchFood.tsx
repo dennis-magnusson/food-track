@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { colors } from "../theme";
 
 interface SearchFoodProps {
@@ -19,12 +13,8 @@ const SearchFood = ({ searchQuery, setSearchQuery, searchFoods }) => {
         style={styles.searchInput}
         placeholder="Search for a food"
         value={searchQuery}
-        onChangeText={setSearchQuery}
-        onSubmitEditing={searchFoods}
+        onChangeText={searchFoods}
       />
-      <TouchableOpacity style={styles.searchButton} onPress={searchFoods}>
-        <Text style={styles.searchButtonText}>Search</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -44,16 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightBackground,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginRight: 10,
-  },
-  searchButton: {
-    backgroundColor: colors.accent,
-    padding: 10,
-    borderRadius: 5,
-  },
-  searchButtonText: {
-    color: colors.lightText,
-    fontWeight: "bold",
   },
 });
 
