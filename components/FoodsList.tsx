@@ -1,32 +1,22 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme";
-import { FoodEntry } from "../types";
-import { calculateNutrition } from "../utils/getTotals";
+import { Food } from "../types";
 
 interface FoodsListProps {
-  foods: FoodEntry[];
+  foods: Food[];
 }
 
 const FoodsList = ({ foods }: FoodsListProps): JSX.Element => {
   return (
     <View style={styles.foodContainer}>
-      {foods.map((foodEntry, index) => {
-        const { food, amount } = foodEntry;
-        const calories = calculateNutrition(food.calories, amount);
-        const protein = calculateNutrition(food.protein, amount);
-        const fat = calculateNutrition(food.fat, amount);
-        const carbs = calculateNutrition(food.carbs, amount);
-
+      {foods.map((food, index) => {
         return (
           <TouchableOpacity key={index} onPress={() => {}}>
             <View style={styles.foodItem}>
-              <Text style={styles.foodName}>
-                {food.name}
-                {", " + amount + food.per100unit}
-              </Text>
+              <Text style={styles.foodName}>{food.name}</Text>
               <Text style={styles.calories}>
-                {calories} kcal, {protein}g Protein | {carbs}g Carbs | {fat}g
-                Fat
+                {food.calories} kcal, {food.protein}g Protein | {food.carbs}g
+                Carbs | {food.fat}g Fat
               </Text>
             </View>
           </TouchableOpacity>
@@ -43,9 +33,9 @@ const styles = StyleSheet.create({
   foodItem: {
     backgroundColor: colors.accentBackground,
     borderRadius: 10,
-    marginHorizontal: 16,
-    marginTop: 8,
-    marginBottom: 8,
+    marginHorizontal: 10,
+    marginTop: 6,
+    marginBottom: 6,
     padding: 16,
     elevation: 2,
   },
