@@ -10,7 +10,6 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@react-native-menu/menu": "^0.8.0",
     "@react-native-picker/picker": "2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
