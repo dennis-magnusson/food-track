@@ -9,9 +9,9 @@ interface FoodsListProps {
 const FoodsList = ({ foods }: FoodsListProps): JSX.Element => {
   return (
     <View style={styles.foodContainer}>
-      {foods.map((food, index) => {
+      {foods.map((food) => {
         return (
-          <TouchableOpacity key={index} onPress={() => {}}>
+          <TouchableOpacity key={food.id} onPress={() => {}}>
             <View style={styles.foodItem}>
               <Text style={styles.foodName}>{food.name}</Text>
               <Text style={styles.calories}>
