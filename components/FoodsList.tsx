@@ -4,14 +4,15 @@ import { Food } from "../types";
 
 interface FoodsListProps {
   foods: Food[];
+  handleFoodPress: (food: Food) => void;
 }
 
-const FoodsList = ({ foods }: FoodsListProps): JSX.Element => {
+const FoodsList = ({ foods, handleFoodPress }: FoodsListProps): JSX.Element => {
   return (
     <View style={styles.foodContainer}>
       {foods.map((food) => {
         return (
-          <TouchableOpacity key={food.id} onPress={() => {}}>
+          <TouchableOpacity key={food.id} onPress={() => handleFoodPress(food)}>
             <View style={styles.foodItem}>
               <Text style={styles.foodName}>{food.name}</Text>
               <Text style={styles.calories}>
