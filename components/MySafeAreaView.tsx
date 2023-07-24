@@ -1,8 +1,13 @@
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { colors } from "../theme";
 
-const MySafeAreaView = ({ children, style, ...rest }) => {
+interface MySafeAreaViewProps {
+  children: JSX.Element;
+  style?: StyleProp<ViewStyle>;
+}
+
+const MySafeAreaView = ({ children, style, ...rest }: MySafeAreaViewProps) => {
   const containerStyle = [styles.container, style];
 
   return (

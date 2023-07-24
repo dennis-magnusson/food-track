@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput } from "react-native";
 import MyButton from "../components/MyButton";
 import MySafeAreaView from "../components/MySafeAreaView";
-import { insertFood } from "../db";
+import { insertFood } from "../services/databaseService";
 import { colors } from "../theme";
 
 const CustomFoodScreen = ({ navigation }) => {
@@ -29,7 +29,7 @@ const CustomFoodScreen = ({ navigation }) => {
     setSugar("");
   }
 
-  const handleSubmit = () => {
+  function handleSubmit() {
     if (!foodName || !calories || !protein || !carbs || !fat) {
       Alert.alert(
         "Missing fields",
@@ -47,27 +47,24 @@ const CustomFoodScreen = ({ navigation }) => {
     const fiberNum = parseFloat(fiber || "0"); // Default to 0 if not provided
     const saltNum = parseFloat(salt || "0");
 
-    insertFood({
-      foodName,
+    const food = {
+      name: foodName,
       calories: caloriesNum,
       protein: proteinNum,
       carbs: carbsNum,
+      fat: fatNum,
       sugar: sugarNum,
       fiber: fiberNum,
       salt: saltNum,
-      fat: fatNum,
-      per100unit,
-    })
-      .then((insertId) => {
-        console.log(`Inserted new food with ID: ${insertId}`);
-        resetForm();
-        navigation.pop();
-      })
-      .catch((error) => {
-        console.log(`Error occurred while inserting new food: ${error}`);
-        Alert.alert("Error creating food", JSON.stringify(error));
-      });
-  };
+      per100unit: per100unit,
+    };
+
+    // Add to database
+    insertFood(food);
+
+    resetForm();
+    navigation.goBack();
+  }
 
   return (
     <MySafeAreaView>
