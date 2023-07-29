@@ -38,9 +38,8 @@ const AddFoodModal = ({
     <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text>
-            Enter the quantity of {selectedFood?.name} (
-            {selectedFood?.per100unit}):
+          <Text style={styles.foodNameText}>
+            {selectedFood?.name} ({selectedFood?.per100unit}):
           </Text>
           <View
             style={{
@@ -50,19 +49,24 @@ const AddFoodModal = ({
             }}
           >
             <TouchableOpacity onPress={() => setFoodQuantity(foodQuantity - 5)}>
-              <AntDesign name="minussquareo" size={24} color="black" />
+              <AntDesign name="minus" size={50} color="black" />
             </TouchableOpacity>
             <TextInput
               keyboardType="numeric"
-              value={String(foodQuantity + selectedFood.per100unit)}
+              value={String(foodQuantity)}
               onChangeText={(text) => setFoodQuantity(Number(text))}
               style={styles.textInput}
+              autoFocus={true}
             />
             <TouchableOpacity onPress={() => setFoodQuantity(foodQuantity + 5)}>
-              <AntDesign name="plussquareo" size={24} color="black" />
+              <AntDesign name="plus" size={50} color="black" />
             </TouchableOpacity>
           </View>
-          <MyButton text="Add" onPress={handleFoodLog} />
+          <MyButton
+            style={styles.submitButton}
+            text="Add food"
+            onPress={handleFoodLog}
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -74,11 +78,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginBottom: 90,
   },
   modalView: {
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
@@ -90,6 +94,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  foodNameText: {
+    fontWeight: "700",
+    fontSize: 18,
+  },
   quantityContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -97,39 +105,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textInput: {
-    fontSize: 20,
-    height: 30,
-    width: 70,
-    borderColor: "gray",
-    borderWidth: 1,
+    fontSize: 38,
+    width: 100,
+    borderRadius: 5,
+    borderWidth: 3,
     textAlign: "center",
-    margin: 20,
-  },
-  button: {
-    height: 50,
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 10,
-    backgroundColor: "#2196F3",
-    borderRadius: 25,
-  },
-  buttonText: {
-    fontSize: 24,
-    color: "white",
+    margin: 10,
   },
   submitButton: {
-    height: 20,
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#4CAF50",
-    borderRadius: 25,
-    marginTop: 20, // add margin top to the submit button
-  },
-  submitButtonText: {
-    fontSize: 24,
-    color: "white",
+    marginTop: 10,
+    width: 200,
   },
 });
 
