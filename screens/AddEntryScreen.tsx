@@ -61,8 +61,8 @@ const AddEntryScreen = ({ route }) => {
 
   return (
     <MySafeAreaView>
-      <View>
-        <View>
+      <View style={styles.container}>
+        <View style={styles.containerInner}>
           <SearchFood
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -73,7 +73,7 @@ const AddEntryScreen = ({ route }) => {
             style={styles.addButton}
             onPress={handleAddCustomFood}
           />
-          <ScrollView contentContainerStyle={styles.containerInner}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
             <FoodsList
               foods={filteredFoods}
               handleFoodPress={handleFoodPress}
@@ -94,7 +94,13 @@ const AddEntryScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   containerInner: {
+    flex: 1,
+  },
+  scrollView: {
     backgroundColor: colors.lightBackground,
   },
   addButton: {
