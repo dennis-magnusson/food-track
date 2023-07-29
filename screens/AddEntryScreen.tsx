@@ -100,67 +100,6 @@ const styles = StyleSheet.create({
   addButton: {
     marginHorizontal: 10,
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  quantityContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  textInput: {
-    fontSize: 20,
-    height: 30,
-    width: 70,
-    borderColor: "gray",
-    borderWidth: 1,
-    textAlign: "center",
-    margin: 20,
-  },
-  button: {
-    height: 50,
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 10,
-    backgroundColor: "#2196F3",
-    borderRadius: 25,
-  },
-  buttonText: {
-    fontSize: 24,
-    color: "white",
-  },
-  submitButton: {
-    height: 20,
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#4CAF50",
-    borderRadius: 25,
-    marginTop: 20, // add margin top to the submit button
-  },
-  submitButtonText: {
-    fontSize: 24,
-    color: "white",
-  },
 });
 
 export default AddEntryScreen;
