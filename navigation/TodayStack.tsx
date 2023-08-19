@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CustomFoodScreen from "../screens/CustomFoodScreen";
-import MealScreen from "../screens/MealScreen";
-import TodayScreen from "../screens/TodayScreen";
+import MealScreen from "../screens/Meal/MealScreen";
+import TodayScreen from "../screens/Today/TodayScreen";
 
 const TodayStack = (): JSX.Element => {
   const Stack = createNativeStackNavigator();

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { DayContext } from "../context/AppContext";
-import { layout, typography } from "../theme";
-import { getTotals } from "../utils/getTotals";
+import { DayContext } from "../../context/AppContext";
+import { layout, typography } from "../../theme";
+import { getTotals } from "../../utils/getTotals";
 
 const DailyTotals = (): JSX.Element => {
   const day = useContext(DayContext);

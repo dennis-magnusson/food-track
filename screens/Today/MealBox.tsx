@@ -1,9 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { layout, typography } from "../theme";
-import { Meal, MealType } from "../types";
-import { getTotals } from "../utils/getTotals";
+import { layout, typography } from "../../theme";
+import { Meal, MealType } from "../../types";
+import { getTotals } from "../../utils/getTotals";
 
 interface MealBoxProps {
   mealData: { type: MealType; meal: Meal };

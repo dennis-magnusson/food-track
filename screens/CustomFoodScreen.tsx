@@ -1,9 +1,9 @@
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput } from "react-native";
-import MyButton from "../components/MyButton";
-import MySafeAreaView from "../components/MySafeAreaView";
 import { insertFood } from "../services/databaseService";
+import MyButton from "../shared/MyButton";
+import MySafeAreaView from "../shared/MySafeAreaView";
 import { colors } from "../theme";
 
 const CustomFoodScreen = ({ navigation }) => {

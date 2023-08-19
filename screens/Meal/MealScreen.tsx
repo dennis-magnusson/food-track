@@ -1,20 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import AddFoodModal from "../components/AddFoodModal";
-import FoodsList from "../components/FoodsList";
-import MyButton from "../components/MyButton";
-import MySafeAreaView from "../components/MySafeAreaView";
-import SearchFood from "../components/SearchFood";
-import { fetchAllFoods } from "../services/databaseService";
-import { colors } from "../theme";
-import { Food, MealType } from "../types";
+import { fetchAllFoods } from "../../services/databaseService";
+import MyButton from "../../shared/MyButton";
+import MySafeAreaView from "../../shared/MySafeAreaView";
+import SearchFood from "../../shared/SearchFood";
+import { colors } from "../../theme";
+import { Food } from "../../types";
+import AddFoodModal from "./AddFoodModal";
+import FoodsList from "./FoodsList";
 
 const MealScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [mealType, setMealType] = useState<MealType>(route.params.meal.type);
   const [foods, setFoods] = useState<Food[]>([]);
   const [filteredFoods, setFilteredFoods] = useState<Food[]>(foods);
 
@@ -28,7 +27,7 @@ const MealScreen = ({ route }) => {
       setFoods(f);
       setFilteredFoods(f);
     });
-    navigation.setOptions({ title: `${mealType}` });
+    navigation.setOptions({ title: `${route.params.meal.type}` });
   }, []);
 
   const searchFoods = (query: string) => {

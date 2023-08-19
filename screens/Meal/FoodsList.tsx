@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors } from "../theme";
-import { Food } from "../types";
+import { colors } from "../../theme";
+import { Food } from "../../types";
 
 interface FoodsListProps {
   foods: Food[];
