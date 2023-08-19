@@ -1,28 +1,26 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors } from "../theme";
-import { FoodEntry, Meal, MealType } from "../types";
+import { layout, typography } from "../theme";
+import { Meal, MealType } from "../types";
+import { getTotals } from "../utils/getTotals";
 
 interface MealBoxProps {
-  meal: { type: MealType; foodEntries: FoodEntry[] };
+  mealData: { type: MealType; meal: Meal };
   handleMealPress: (meal: Meal) => void;
 }
 
-const MealBox = ({ meal, handleMealPress }: MealBoxProps): JSX.Element => {
+const MealBox = ({ mealData, handleMealPress }: MealBoxProps): JSX.Element => {
+  const totalCalories = getTotals(mealData.meal).totalCalories;
+
   return (
     <TouchableOpacity
       style={styles.mealBox}
-      onPress={() => handleMealPress(meal)}
+      onPress={() => handleMealPress(mealData.meal)}
     >
       <View>
-        <Text style={styles.mealBoxTitle}>{meal.type}</Text>
-        {meal.foodEntries.map((entry, index) => (
-          <Text key={index} style={styles.nutritionInfo}>
-            {entry.food.name}, {entry.amount}
-            {entry.food.per100unit}
-          </Text>
-        ))}
+        <Text style={styles.mealBoxTitle}>{mealData.type}</Text>
+        <Text>{totalCalories} cal</Text>
       </View>
       <View>
         <Ionicons name="add-circle-outline" size={38} color="black" />
@@ -33,23 +31,14 @@ const MealBox = ({ meal, handleMealPress }: MealBoxProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   mealBox: {
+    ...layout.boxContainer,
     flex: 1,
     flexDirection: "row",
-    backgroundColor: colors.accentBackground,
-    width: "90%",
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 20,
     justifyContent: "space-between",
     alignItems: "center",
   },
   mealBoxTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  nutritionInfo: {
-    fontSize: 12,
+    ...typography.title2,
   },
 });
 

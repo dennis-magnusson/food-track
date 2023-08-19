@@ -14,7 +14,7 @@ const MealsList = ({ handleMealPress }: MealBoxProps): JSX.Element => {
       {Object.entries(meals).map(([mealType, foodEntries]) => (
         <MealBox
           key={mealType}
-          meal={{ type: mealType as MealType, foodEntries }}
+          mealData={{ type: mealType as MealType, meal: foodEntries }}
           handleMealPress={handleMealPress}
         />
       ))}
