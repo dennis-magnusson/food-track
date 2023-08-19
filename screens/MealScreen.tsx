@@ -10,7 +10,7 @@ import { fetchAllFoods } from "../services/databaseService";
 import { colors } from "../theme";
 import { Food, MealType } from "../types";
 
-const AddEntryScreen = ({ route }) => {
+const MealScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -28,6 +28,7 @@ const AddEntryScreen = ({ route }) => {
       setFoods(f);
       setFilteredFoods(f);
     });
+    navigation.setOptions({ title: `${mealType}` });
   }, []);
 
   const searchFoods = (query: string) => {
@@ -38,8 +39,6 @@ const AddEntryScreen = ({ route }) => {
       )
     );
   };
-
-  navigation.setOptions({ title: `Add food - ${mealType}` });
 
   const handleAddCustomFood = () => {
     // navigation.navigate("Add Custom Food");
@@ -109,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddEntryScreen;
+export default MealScreen;
