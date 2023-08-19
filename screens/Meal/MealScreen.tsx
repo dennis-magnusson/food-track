@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -12,6 +11,7 @@ import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { colors, typography } from "../../theme";
 import { Food } from "../../types";
+import { capitalize } from "../../utils/textOps";
 import AddFoodModal from "./AddFoodModal";
 import FoodsList from "./FoodsList";
 import SearchBar from "./SearchBar";
@@ -19,8 +19,6 @@ import SearchBar from "./SearchBar";
 const DEFAULT_FOOD_QUANTITY = 100;
 
 const MealScreen = ({ route }) => {
-  const navigation = useNavigation();
-
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [foods, setFoods] = useState<Food[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -31,8 +29,6 @@ const MealScreen = ({ route }) => {
   const [foodQuantity, setFoodQuantity] = useState<number>(
     DEFAULT_FOOD_QUANTITY
   );
-
-  console.log(route);
 
   const filteredFoods = useMemo(() => {
     return foods.filter((food) =>
@@ -83,7 +79,7 @@ const MealScreen = ({ route }) => {
         style={styles.container}
       >
         <View style={styles.containerInner}>
-          <Text style={styles.title}>Lunch</Text>
+          <Text style={styles.title}>{capitalize(route.params.mealType)}</Text>
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
