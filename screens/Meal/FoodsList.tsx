@@ -1,4 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { colors } from "../../theme";
 import { Food } from "../../types";
 
@@ -8,29 +15,31 @@ interface FoodsListProps {
 }
 
 const FoodsList = ({ foods, handleFoodPress }: FoodsListProps): JSX.Element => {
+  const renderItem = ({ item }: { item: Food }) => (
+    <TouchableOpacity key={item.id} onPress={() => handleFoodPress(item)}>
+      <View style={styles.foodItem}>
+        <Text style={styles.foodName}>{item.name}</Text>
+        <Text style={styles.calories}>
+          {item.calories} kcal, {item.protein}g Protein | {item.carbs}g Carbs |{" "}
+          {item.fat}g Fat
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
-    <View style={styles.foodContainer}>
-      {foods.map((food) => {
-        return (
-          <TouchableOpacity key={food.id} onPress={() => handleFoodPress(food)}>
-            <View style={styles.foodItem}>
-              <Text style={styles.foodName}>{food.name}</Text>
-              <Text style={styles.calories}>
-                {food.calories} kcal, {food.protein}g Protein | {food.carbs}g
-                Carbs | {food.fat}g Fat
-              </Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
+    <FlatList
+      data={foods}
+      renderItem={renderItem}
+      scrollEnabled={true}
+      keyExtractor={(item) => item.id.toString()}
+      contentContainerStyle={styles.foodContainer}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  foodContainer: {
-    flex: 1,
-  },
+  foodContainer: {},
   foodItem: {
     backgroundColor: colors.accentBackground,
     borderRadius: 10,
@@ -48,4 +57,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
 export default FoodsList;
