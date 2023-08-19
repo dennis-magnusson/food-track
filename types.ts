@@ -1,3 +1,5 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 export type Food = {
   id: number;
   name: string;
@@ -29,3 +31,19 @@ export type DayContextType = {
     snack: Meal;
   };
 };
+
+export type RootStackParamList = {
+  Today: undefined;
+  Meal: { mealType: MealType };
+  AddCustomFood: undefined;
+};
+
+export type TodayScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Today"
+>;
+
+export type MealScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Meal"
+>;

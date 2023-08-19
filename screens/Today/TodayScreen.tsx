@@ -1,19 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import DailyTotals from "../components/DailyTotals";
-import MealsList from "../components/MealsList";
-import MySafeAreaView from "../components/MySafeAreaView";
-import { colors } from "../theme";
-import { Meal } from "../types";
+import MySafeAreaView from "../../shared/MySafeAreaView";
+import { colors } from "../../theme";
+import { MealType, TodayScreenNavigationProp } from "../../types";
+import DailyTotals from "./DailyTotals";
+import MealsList from "./MealsList";
 
 const TodayScreen = (): JSX.Element => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<TodayScreenNavigationProp>();
 
-  const handleMealPress = (meal: Meal): void => {
-    navigation.navigate("Add Food", {
-      meal,
-    });
+  const handleMealPress = (mealType: MealType): void => {
+    navigation.navigate("Meal", { mealType });
   };
 
   return (

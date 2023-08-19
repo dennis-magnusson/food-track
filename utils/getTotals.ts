@@ -7,17 +7,28 @@ type Totals = {
   totalProtein: number;
 };
 
-export function calculateNutrition(nutrition: number, amount: number) {
-  return (nutrition * amount) / 100;
-}
+export function getTotals(meal: Meal): Totals;
+export function getTotals(day: DayContextType): Totals;
 
-export function getTotals(day: DayContextType): Totals {
+export function getTotals(input: Meal | DayContextType): Totals {
   let totalCalories = 0;
   let totalCarbs = 0;
   let totalFat = 0;
   let totalProtein = 0;
 
-  Object.values(day.meals).forEach((meal: Meal) => {
+  if ((input as DayContextType).date !== undefined) {
+    // It is a DayContextType
+    const day = input as DayContextType;
+    Object.values(day.meals).forEach((meal: Meal) => {
+      const mealTotals = getTotals(meal); // Recursive call to get the totals of this meal
+      totalCalories += mealTotals.totalCalories;
+      totalCarbs += mealTotals.totalCarbs;
+      totalFat += mealTotals.totalFat;
+      totalProtein += mealTotals.totalProtein;
+    });
+  } else {
+    // It is a Meal
+    const meal = input as Meal;
     meal.forEach((entry: FoodEntry) => {
       const { food, amount } = entry;
       const ratio = amount / 100;
@@ -27,7 +38,7 @@ export function getTotals(day: DayContextType): Totals {
       totalFat += food.fat * ratio;
       totalProtein += food.protein * ratio;
     });
-  });
+  }
 
   return {
     totalCalories,

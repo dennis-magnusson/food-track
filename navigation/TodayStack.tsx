@@ -1,16 +1,20 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AddEntryScreen from "../screens/AddEntryScreen";
 import CustomFoodScreen from "../screens/CustomFoodScreen";
-import TodayScreen from "../screens/TodayScreen";
+import MealScreen from "../screens/Meal/MealScreen";
+import TodayScreen from "../screens/Today/TodayScreen";
+import { RootStackParamList } from "../types";
 
 const TodayStack = (): JSX.Element => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
-    <Stack.Navigator initialRouteName="Today">
+    <Stack.Navigator
+      initialRouteName="Today"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Today" component={TodayScreen} />
-      <Stack.Screen name="Add Food" component={AddEntryScreen} />
-      <Stack.Screen name="Add Custom Food" component={CustomFoodScreen} />
+      <Stack.Screen name="Meal" component={MealScreen} />
+      <Stack.Screen name="AddCustomFood" component={CustomFoodScreen} />
     </Stack.Navigator>
   );
 };
