@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DayContext } from "../context/AppContext";
-import { colors } from "../theme";
+import { layout, typography } from "../theme";
 import { getTotals } from "../utils/getTotals";
-import NutrientSummary from "./NutrientSummary";
 
 const DailyTotals = (): JSX.Element => {
   const day = useContext(DayContext);
@@ -12,31 +11,21 @@ const DailyTotals = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text>Calories</Text>
-      <Text>
-        {totalCalories} / {calorieGoal} kcal
-      </Text>
-      <NutrientSummary
-        totalCarbs={totalCarbs}
-        totalFat={totalFat}
-        totalProtein={totalProtein}
-      />
+      <Text style={styles.title}>Totals</Text>
+      <Text style={styles.stat}>{totalCalories} calories</Text>
+      <Text style={styles.stat}>{totalProtein} protein</Text>
+      <Text style={styles.stat}>{totalCarbs} carbohydrates</Text>
+      <Text style={styles.stat}>{totalFat} fat</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.accentBackground,
-    width: "90%",
-    height: 190,
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    ...layout.boxContainer,
   },
+  title: { ...typography.title1, marginBottom: 8 },
+  stat: typography.title3,
 });
 
 export default DailyTotals;
