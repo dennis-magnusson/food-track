@@ -7,9 +7,6 @@ export const colors: Record<string, string> = {
   lightText: "#fff",
   lightBackground: "#fff",
   accentBackground: "#eee",
-  fatColor: "#00897b",
-  carbsColor: "#f44336",
-  proteinColor: "#1565c0",
 };
 
 const baseTitleStyle: TextStyle = {
