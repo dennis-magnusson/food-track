@@ -47,6 +47,7 @@ const AddEntryScreen = ({ route }) => {
 
   const handleFoodPress = (food: Food) => {
     setSelectedFood(food);
+    setFoodQuantity(100);
     setIsModalVisible(true);
   };
 
