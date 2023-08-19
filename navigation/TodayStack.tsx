@@ -7,7 +7,10 @@ const TodayStack = (): JSX.Element => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="Today">
+    <Stack.Navigator
+      initialRouteName="Today"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Today" component={TodayScreen} />
       <Stack.Screen name="Meal" component={MealScreen} />
       <Stack.Screen name="Add Custom Food" component={CustomFoodScreen} />
