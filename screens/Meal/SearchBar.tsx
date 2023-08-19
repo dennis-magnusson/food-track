@@ -57,7 +57,7 @@ const SearchBar = ({
       <TextInput
         ref={inputRef}
         style={styles.searchInput}
-        placeholder="Search for a food"
+        placeholder="Search for a food to add"
         value={searchQuery}
         onChangeText={searchFoods}
         onBlur={onBlur}

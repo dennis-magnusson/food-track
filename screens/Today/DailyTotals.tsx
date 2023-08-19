@@ -11,7 +11,7 @@ const DailyTotals = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Totals</Text>
+      <Text style={styles.title}>Today's Totals</Text>
       <Text style={styles.stat}>{totalCalories} calories</Text>
       <Text style={styles.stat}>{totalProtein} protein</Text>
       <Text style={styles.stat}>{totalCarbs} carbohydrates</Text>

@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { DayContext } from "../../context/AppContext";
-import { DayContextType, Meal, MealType } from "../../types";
+import { DayContextType, MealType } from "../../types";
 import MealBox from "./MealBox";
 
 interface MealBoxProps {
-  handleMealPress: (meal: Meal) => void;
+  handleMealPress: (mealType: MealType) => void;
 }
 
 const MealsList = ({ handleMealPress }: MealBoxProps): JSX.Element => {

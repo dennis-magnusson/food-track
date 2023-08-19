@@ -4,10 +4,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { layout, typography } from "../../theme";
 import { Meal, MealType } from "../../types";
 import { getTotals } from "../../utils/getTotals";
+import { capitalize } from "../../utils/textOps";
 
 interface MealBoxProps {
   mealData: { type: MealType; meal: Meal };
-  handleMealPress: (meal: Meal) => void;
+  handleMealPress: (mealType: MealType) => void;
 }
 
 const MealBox = ({ mealData, handleMealPress }: MealBoxProps): JSX.Element => {
@@ -16,10 +17,10 @@ const MealBox = ({ mealData, handleMealPress }: MealBoxProps): JSX.Element => {
   return (
     <TouchableOpacity
       style={styles.mealBox}
-      onPress={() => handleMealPress(mealData.meal)}
+      onPress={() => handleMealPress(mealData.type)}
     >
       <View>
-        <Text style={styles.mealBoxTitle}>{mealData.type}</Text>
+        <Text style={styles.mealBoxTitle}>{capitalize(mealData.type)}</Text>
         <Text>{totalCalories} cal</Text>
       </View>
       <View>
