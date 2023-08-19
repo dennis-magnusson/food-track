@@ -1,42 +1,53 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { fetchAllFoods } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
-import SearchFood from "../../shared/SearchFood";
-import { colors } from "../../theme";
+import { colors, typography } from "../../theme";
 import { Food } from "../../types";
 import AddFoodModal from "./AddFoodModal";
 import FoodsList from "./FoodsList";
+import SearchBar from "./SearchBar";
+
+const DEFAULT_FOOD_QUANTITY = 100;
 
 const MealScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [foods, setFoods] = useState<Food[]>([]);
-  const [filteredFoods, setFilteredFoods] = useState<Food[]>(foods);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   // Modal state
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
-  const [foodQuantity, setFoodQuantity] = useState<number>(100);
+  const [foodQuantity, setFoodQuantity] = useState<number>(
+    DEFAULT_FOOD_QUANTITY
+  );
+
+  console.log(route);
+
+  const filteredFoods = useMemo(() => {
+    return foods.filter((food) =>
+      food.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, foods]);
 
   useEffect(() => {
     fetchAllFoods((f) => {
       setFoods(f);
-      setFilteredFoods(f);
     });
-    navigation.setOptions({ title: `${route.params.meal.type}` });
   }, []);
 
   const searchFoods = (query: string) => {
     setSearchQuery(query);
-    setFilteredFoods(
-      foods.filter((food) =>
-        food.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
   };
 
   const handleAddCustomFood = () => {
@@ -45,7 +56,7 @@ const MealScreen = ({ route }) => {
 
   const handleFoodPress = (food: Food) => {
     setSelectedFood(food);
-    setFoodQuantity(100);
+    setFoodQuantity(DEFAULT_FOOD_QUANTITY);
     setIsModalVisible(true);
   };
 
@@ -55,29 +66,51 @@ const MealScreen = ({ route }) => {
     );
     // close the modal and reset the quantity input
     setIsModalVisible(false);
-    setFoodQuantity(0);
+    setFoodQuantity(DEFAULT_FOOD_QUANTITY);
   };
+
+  function handleSearchInputFocus() {
+    setIsSearching(true);
+  }
+  function handleSearchInputBlur() {
+    setIsSearching(false);
+  }
 
   return (
     <MySafeAreaView>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <View style={styles.containerInner}>
-          <SearchFood
+          <Text style={styles.title}>Lunch</Text>
+          <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             searchFoods={searchFoods}
+            isFocused={isSearching}
+            onFocus={handleSearchInputFocus}
+            onBlur={handleSearchInputBlur}
           />
-          <MyButton
-            text="+ Add Custom Food"
-            style={styles.addButton}
-            onPress={handleAddCustomFood}
-          />
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <FoodsList
-              foods={filteredFoods}
-              handleFoodPress={handleFoodPress}
-            />
-          </ScrollView>
+          {isSearching ? (
+            <>
+              <MyButton
+                text="+ Add Custom Food"
+                style={styles.addButton}
+                onPress={handleAddCustomFood}
+              />
+              <FoodsList
+                foods={filteredFoods}
+                handleFoodPress={handleFoodPress}
+              />
+            </>
+          ) : (
+            <>
+              <View>
+                <Text>Not searching</Text>
+              </View>
+            </>
+          )}
         </View>
         <AddFoodModal
           setIsModalVisible={setIsModalVisible}
@@ -87,7 +120,7 @@ const MealScreen = ({ route }) => {
           isModalVisible={isModalVisible}
           selectedFood={selectedFood}
         />
-      </View>
+      </KeyboardAvoidingView>
     </MySafeAreaView>
   );
 };
@@ -99,6 +132,7 @@ const styles = StyleSheet.create({
   containerInner: {
     flex: 1,
   },
+  title: { ...typography.title1, margin: 15 },
   scrollView: {
     backgroundColor: colors.lightBackground,
   },
