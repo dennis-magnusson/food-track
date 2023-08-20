@@ -35,7 +35,7 @@ export type DayContextType = {
 export type RootStackParamList = {
   Today: undefined;
   Meal: { mealType: MealType };
-  AddCustomFood: undefined;
+  AddCustomFood: { mealType: MealType };
 };
 
 export type TodayScreenNavigationProp = NativeStackNavigationProp<
@@ -46,4 +46,9 @@ export type TodayScreenNavigationProp = NativeStackNavigationProp<
 export type MealScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Meal"
+>;
+
+export type AddCustomFoodScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "AddCustomFood"
 >;

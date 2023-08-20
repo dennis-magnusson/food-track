@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CustomFoodScreen from "../screens/CustomFoodScreen";
+import AddCustomFoodScreen from "../screens/AddCustomFood/AddCustomFoodScreen";
 import MealScreen from "../screens/Meal/MealScreen";
 import TodayScreen from "../screens/Today/TodayScreen";
 import { RootStackParamList } from "../types";
@@ -14,7 +14,7 @@ const TodayStack = (): JSX.Element => {
     >
       <Stack.Screen name="Today" component={TodayScreen} />
       <Stack.Screen name="Meal" component={MealScreen} />
-      <Stack.Screen name="AddCustomFood" component={CustomFoodScreen} />
+      <Stack.Screen name="AddCustomFood" component={AddCustomFoodScreen} />
     </Stack.Navigator>
   );
 };
