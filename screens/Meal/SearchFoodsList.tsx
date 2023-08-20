@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { colors } from "../../theme";
 import { Food } from "../../types";
 
@@ -19,14 +13,18 @@ const SearchFoodsList = ({
   handleFoodPress,
 }: FoodsListProps): JSX.Element => {
   const renderItem = ({ item }: { item: Food }) => (
-    <TouchableOpacity key={item.id} onPress={() => handleFoodPress(item)}>
-      <View style={styles.foodItem}>
-        <Text style={styles.foodName}>{item.name}</Text>
-        <Text style={styles.calories}>
-          {item.calories} kcal, {item.protein}g Protein | {item.carbs}g Carbs |{" "}
-          {item.fat}g Fat
-        </Text>
-      </View>
+    <TouchableOpacity
+      style={styles.foodItem}
+      key={item.id}
+      onPress={() => {
+        handleFoodPress(item);
+      }}
+    >
+      <Text style={styles.foodName}>{item.name}</Text>
+      <Text style={styles.calories}>
+        {item.calories} kcal, {item.protein}g Protein | {item.carbs}g Carbs |{" "}
+        {item.fat}g Fat
+      </Text>
     </TouchableOpacity>
   );
 
@@ -35,6 +33,7 @@ const SearchFoodsList = ({
       data={foods}
       renderItem={renderItem}
       scrollEnabled={true}
+      keyboardShouldPersistTaps="always"
       keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={styles.foodContainer}
     />

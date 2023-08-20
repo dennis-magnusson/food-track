@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
-import { typography } from "../../theme";
+import { inputs, typography } from "../../theme";
 
 const AddCustomFoodScreen = (): JSX.Element => {
   const [name, setName] = useState<string>("");
@@ -59,7 +59,7 @@ const AddCustomFoodScreen = (): JSX.Element => {
           <Text style={styles.topTitle}>Name of the food</Text>
           <View style={styles.row}>
             <TextInput
-              style={[styles.input, styles.fullWidth]}
+              style={[styles.input, styles.columnFull]}
               value={name}
               placeholder="eg. Mango"
               onChangeText={setName}
@@ -203,18 +203,11 @@ const styles = StyleSheet.create({
   columnFull: {
     flex: 1,
   },
-  fullWidth: {
-    flex: 1,
-  },
   label: {
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
+    ...inputs.textInput,
   },
   unitButton: {
     borderWidth: 1,

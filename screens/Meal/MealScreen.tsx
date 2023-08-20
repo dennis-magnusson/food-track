@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -10,9 +11,12 @@ import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { colors, typography } from "../../theme";
-import { DayContextType, Food } from "../../types";
+import {
+  AddCustomFoodScreenNavigationProp,
+  DayContextType,
+  Food,
+} from "../../types";
 import { capitalize } from "../../utils/textOps";
-import AddFoodModal from "./AddFoodModal";
 import AddedFoods from "./AddedFoods";
 import SearchBar from "./SearchBar";
 import SearchFood from "./SearchFood";
@@ -24,14 +28,8 @@ const MealScreen = ({ route }) => {
   const [foods, setFoods] = useState<Food[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
-  // Modal state
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
-  const [foodQuantity, setFoodQuantity] = useState<number>(
-    DEFAULT_FOOD_QUANTITY
-  );
-
   const { meals }: DayContextType = useContext(DayContext);
+  const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
 
   const filteredFoods = useMemo(() => {
     return foods.filter((food) =>
@@ -46,22 +44,14 @@ const MealScreen = ({ route }) => {
   }, []);
 
   const handleAddCustomFood = () => {
-    // navigation.navigate("Add Custom Food");
+    navigation.navigate("AddCustomFood", { mealType: route.params.mealType });
   };
 
   const handleFoodPress = (food: Food) => {
-    setSelectedFood(food);
-    setFoodQuantity(DEFAULT_FOOD_QUANTITY);
-    setIsModalVisible(true);
-  };
-
-  const handleFoodLog = () => {
-    console.log(
-      `Logged ${foodQuantity} ${selectedFood?.per100unit} of ${selectedFood?.name}`
-    );
-    // close the modal and reset the quantity input
-    setIsModalVisible(false);
-    setFoodQuantity(DEFAULT_FOOD_QUANTITY);
+    navigation.navigate("AddExistingFood", {
+      mealType: route.params.mealType,
+      food: food,
+    });
   };
 
   return (
@@ -89,14 +79,6 @@ const MealScreen = ({ route }) => {
             <AddedFoods meal={meals[route.params.mealType]} />
           )}
         </View>
-        <AddFoodModal
-          setIsModalVisible={setIsModalVisible}
-          setFoodQuantity={setFoodQuantity}
-          foodQuantity={foodQuantity}
-          handleFoodLog={handleFoodLog}
-          isModalVisible={isModalVisible}
-          selectedFood={selectedFood}
-        />
       </KeyboardAvoidingView>
     </MySafeAreaView>
   );

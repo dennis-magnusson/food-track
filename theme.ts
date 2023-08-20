@@ -37,6 +37,16 @@ export const typography: { [key: string]: TextStyle } = {
   },
 };
 
+export const inputs: { [key: string]: TextStyle } = {
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    fontSize: 16,
+  },
+};
+
 export const layout: { [key: string]: ViewStyle } = {
   accentContainer1: {
     backgroundColor: colors.accentBackground,

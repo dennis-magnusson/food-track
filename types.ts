@@ -36,6 +36,10 @@ export type RootStackParamList = {
   Today: undefined;
   Meal: { mealType: MealType };
   AddCustomFood: { mealType: MealType };
+  AddExistingFood: {
+    mealType: MealType;
+    food: Food;
+  };
 };
 
 export type TodayScreenNavigationProp = NativeStackNavigationProp<
@@ -51,4 +55,9 @@ export type MealScreenNavigationProp = NativeStackNavigationProp<
 export type AddCustomFoodScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "AddCustomFood"
+>;
+
+export type AddExistingFoodScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "AddExistingFood"
 >;

@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import MyButton from "../../shared/MyButton";
 import { Food } from "../../types";
-import FoodsList from "./SearchFoodsList";
+import SearchFoodsList from "./SearchFoodsList";
 
 interface SearchFoodProps {
   handleAddCustomFood: () => void;
@@ -22,7 +22,10 @@ const SearchFood = ({
         style={styles.addButton}
         onPress={handleAddCustomFood}
       />
-      <FoodsList foods={filteredFoods} handleFoodPress={handleFoodPress} />
+      <SearchFoodsList
+        foods={filteredFoods}
+        handleFoodPress={handleFoodPress}
+      />
     </>
   );
 };
