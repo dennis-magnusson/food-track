@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -6,15 +6,16 @@ import {
   Text,
   View,
 } from "react-native";
+import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
-import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { colors, typography } from "../../theme";
-import { Food } from "../../types";
+import { DayContextType, Food } from "../../types";
 import { capitalize } from "../../utils/textOps";
 import AddFoodModal from "./AddFoodModal";
-import FoodsList from "./FoodsList";
+import AddedFoods from "./AddedFoods";
 import SearchBar from "./SearchBar";
+import SearchFood from "./SearchFood";
 
 const DEFAULT_FOOD_QUANTITY = 100;
 
@@ -30,6 +31,8 @@ const MealScreen = ({ route }) => {
     DEFAULT_FOOD_QUANTITY
   );
 
+  const { meals }: DayContextType = useContext(DayContext);
+
   const filteredFoods = useMemo(() => {
     return foods.filter((food) =>
       food.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -41,10 +44,6 @@ const MealScreen = ({ route }) => {
       setFoods(f);
     });
   }, []);
-
-  const searchFoods = (query: string) => {
-    setSearchQuery(query);
-  };
 
   const handleAddCustomFood = () => {
     // navigation.navigate("Add Custom Food");
@@ -65,13 +64,6 @@ const MealScreen = ({ route }) => {
     setFoodQuantity(DEFAULT_FOOD_QUANTITY);
   };
 
-  function handleSearchInputFocus() {
-    setIsSearching(true);
-  }
-  function handleSearchInputBlur() {
-    setIsSearching(false);
-  }
-
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView
@@ -83,29 +75,18 @@ const MealScreen = ({ route }) => {
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            searchFoods={searchFoods}
             isFocused={isSearching}
-            onFocus={handleSearchInputFocus}
-            onBlur={handleSearchInputBlur}
+            onFocus={() => setIsSearching(true)}
+            onBlur={() => setIsSearching(false)}
           />
           {isSearching ? (
-            <>
-              <MyButton
-                text="+ Add Custom Food"
-                style={styles.addButton}
-                onPress={handleAddCustomFood}
-              />
-              <FoodsList
-                foods={filteredFoods}
-                handleFoodPress={handleFoodPress}
-              />
-            </>
+            <SearchFood
+              handleAddCustomFood={handleAddCustomFood}
+              filteredFoods={filteredFoods}
+              handleFoodPress={handleFoodPress}
+            />
           ) : (
-            <>
-              <View>
-                <Text>Not searching</Text>
-              </View>
-            </>
+            <AddedFoods meal={meals[route.params.mealType]} />
           )}
         </View>
         <AddFoodModal
@@ -131,9 +112,6 @@ const styles = StyleSheet.create({
   title: { ...typography.title1, margin: 15 },
   scrollView: {
     backgroundColor: colors.lightBackground,
-  },
-  addButton: {
-    marginHorizontal: 10,
   },
 });
 
