@@ -38,11 +38,18 @@ export const typography: { [key: string]: TextStyle } = {
 };
 
 export const layout: { [key: string]: ViewStyle } = {
-  boxContainer: {
+  accentContainer1: {
     backgroundColor: colors.accentBackground,
-    width: "90%",
     borderRadius: 10,
-    marginBottom: 20,
+    marginHorizontal: 10,
+    marginVertical: 8,
     padding: 15,
+    paddingVertical: 22,
+  },
+  accentContainer2: {
+    padding: 10,
+    margin: 10,
+    backgroundColor: colors.accentBackground,
+    borderRadius: 10,
   },
 };

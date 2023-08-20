@@ -32,7 +32,7 @@ const MealBox = ({ mealData, handleMealPress }: MealBoxProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   mealBox: {
-    ...layout.boxContainer,
+    ...layout.accentContainer1,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",

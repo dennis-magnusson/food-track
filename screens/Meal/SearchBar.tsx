@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../../theme";
+import { colors, layout } from "../../theme";
 
 interface SearchFoodProps {
   searchQuery: string;
@@ -20,7 +20,6 @@ interface SearchFoodProps {
 const SearchBar = ({
   searchQuery,
   setSearchQuery,
-  searchFoods,
   isFocused,
   onBlur,
   onFocus,
@@ -59,7 +58,7 @@ const SearchBar = ({
         style={styles.searchInput}
         placeholder="Search for a food to add"
         value={searchQuery}
-        onChangeText={searchFoods}
+        onChangeText={(query: string) => setSearchQuery(query)}
         onBlur={onBlur}
         onFocus={onFocus}
       />
@@ -81,10 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.accentBackground,
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
+    ...layout.accentContainer2,
   },
   searchInput: {
     flex: 1,

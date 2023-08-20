@@ -26,10 +26,7 @@ const TodayScreen = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   containerInner: {
-    paddingTop: 20,
     backgroundColor: colors.lightBackground,
-    justifyContent: "flex-start",
-    alignItems: "center",
   },
 });
 

@@ -22,7 +22,7 @@ const DailyTotals = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    ...layout.boxContainer,
+    ...layout.accentContainer1,
   },
   title: { ...typography.title1, marginBottom: 8 },
   stat: typography.title3,
