@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useState } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -6,17 +7,33 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { DayDispatchContext } from "../../context/AppContext";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { inputs, typography } from "../../theme";
-import { Food } from "../../types";
+import { AddExistingFoodScreenNavigationProp, FoodEntry } from "../../types";
 
 const AddExistingFoodScreen = ({ route }) => {
-  const food: Food = route.params.food;
+  const { food, mealType } = route.params;
   const [servingSize, setServingSize] = useState<string>("100");
 
+  const navigate = useNavigation<AddExistingFoodScreenNavigationProp>();
+  const dispatch = useContext(DayDispatchContext);
+
   const handleLogFood = () => {
-    /* Handle the logging here */
+    const foodEntry: FoodEntry = {
+      food: food,
+      amount: parseFloat(servingSize) || 100,
+    };
+
+    dispatch({
+      type: "ADD_FOOD",
+      payload: {
+        mealType: mealType,
+        food: foodEntry,
+      },
+    });
+    navigate.goBack();
   };
 
   const computeNutritionValue = (baseValue: number) => {

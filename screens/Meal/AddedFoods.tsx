@@ -1,5 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { typography } from "../../theme";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { layout, typography } from "../../theme";
 import { FoodEntry, Meal } from "../../types";
 
 interface AddedFoodsProps {
@@ -8,10 +14,14 @@ interface AddedFoodsProps {
 
 const AddedFoods = ({ meal }): JSX.Element => {
   const renderItem = ({ item }: { item: FoodEntry }) => (
-    <Text>
-      {item.food.name}: {item.amount}
-      {item.food.per100unit}
-    </Text>
+    <TouchableOpacity>
+      <View style={{ ...layout.accentContainer1 }}>
+        <Text style={{ ...typography.title3, marginBottom: 0 }}>
+          {item.food.name} {item.amount}
+          {item.food.per100unit}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
   return (
     <View style={styles.container}>

@@ -14,6 +14,14 @@ export type DayAction =
         mealType: MealType;
         foodName: string;
       };
+    }
+  | {
+      type: "CHANGE_FOOD_AMOUNT";
+      payload: {
+        mealType: MealType;
+        foodId: number;
+        newAmount: number;
+      };
     };
 
 export function dayReducer(
@@ -39,6 +47,19 @@ export function dayReducer(
           ...day.meals,
           [action.payload.mealType]: day.meals[action.payload.mealType].filter(
             (foodEntry) => foodEntry.food.name !== action.payload.foodName
+          ),
+        },
+      };
+    case "CHANGE_FOOD_AMOUNT":
+      return {
+        ...day,
+        meals: {
+          ...day.meals,
+          [action.payload.mealType]: day.meals[action.payload.mealType].map(
+            (foodEntry) =>
+              foodEntry.food.id === action.payload.foodId
+                ? { ...foodEntry, amount: action.payload.newAmount }
+                : foodEntry
           ),
         },
       };
