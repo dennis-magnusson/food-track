@@ -17,7 +17,6 @@ export function getTotals(input: Meal | DayContextType): Totals {
   let totalProtein = 0;
 
   if ((input as DayContextType).date !== undefined) {
-    // It is a DayContextType
     const day = input as DayContextType;
     Object.values(day.meals).forEach((meal: Meal) => {
       const mealTotals = getTotals(meal); // Recursive call to get the totals of this meal
@@ -27,7 +26,6 @@ export function getTotals(input: Meal | DayContextType): Totals {
       totalProtein += mealTotals.totalProtein;
     });
   } else {
-    // It is a Meal
     const meal = input as Meal;
     meal.forEach((entry: FoodEntry) => {
       const { food, amount } = entry;
@@ -41,9 +39,9 @@ export function getTotals(input: Meal | DayContextType): Totals {
   }
 
   return {
-    totalCalories,
-    totalCarbs,
-    totalFat,
-    totalProtein,
+    totalCalories: Math.floor(totalCalories),
+    totalCarbs: Math.floor(totalCarbs),
+    totalFat: Math.floor(totalFat),
+    totalProtein: Math.floor(totalProtein),
   };
 }
