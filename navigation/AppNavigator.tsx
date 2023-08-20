@@ -15,7 +15,7 @@ function AppNavigator() {
       }}
     >
       <Tab.Screen
-        name="Today"
+        name="Home"
         component={TodayStack}
         options={{
           tabBarIcon: () => <Ionicons name="body" size={24} color="black" />,
