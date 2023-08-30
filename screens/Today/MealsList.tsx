@@ -3,11 +3,13 @@ import { DayContext } from "../../context/AppContext";
 import { DayContextType, MealType } from "../../types";
 import MealBox from "./MealBox";
 
-interface MealBoxProps {
+interface MealsListProps {
   handleMealPress: (mealType: MealType) => void;
 }
 
-const MealsList = ({ handleMealPress }: MealBoxProps): JSX.Element => {
+const MealsList: React.FC<MealsListProps> = ({
+  handleMealPress,
+}): JSX.Element => {
   const { meals }: DayContextType = useContext(DayContext);
   return (
     <>

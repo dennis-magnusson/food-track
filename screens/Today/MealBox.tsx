@@ -11,7 +11,10 @@ interface MealBoxProps {
   handleMealPress: (mealType: MealType) => void;
 }
 
-const MealBox = ({ mealData, handleMealPress }: MealBoxProps): JSX.Element => {
+const MealBox: React.FC<MealBoxProps> = ({
+  mealData,
+  handleMealPress,
+}): JSX.Element => {
   const totalCalories = getTotals(mealData.meal).totalCalories;
 
   return (

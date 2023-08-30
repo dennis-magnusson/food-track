@@ -13,7 +13,7 @@ import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { inputs, typography } from "../../theme";
 
-const AddCustomFoodScreen = (): JSX.Element => {
+const AddCustomFoodScreen: React.FC = (): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [calories, setCalories] = useState<string>("");
   const [protein, setProtein] = useState<string>("");

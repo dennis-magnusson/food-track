@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { colors, layout } from "../../theme";
 
-interface SearchFoodProps {
+interface SearchBarProps {
   searchQuery: string;
   setSearchQuery: (string) => void;
   isFocused: boolean;
@@ -17,7 +17,7 @@ interface SearchFoodProps {
   onFocus: () => void;
 }
 
-const SearchBar = ({
+const SearchBar: React.FC<SearchBarProps> = ({
   searchQuery,
   setSearchQuery,
   isFocused,

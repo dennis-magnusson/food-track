@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -11,9 +11,20 @@ import { DayDispatchContext } from "../../context/AppContext";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { inputs, typography } from "../../theme";
-import { AddExistingFoodScreenNavigationProp, FoodEntry } from "../../types";
+import {
+  AddExistingFoodScreenNavigationProp,
+  FoodEntry,
+  RootStackParamList,
+} from "../../types";
+import NutritionFactsTable from "./NutritionFactsTable";
 
-const AddExistingFoodScreen = ({ route }) => {
+interface AddExistingFoodScreenProps {
+  route: RouteProp<RootStackParamList, "AddExistingFood">;
+}
+
+const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
+  route,
+}) => {
   const { food, mealType } = route.params;
   const [servingSize, setServingSize] = useState<string>("100");
 
@@ -36,11 +47,13 @@ const AddExistingFoodScreen = ({ route }) => {
     navigate.goBack();
   };
 
-  const computeNutritionValue = (baseValue: number) => {
-    const serving = parseFloat(servingSize);
-    const computedValue = isNaN(serving) ? 0 : (baseValue * serving) / 100;
-
-    return Math.floor(computedValue * 10) / 10;
+  const handleInputChange = (text: string) => {
+    if (
+      (text === "" || /^[\d]*[.,]?[\d]*$/.test(text)) &&
+      !/^[.,]$/.test(text)
+    ) {
+      setServingSize(text);
+    }
   };
 
   return (
@@ -54,45 +67,12 @@ const AddExistingFoodScreen = ({ route }) => {
               style={styles.input}
               placeholder="Amount"
               keyboardType="numeric"
-              onChangeText={setServingSize}
+              onChangeText={handleInputChange}
               value={servingSize}
             />
             <Text style={styles.inputUnits}>{food.per100unit}</Text>
           </View>
-
-          <View style={styles.nutritionInfo}>
-            <Text style={styles.nutritionTitle}>Nutrition facts</Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Calories: </Text>
-              {computeNutritionValue(food.calories)}
-            </Text>
-            <View style={styles.separator} />
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Protein: </Text>
-              {computeNutritionValue(food.protein)}g
-            </Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Fat: </Text>
-              {computeNutritionValue(food.fat)}g
-            </Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Carbs: </Text>
-              {computeNutritionValue(food.carbs)}g
-            </Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Sugar: </Text>
-              {food.sugar ? computeNutritionValue(food.sugar) : "- "}g
-            </Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Fiber: </Text>
-              {food.fiber ? computeNutritionValue(food.fiber) : "- "}g
-            </Text>
-            <Text style={styles.labelLine}>
-              <Text style={styles.bold}>Salt: </Text>
-              {food.salt ? computeNutritionValue(food.salt) : "- "}g
-            </Text>
-          </View>
-
+          <NutritionFactsTable food={food} amountInput={servingSize} />
           <MyButton
             text="Log food"
             onPress={handleLogFood}
@@ -120,31 +100,6 @@ const styles = StyleSheet.create({
   input: {
     ...inputs.textInput,
     flex: 0.5,
-  },
-  nutritionInfo: {
-    marginTop: 20,
-    padding: 10,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  nutritionTitle: {
-    fontWeight: "bold",
-    fontSize: 18,
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  labelLine: {
-    fontSize: 16,
-    marginVertical: 3,
-  },
-  separator: {
-    borderBottomColor: "gray",
-    borderBottomWidth: 0.5,
-    marginVertical: 5,
-  },
-  bold: {
-    fontWeight: "bold",
   },
 });
 

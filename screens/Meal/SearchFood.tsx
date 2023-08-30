@@ -10,7 +10,7 @@ interface SearchFoodProps {
   filteredFoods: Food[];
 }
 
-const SearchFood = ({
+const SearchFood: React.FC<SearchFoodProps> = ({
   handleAddCustomFood,
   filteredFoods,
   handleFoodPress,

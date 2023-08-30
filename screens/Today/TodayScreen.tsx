@@ -7,7 +7,7 @@ import { MealType, TodayScreenNavigationProp } from "../../types";
 import DailyTotals from "./DailyTotals";
 import MealsList from "./MealsList";
 
-const TodayScreen = (): JSX.Element => {
+const TodayScreen: React.FC = (): JSX.Element => {
   const navigation = useNavigation<TodayScreenNavigationProp>();
 
   const handleMealPress = (mealType: MealType): void => {

@@ -8,10 +8,10 @@ interface FoodsListProps {
   handleFoodPress: (food: Food) => void;
 }
 
-const SearchFoodsList = ({
+const SearchFoodsList: React.FC<FoodsListProps> = ({
   foods,
   handleFoodPress,
-}: FoodsListProps): JSX.Element => {
+}): JSX.Element => {
   const renderItem = ({ item }: { item: Food }) => (
     <TouchableOpacity
       style={styles.foodItem}

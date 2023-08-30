@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -15,6 +15,7 @@ import {
   AddCustomFoodScreenNavigationProp,
   DayContextType,
   Food,
+  RootStackParamList,
 } from "../../types";
 import { capitalize } from "../../utils/textOps";
 import AddedFoods from "./AddedFoods";
@@ -23,7 +24,11 @@ import SearchFood from "./SearchFood";
 
 const DEFAULT_FOOD_QUANTITY = 100;
 
-const MealScreen = ({ route }) => {
+interface MealScreenProps {
+  route: RouteProp<RootStackParamList, "Meal">;
+}
+
+const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [foods, setFoods] = useState<Food[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);

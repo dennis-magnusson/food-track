@@ -12,7 +12,7 @@ interface AddedFoodsProps {
   meal: Meal;
 }
 
-const AddedFoods = ({ meal }): JSX.Element => {
+const AddedFoods: React.FC<AddedFoodsProps> = ({ meal }): JSX.Element => {
   const renderItem = ({ item }: { item: FoodEntry }) => (
     <TouchableOpacity>
       <View style={{ ...layout.accentContainer1 }}>

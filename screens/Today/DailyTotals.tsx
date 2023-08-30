@@ -4,7 +4,7 @@ import { DayContext } from "../../context/AppContext";
 import { layout, typography } from "../../theme";
 import { getTotals } from "../../utils/getTotals";
 
-const DailyTotals = (): JSX.Element => {
+const DailyTotals: React.FC = (): JSX.Element => {
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
   const calorieGoal = 2500;
