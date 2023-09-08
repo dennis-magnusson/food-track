@@ -28,7 +28,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   const { food, mealType } = route.params;
   const [servingSize, setServingSize] = useState<string>("100");
 
-  const navigate = useNavigation<AddExistingFoodScreenNavigationProp>();
+  const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
 
   const handleLogFood = () => {
@@ -44,7 +44,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
         food: foodEntry,
       },
     });
-    navigate.goBack();
+    navigation.navigate("Meal", { mealType: route.params.mealType });
   };
 
   const handleInputChange = (text: string) => {

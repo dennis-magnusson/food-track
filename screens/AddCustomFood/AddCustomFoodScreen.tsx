@@ -1,3 +1,4 @@
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -9,11 +10,22 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { insertFood } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { inputs, typography } from "../../theme";
+import {
+  AddCustomFoodScreenNavigationProp,
+  RootStackParamList,
+} from "../../types";
 
-const AddCustomFoodScreen: React.FC = (): JSX.Element => {
+interface AddCustomFoodScreenProps {
+  route: RouteProp<RootStackParamList, "AddCustomFood">;
+}
+
+const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
+  route,
+}): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [calories, setCalories] = useState<string>("");
   const [protein, setProtein] = useState<string>("");
@@ -24,8 +36,61 @@ const AddCustomFoodScreen: React.FC = (): JSX.Element => {
   const [salt, setSalt] = useState<string>("");
   const [per100unit, setPer100unit] = useState<"g" | "ml">("g");
 
-  const handleAddCustomFood = () => {
-    // Handle the submission of the food here. For example, you could make an API call.
+  const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
+
+  const handleAddCustomFood = async () => {
+    if (!name.trim()) {
+      alert("Please enter the name of the food.");
+      return;
+    }
+
+    const missingFields = [];
+
+    if (!calories) missingFields.push("Calories");
+    if (!protein) missingFields.push("Protein");
+    if (!carbs) missingFields.push("Carbs");
+    if (!fat) missingFields.push("Fat");
+
+    if (missingFields.length) {
+      alert(
+        `Please enter the following required nutritional information: ${missingFields.join(
+          ", "
+        )}.`
+      );
+      return;
+    }
+
+    const food = {
+      name,
+      calories: parseFloat(calories),
+      protein: parseFloat(protein),
+      carbs: parseFloat(carbs),
+      sugar: sugar ? parseFloat(sugar) : null,
+      fiber: fiber ? parseFloat(fiber) : null,
+      fat: parseFloat(fat),
+      salt: salt ? parseFloat(salt) : null,
+      per100unit,
+    };
+
+    try {
+      const insertedFood = await insertFood(food);
+
+      navigation.navigate("AddExistingFood", {
+        food: insertedFood,
+        mealType: route.params.mealType,
+      });
+
+      setName("");
+      setCalories("");
+      setProtein("");
+      setCarbs("");
+      setFat("");
+      setSugar("");
+      setFiber("");
+      setSalt("");
+    } catch (error) {
+      console.log("Error inserting food:", error);
+    }
   };
 
   const UnitButton = ({

@@ -1,5 +1,9 @@
-import { RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+} from "@react-navigation/native";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -42,11 +46,13 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
     );
   }, [searchQuery, foods]);
 
-  useEffect(() => {
-    fetchAllFoods((f) => {
-      setFoods(f);
-    });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchAllFoods((f) => {
+        setFoods(f);
+      });
+    }, [])
+  );
 
   const handleAddCustomFood = () => {
     navigation.navigate("AddCustomFood", { mealType: route.params.mealType });

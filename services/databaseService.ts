@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 import { basicFoods } from "../constants/basicFoods";
+import { Food } from "../types";
 import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
@@ -38,34 +39,38 @@ export const populateBasicFoods = () => {
   });
 };
 
-export const insertFood = (food) => {
-  const {
-    name,
-    calories,
-    protein,
-    carbs,
-    sugar,
-    fiber,
-    fat,
-    salt,
-    per100unit,
-  } = food;
-  db.transaction(
-    (tx) => {
-      tx.executeSql(INSERT_FOOD, [
-        name,
-        calories,
-        protein,
-        carbs,
-        sugar,
-        fiber,
-        fat,
-        salt,
-        per100unit,
-      ]);
-    },
-    (error) => console.log(error)
-  );
+export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
+  return new Promise((resolve, reject) => {
+    const {
+      name,
+      calories,
+      protein,
+      carbs,
+      sugar,
+      fiber,
+      fat,
+      salt,
+      per100unit,
+    } = food;
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          INSERT_FOOD,
+          [name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit],
+          (_, result) => {
+            const insertedId = result.insertId;
+            const insertedFood = { ...food, id: insertedId };
+            resolve(insertedFood);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
 };
 
 export const fetchAllFoods = (setFoods) => {
