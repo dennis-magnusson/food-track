@@ -12,7 +12,7 @@ export type DayAction =
       type: "REMOVE_FOOD";
       payload: {
         mealType: MealType;
-        foodName: string;
+        foodId: number;
       };
     }
   | {
@@ -34,10 +34,13 @@ export function dayReducer(
         ...day,
         meals: {
           ...day.meals,
-          [action.payload.mealType]: [
+          [action.payload.mealType]: {
             ...day.meals[action.payload.mealType],
-            action.payload.food,
-          ],
+            entries: [
+              ...day.meals[action.payload.mealType].entries,
+              action.payload.food,
+            ],
+          },
         },
       };
     case "REMOVE_FOOD":
@@ -45,9 +48,12 @@ export function dayReducer(
         ...day,
         meals: {
           ...day.meals,
-          [action.payload.mealType]: day.meals[action.payload.mealType].filter(
-            (foodEntry) => foodEntry.food.name !== action.payload.foodName
-          ),
+          [action.payload.mealType]: {
+            ...day.meals[action.payload.mealType],
+            entries: day.meals[action.payload.mealType].entries.filter(
+              (foodEntry) => foodEntry.food.id !== action.payload.foodId
+            ),
+          },
         },
       };
     case "CHANGE_FOOD_AMOUNT":
@@ -55,12 +61,15 @@ export function dayReducer(
         ...day,
         meals: {
           ...day.meals,
-          [action.payload.mealType]: day.meals[action.payload.mealType].map(
-            (foodEntry) =>
-              foodEntry.food.id === action.payload.foodId
-                ? { ...foodEntry, amount: action.payload.newAmount }
-                : foodEntry
-          ),
+          [action.payload.mealType]: {
+            ...day.meals[action.payload.mealType],
+            entries: day.meals[action.payload.mealType].entries.map(
+              (foodEntry) =>
+                foodEntry.food.id === action.payload.foodId
+                  ? { ...foodEntry, amount: action.payload.newAmount }
+                  : foodEntry
+            ),
+          },
         },
       };
     default:
