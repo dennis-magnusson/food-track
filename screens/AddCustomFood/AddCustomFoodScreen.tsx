@@ -78,6 +78,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
       navigation.navigate("AddExistingFood", {
         food: insertedFood,
         mealType: route.params.mealType,
+        mealId: route.params.mealId,
       });
 
       setName("");

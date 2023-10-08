@@ -55,13 +55,17 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   );
 
   const handleAddCustomFood = () => {
-    navigation.navigate("AddCustomFood", { mealType: route.params.mealType });
+    navigation.navigate("AddCustomFood", {
+      mealType: route.params.mealType,
+      mealId: meals[route.params.mealType].id,
+    });
   };
 
   const handleFoodPress = (food: Food) => {
     navigation.navigate("AddExistingFood", {
       mealType: route.params.mealType,
       food: food,
+      mealId: meals[route.params.mealType].id,
     });
   };
 

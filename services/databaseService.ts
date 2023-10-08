@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import { Food } from "../types";
+import { Food, FoodEntry, Meal, RawMealDataRow } from "../types";
 import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
@@ -7,6 +7,7 @@ import {
   FETCH_ALL_FOODS,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   INSERT_FOOD,
+  INSERT_FOOD_TO_MEAL,
   INSERT_OR_IGNORE_MEAL,
 } from "./sql";
 
@@ -84,7 +85,7 @@ export const fetchAllFoods = (
   );
 };
 
-export const fetchMealsForDate = (date: string): Promise<any[]> => {
+export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
@@ -97,6 +98,31 @@ export const fetchMealsForDate = (date: string): Promise<any[]> => {
           [date],
           (_, resultSet) => {
             resolve(resultSet.rows._array);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const insertFoodEntryToMeal = (
+  mealId: Meal["id"],
+  entry: Omit<FoodEntry, "id">
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          INSERT_FOOD_TO_MEAL,
+          [mealId, entry.food.id, entry.amount],
+          (_, result) => {
+            console.log(result);
+            const insertedMealFoodId = result.insertId;
+            resolve(insertedMealFoodId);
           }
         );
       },

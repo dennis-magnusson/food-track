@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { DayDispatchContext } from "../../context/AppContext";
+import { insertFoodEntryToMeal } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { inputs, typography } from "../../theme";
@@ -25,26 +26,31 @@ interface AddExistingFoodScreenProps {
 const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   route,
 }) => {
-  const { food, mealType } = route.params;
+  const { food, mealType, mealId } = route.params;
   const [servingSize, setServingSize] = useState<string>("100");
 
   const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
 
-  const handleLogFood = () => {
-    const foodEntry: FoodEntry = {
+  const handleLogFood = async () => {
+    const foodEntry: Omit<FoodEntry, "id"> = {
       food: food,
       amount: parseFloat(servingSize) || 100,
     };
 
-    dispatch({
-      type: "ADD_FOOD",
-      payload: {
-        mealType: mealType,
-        food: foodEntry,
-      },
-    });
-    navigation.navigate("Meal", { mealType: route.params.mealType });
+    try {
+      const insertedId = await insertFoodEntryToMeal(mealId, foodEntry);
+      dispatch({
+        type: "ADD_FOOD",
+        payload: {
+          mealType: mealType,
+          food: { foodEntry, id: insertedId },
+        },
+      });
+      navigation.navigate("Meal", { mealType: route.params.mealType });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleInputChange = (text: string) => {
