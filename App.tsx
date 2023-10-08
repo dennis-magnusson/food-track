@@ -1,16 +1,17 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { format } from "date-fns";
 import { useEffect, useReducer } from "react";
-import { initialDay } from "./constants/initialDay";
 import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
 import AppNavigator from "./navigation/AppNavigator";
 import { initializeDB, populateBasicFoods } from "./services/databaseService";
-
-const Tab = createBottomTabNavigator();
+import { initializeDayContext } from "./utils/initializeDayContext";
 
 function App() {
-  const [day, dispatch] = useReducer(dayReducer, initialDay);
+  const [day, dispatch] = useReducer(
+    dayReducer,
+    initializeDayContext(format(new Date(), "yyyy-MM-dd"))
+  );
 
   useEffect(() => {
     initializeDB();
