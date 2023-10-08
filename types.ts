@@ -33,6 +33,7 @@ export type DayContextType = {
     dinner: Meal;
     snack: Meal;
   };
+  loading: boolean;
 };
 
 export type RootStackParamList = {

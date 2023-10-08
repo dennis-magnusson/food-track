@@ -22,6 +22,19 @@ export type DayAction =
         foodId: number;
         newAmount: number;
       };
+    }
+  | {
+      type: "SET_DAY_DATA";
+      payload: {
+        meals: DayContextType["meals"];
+        date: string;
+      };
+    }
+  | {
+      type: "SET_LOADING";
+      payload: {
+        loading: boolean;
+      };
     };
 
 export function dayReducer(
@@ -29,6 +42,17 @@ export function dayReducer(
   action: DayAction
 ): DayContextType {
   switch (action.type) {
+    case "SET_DAY_DATA":
+      return {
+        ...day,
+        meals: action.payload.meals,
+        date: action.payload.date,
+      };
+    case "SET_LOADING":
+      return {
+        ...day,
+        loading: action.payload.loading,
+      };
     case "ADD_FOOD":
       return {
         ...day,
