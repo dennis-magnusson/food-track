@@ -1,12 +1,9 @@
 import * as SQLite from "expo-sqlite";
-import { basicFoods } from "../constants/basicFoods";
 import { Food } from "../types";
 import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
-  CREATE_TABLE_RECIPES,
-  CREATE_TABLE_RECIPE_FOODS,
   FETCH_ALL_FOODS,
   INSERT_FOOD,
 } from "./sql";
@@ -17,8 +14,6 @@ export const initializeDB = () => {
   db.transaction(
     (tx) => {
       tx.executeSql(CREATE_TABLE_FOODS);
-      tx.executeSql(CREATE_TABLE_RECIPES);
-      tx.executeSql(CREATE_TABLE_RECIPE_FOODS);
       tx.executeSql(CREATE_TABLE_MEALS);
       tx.executeSql(CREATE_TABLE_MEAL_FOODS);
     },
@@ -26,18 +21,18 @@ export const initializeDB = () => {
   );
 };
 
-export const populateBasicFoods = () => {
-  basicFoods.forEach((food) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit) SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM Food WHERE name = ?)",
-        [...food, food[0]],
-        () => {},
-        (_, error) => console.log(error)
-      );
-    });
-  });
-};
+// export const populateBasicFoods = () => {
+//   basicFoods.forEach((food) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "INSERT INTO Food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit) SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM Food WHERE name = ?)",
+//         [...food, food[0]],
+//         () => {},
+//         (_, error) => console.log(error)
+//       );
+//     });
+//   });
+// };
 
 export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
   return new Promise((resolve, reject) => {
@@ -59,6 +54,7 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
           INSERT_FOOD,
           [name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit],
           (_, result) => {
+            console.log(result);
             const insertedId = result.insertId;
             const insertedFood = { ...food, id: insertedId };
             resolve(insertedFood);
@@ -73,7 +69,9 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
   });
 };
 
-export const fetchAllFoods = (setFoods) => {
+export const fetchAllFoods = (
+  setFoods: React.Dispatch<React.SetStateAction<Food[]>>
+) => {
   db.transaction(
     (tx) => {
       tx.executeSql(FETCH_ALL_FOODS, [], (_, { rows: { _array } }) => {

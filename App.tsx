@@ -4,7 +4,7 @@ import { useEffect, useReducer } from "react";
 import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
 import AppNavigator from "./navigation/AppNavigator";
-import { initializeDB, populateBasicFoods } from "./services/databaseService";
+import { initializeDB } from "./services/databaseService";
 import { initializeDayContext } from "./utils/initializeDayContext";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     initializeDB();
-    populateBasicFoods();
+    // populateBasicFoods();
   }, []);
 
   return (
