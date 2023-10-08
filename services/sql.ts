@@ -17,8 +17,9 @@ export const CREATE_TABLE_MEALS = `
   CREATE TABLE IF NOT EXISTS Meal (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT NOT NULL,
-    type TEXT CHECK(type IN ('breakfast', 'lunch', 'dinner', 'snack')) NOT NULL
-  )
+    type TEXT CHECK(type IN ('breakfast', 'lunch', 'dinner', 'snack')) NOT NULL,
+    UNIQUE(date, type)
+);
 `;
 
 export const CREATE_TABLE_MEAL_FOODS = `
@@ -50,6 +51,29 @@ export const FETCH_ALL_FOODS = `
   SELECT * FROM Food
 `;
 
-export const FETCH_MEALS_BY_DATE_AND_TYPE = `
-  SELECT * FROM Meal WHERE date = ? AND type = ?
+export const INSERT_OR_IGNORE_MEAL = `
+  INSERT OR IGNORE INTO Meal (date, type) VALUES (?, ?)
+`;
+
+export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
+  SELECT 
+    Meal.id AS meal_id, 
+    Meal.date, 
+    Meal.type, 
+    MealFood.food_id,
+    Food.name,
+    Food.calories,
+    Food.protein,
+    Food.carbs,
+    Food.sugar,
+    Food.fiber,
+    Food.fat,
+    Food.salt,
+    Food.per100unit,
+    MealFood.amount
+  FROM Meal 
+  LEFT JOIN MealFood ON Meal.id = MealFood.meal_id
+  LEFT JOIN Food ON MealFood.food_id = Food.id
+  WHERE Meal.date = ?
+  ORDER BY Meal.type, Food.name
 `;

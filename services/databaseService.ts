@@ -5,10 +5,12 @@ import {
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
   FETCH_ALL_FOODS,
+  FETCH_MEALS_WITH_FOODS_BY_DATE,
   INSERT_FOOD,
+  INSERT_OR_IGNORE_MEAL,
 } from "./sql";
 
-const db = SQLite.openDatabase("mydb.db");
+const db = SQLite.openDatabase("food.db");
 
 export const initializeDB = () => {
   db.transaction(
@@ -74,10 +76,34 @@ export const fetchAllFoods = (
 ) => {
   db.transaction(
     (tx) => {
-      tx.executeSql(FETCH_ALL_FOODS, [], (_, { rows: { _array } }) => {
-        setFoods(_array);
+      tx.executeSql(FETCH_ALL_FOODS, [], (_, resultSet) => {
+        setFoods(resultSet.rows._array);
       });
     },
     (error) => console.log(error)
   );
+};
+
+export const fetchMealsForDate = (date: string): Promise<any[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        ["breakfast", "lunch", "dinner", "snack"].forEach((mealType) => {
+          tx.executeSql(INSERT_OR_IGNORE_MEAL, [date, mealType]);
+        });
+
+        tx.executeSql(
+          FETCH_MEALS_WITH_FOODS_BY_DATE,
+          [date],
+          (_, resultSet) => {
+            resolve(resultSet.rows._array);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
 };
