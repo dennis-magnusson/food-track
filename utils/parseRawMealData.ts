@@ -1,21 +1,4 @@
-import { DayContextType, Food, FoodEntry, MealType } from "../types";
-
-interface RawMealDataRow {
-  amount: number | null;
-  calories: number | null;
-  carbs: number | null;
-  date: string;
-  fat: number | null;
-  fiber: number | null;
-  food_id: number | null;
-  meal_id: number;
-  name: string | null;
-  per100unit: Food["per100unit"] | null;
-  protein: number | null;
-  salt: number | null;
-  sugar: number | null;
-  type: string;
-}
+import { DayContextType, FoodEntry, MealType, RawMealDataRow } from "../types";
 
 function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
   var emptyMeals: DayContextType["meals"] = {
@@ -30,8 +13,8 @@ function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
     emptyMeals[mealType].id = row.meal_id as number;
 
     if (row.name) {
-      // if the row contains an entry
       const entry: FoodEntry = {
+        id: row.meal_id,
         food: {
           id: row.food_id,
           name: row.name,
@@ -43,11 +26,9 @@ function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
         },
         amount: row.amount,
       };
-      emptyMeals[mealType].entries.push();
+      emptyMeals[mealType].entries.push(entry);
     }
   });
-
-  console.log(emptyMeals);
 
   return emptyMeals;
 }
