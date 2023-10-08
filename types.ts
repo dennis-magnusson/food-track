@@ -18,7 +18,10 @@ export type FoodEntry = {
   amount: number;
 };
 
-export type Meal = FoodEntry[];
+export type Meal = {
+  id: number;
+  entries: FoodEntry[];
+};
 
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 

@@ -25,8 +25,12 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({ meal }): JSX.Element => {
   );
   return (
     <View style={styles.container}>
-      {meal.length !== 0 ? (
-        <FlatList data={meal} renderItem={renderItem} scrollEnabled={true} />
+      {meal.entries.length !== 0 ? (
+        <FlatList
+          data={meal.entries}
+          renderItem={renderItem}
+          scrollEnabled={true}
+        />
       ) : (
         <View style={styles.nothingContainer}>
           <Text style={styles.nothingText}>No food tracked...</Text>

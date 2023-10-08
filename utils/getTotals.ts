@@ -27,7 +27,7 @@ export function getTotals(input: Meal | DayContextType): Totals {
     });
   } else {
     const meal = input as Meal;
-    meal.forEach((entry: FoodEntry) => {
+    meal.entries.forEach((entry: FoodEntry) => {
       const { food, amount } = entry;
       const ratio = amount / 100;
 
