@@ -13,24 +13,6 @@ export const CREATE_TABLE_FOODS = `
   )
 `;
 
-export const CREATE_TABLE_RECIPES = `
-  CREATE TABLE IF NOT EXISTS Recipe (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
-  )
-`;
-
-export const CREATE_TABLE_RECIPE_FOODS = `
-  CREATE TABLE IF NOT EXISTS RecipeFood (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipe_id INTEGER NOT NULL,
-    food_id INTEGER NOT NULL,
-    amount REAL NOT NULL,
-    FOREIGN KEY (recipe_id) REFERENCES Recipe(id),
-    FOREIGN KEY (food_id) REFERENCES Food(id)
-  )
-`;
-
 export const CREATE_TABLE_MEALS = `
   CREATE TABLE IF NOT EXISTS Meal (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,6 +39,11 @@ export const INSERT_FOOD = `
 
 export const INSERT_MEAL = `
   INSERT INTO Meal (date, type) VALUES (?, ?)
+`;
+
+export const INSERT_FOOD_TO_MEAL = `
+    INSERT INTO MealFood (meal_id, food_id, amount)
+    VALUES (?, ?, ?)
 `;
 
 export const FETCH_ALL_FOODS = `
