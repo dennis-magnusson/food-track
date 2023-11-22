@@ -29,6 +29,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({ meal }): JSX.Element => {
         <FlatList
           data={meal.entries}
           renderItem={renderItem}
+          keyExtractor={(item, i) => (item.id + i).toString()} // TODO: use only the id but combine the elements that share the same food id into one
           scrollEnabled={true}
         />
       ) : (
