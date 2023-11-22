@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Food } from "../../types";
+import { Food } from "../types";
 
 interface NutritionFactsTableProps {
   food: Food;

@@ -11,13 +11,13 @@ import { DayDispatchContext } from "../../context/AppContext";
 import { insertFoodEntryToMeal } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
+import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import { inputs, typography } from "../../theme";
 import {
   AddExistingFoodScreenNavigationProp,
   FoodEntry,
   RootStackParamList,
 } from "../../types";
-import NutritionFactsTable from "./NutritionFactsTable";
 
 interface AddExistingFoodScreenProps {
   route: RouteProp<RootStackParamList, "AddExistingFood">;
@@ -40,6 +40,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
 
     try {
       const insertedId = await insertFoodEntryToMeal(mealId, foodEntry);
+      console.log(insertedId);
       dispatch({
         type: "ADD_FOOD",
         payload: {
