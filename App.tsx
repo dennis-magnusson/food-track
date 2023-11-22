@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { format } from "date-fns";
 import { useEffect, useReducer } from "react";
+import { StatusBar } from "react-native";
 import loadingDayContext from "./constants/loadingDayContext";
 import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
@@ -36,13 +37,16 @@ function App() {
   }
 
   return (
-    <DayContext.Provider value={day}>
-      <DayDispatchContext.Provider value={dispatch}>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </DayDispatchContext.Provider>
-    </DayContext.Provider>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <DayContext.Provider value={day}>
+        <DayDispatchContext.Provider value={dispatch}>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </DayDispatchContext.Provider>
+      </DayContext.Provider>
+    </>
   );
 }
 
