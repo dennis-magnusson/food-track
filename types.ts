@@ -38,7 +38,7 @@ export type DayContextType = {
 };
 
 export type RootStackParamList = {
-  Today: undefined;
+  Main: undefined;
   Meal: { mealType: MealType };
   AddCustomFood: { mealType: MealType; mealId: number };
   AddExistingFood: {
@@ -65,9 +65,9 @@ export interface RawMealDataRow {
   type: string;
 }
 
-export type TodayScreenNavigationProp = NativeStackNavigationProp<
+export type MainScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  "Today"
+  "Main"
 >;
 
 export type MealScreenNavigationProp = NativeStackNavigationProp<

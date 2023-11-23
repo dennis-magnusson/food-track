@@ -3,12 +3,12 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { colors } from "../../theme";
-import { MealType, TodayScreenNavigationProp } from "../../types";
+import { MainScreenNavigationProp, MealType } from "../../types";
 import DailyTotals from "./DailyTotals";
 import MealsList from "./MealsList";
 
-const TodayScreen: React.FC = (): JSX.Element => {
-  const navigation = useNavigation<TodayScreenNavigationProp>();
+const MainScreen: React.FC = (): JSX.Element => {
+  const navigation = useNavigation<MainScreenNavigationProp>();
 
   const handleMealPress = (mealType: MealType): void => {
     navigation.navigate("Meal", { mealType });
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TodayScreen;
+export default MainScreen;
