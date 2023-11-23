@@ -1,8 +1,8 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
+import * as Device from "expo-device";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -118,7 +118,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Device.osName === "iOS" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <ScrollView style={styles.container} bounces={false}>

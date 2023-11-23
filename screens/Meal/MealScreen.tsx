@@ -3,14 +3,9 @@ import {
   useFocusEffect,
   useNavigation,
 } from "@react-navigation/native";
+import * as Device from "expo-device";
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
 import MySafeAreaView from "../../shared/MySafeAreaView";
@@ -72,7 +67,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Device.osName === "ios" ? "padding" : "height"}
         style={styles.container}
       >
         <View style={styles.containerInner}>
