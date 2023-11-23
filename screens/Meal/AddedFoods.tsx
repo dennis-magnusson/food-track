@@ -10,11 +10,21 @@ import { FoodEntry, Meal } from "../../types";
 
 interface AddedFoodsProps {
   meal: Meal;
+  handleEntryPress: (
+    id: FoodEntry["id"],
+    food: FoodEntry["food"],
+    currentAmount: FoodEntry["amount"]
+  ) => void;
 }
 
-const AddedFoods: React.FC<AddedFoodsProps> = ({ meal }): JSX.Element => {
+const AddedFoods: React.FC<AddedFoodsProps> = ({
+  meal,
+  handleEntryPress,
+}): JSX.Element => {
   const renderItem = ({ item }: { item: FoodEntry }) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => handleEntryPress(item.id, item.food, item.amount)}
+    >
       <View style={{ ...layout.accentContainer1 }}>
         <Text style={{ ...typography.title3, marginBottom: 0 }}>
           {item.food.name} {item.amount}

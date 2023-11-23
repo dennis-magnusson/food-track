@@ -14,6 +14,7 @@ import {
   AddCustomFoodScreenNavigationProp,
   DayContextType,
   Food,
+  FoodEntry,
   RootStackParamList,
 } from "../../types";
 import { capitalize } from "../../utils/textOps";
@@ -59,8 +60,22 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   const handleFoodPress = (food: Food) => {
     navigation.navigate("AddExistingFood", {
       mealType: route.params.mealType,
-      food: food,
+      food,
       mealId: meals[route.params.mealType].id,
+    });
+  };
+
+  const handleEntryPress = (
+    id: FoodEntry["id"],
+    food: FoodEntry["food"],
+    currentAmount: FoodEntry["amount"]
+  ) => {
+    navigation.navigate("ModifyFoodEntry", {
+      mealType: route.params.mealType,
+      entryId: id,
+      food,
+      mealId: meals[route.params.mealType].id,
+      currentAmount,
     });
   };
 
@@ -86,7 +101,10 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
               handleFoodPress={handleFoodPress}
             />
           ) : (
-            <AddedFoods meal={meals[route.params.mealType]} />
+            <AddedFoods
+              meal={meals[route.params.mealType]}
+              handleEntryPress={handleEntryPress}
+            />
           )}
         </View>
       </KeyboardAvoidingView>

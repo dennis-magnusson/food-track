@@ -9,6 +9,7 @@ import {
   INSERT_FOOD,
   INSERT_FOOD_TO_MEAL,
   INSERT_OR_IGNORE_MEAL,
+  UPDATE_AMOUNT_FOOD_ENTRY,
 } from "./sql";
 
 const db = SQLite.openDatabase("food.db");
@@ -57,7 +58,6 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
           INSERT_FOOD,
           [name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit],
           (_, result) => {
-            console.log(result);
             const insertedId = result.insertId;
             const insertedFood = { ...food, id: insertedId };
             resolve(insertedFood);
@@ -111,7 +111,7 @@ export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
 
 export const insertFoodEntryToMeal = (
   mealId: Meal["id"],
-  entry: Omit<FoodEntry, "id">
+  entry: Omit<FoodEntry, "id" | "meal_id">
 ): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.transaction(
@@ -120,9 +120,31 @@ export const insertFoodEntryToMeal = (
           INSERT_FOOD_TO_MEAL,
           [mealId, entry.food.id, entry.amount],
           (_, result) => {
-            console.log(result);
             const insertedMealFoodId = result.insertId;
             resolve(insertedMealFoodId);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const updateAmountToFoodEntry = (
+  entryId: number,
+  newAmount: number
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          UPDATE_AMOUNT_FOOD_ENTRY,
+          [newAmount, entryId],
+          (_, result) => {
+            resolve(result.rowsAffected);
           }
         );
       },

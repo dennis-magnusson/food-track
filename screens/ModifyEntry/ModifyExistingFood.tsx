@@ -8,47 +8,45 @@ import {
   View,
 } from "react-native";
 import { DayDispatchContext } from "../../context/AppContext";
-import { insertFoodEntryToMeal } from "../../services/databaseService";
+import { updateAmountToFoodEntry } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import { inputs, typography } from "../../theme";
 import {
-  FoodEntry,
-  ModifyExistingFoodScreenNavigationProp,
+  ModifyFoodEntryScreenNavigationProp,
   RootStackParamList,
 } from "../../types";
 
-interface ModifyExistingFoodScreenProps {
-  route: RouteProp<RootStackParamList, "AddExistingFood">;
+interface ModifyFoodEntryScreenProps {
+  route: RouteProp<RootStackParamList, "ModifyFoodEntry">;
 }
 
-const ModifyExistingFoodScreen: React.FC<ModifyExistingFoodScreenProps> = ({
+const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
   route,
 }) => {
-  const { food, mealType, mealId } = route.params;
-  const [servingSize, setServingSize] = useState<string>("100");
+  const { entryId, food, mealType, currentAmount } = route.params;
+  const [servingSize, setServingSize] = useState<string>(
+    currentAmount.toString()
+  );
 
-  const navigation = useNavigation<ModifyExistingFoodScreenNavigationProp>();
+  const navigation = useNavigation<ModifyFoodEntryScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
 
-  const handleLogFood = async () => {
-    const foodEntry: Omit<FoodEntry, "id"> = {
-      food: food,
-      amount: parseFloat(servingSize) || 100,
-    };
+  const handleModifyFoodEntry = async () => {
+    const newAmount = parseFloat(servingSize) || 100;
 
     try {
-      const insertedId = await insertFoodEntryToMeal(mealId, foodEntry);
-      console.log(insertedId);
+      await updateAmountToFoodEntry(entryId, newAmount);
       dispatch({
-        type: "ADD_FOOD",
+        type: "CHANGE_FOOD_AMOUNT",
         payload: {
-          mealType: mealType,
-          food: { foodEntry, id: insertedId },
+          mealType,
+          entryId,
+          newAmount,
         },
       });
-      navigation.navigate("Meal", { mealType: route.params.mealType });
+      navigation.navigate("Meal", { mealType });
     } catch (error) {
       alert(error);
     }
@@ -81,8 +79,8 @@ const ModifyExistingFoodScreen: React.FC<ModifyExistingFoodScreenProps> = ({
           </View>
           <NutritionFactsTable food={food} amountInput={servingSize} />
           <MyButton
-            text="Log food"
-            onPress={handleLogFood}
+            text="Update"
+            onPress={handleModifyFoodEntry}
             style={{ marginTop: 20 }}
           />
         </View>
@@ -110,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModifyExistingFoodScreen;
+export default ModifyFoodEntryScreen;

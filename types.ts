@@ -47,6 +47,13 @@ export type RootStackParamList = {
     mealId: number;
     food: Food;
   };
+  ModifyFoodEntry: {
+    entryId: number;
+    mealId: number;
+    mealType: MealType;
+    food: Food;
+    currentAmount: number;
+  };
 };
 
 export interface RawMealDataRow {
@@ -87,6 +94,11 @@ export type AddExistingFoodScreenNavigationProp = NativeStackNavigationProp<
   "AddExistingFood"
 >;
 
+export type ModifyFoodEntryScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "ModifyFoodEntry"
+>;
+
 export type DayAction =
   | {
       type: "ADD_FOOD";
@@ -105,8 +117,8 @@ export type DayAction =
   | {
       type: "CHANGE_FOOD_AMOUNT";
       payload: {
+        entryId: number;
         mealType: MealType;
-        foodId: number;
         newAmount: number;
       };
     }

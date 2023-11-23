@@ -52,7 +52,7 @@ export function dayReducer(
             ...day.meals[action.payload.mealType],
             entries: day.meals[action.payload.mealType].entries.map(
               (foodEntry) =>
-                foodEntry.food.id === action.payload.foodId
+                foodEntry.id === action.payload.entryId
                   ? { ...foodEntry, amount: action.payload.newAmount }
                   : foodEntry
             ),

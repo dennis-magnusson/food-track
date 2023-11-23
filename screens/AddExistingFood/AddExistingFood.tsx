@@ -33,7 +33,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   const dispatch = useContext(DayDispatchContext);
 
   const handleLogFood = async () => {
-    const foodEntry: Omit<FoodEntry, "id"> = {
+    const foodEntry: Omit<FoodEntry, "meal_id" | "id"> = {
       food: food,
       amount: parseFloat(servingSize) || 100,
     };
@@ -45,7 +45,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
         type: "ADD_FOOD",
         payload: {
           mealType: mealType,
-          food: { ...foodEntry, id: insertedId },
+          food: { ...foodEntry, id: insertedId, meal_id: mealId },
         },
       });
       navigation.navigate("Meal", { mealType: route.params.mealType });
