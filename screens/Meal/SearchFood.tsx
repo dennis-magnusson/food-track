@@ -6,7 +6,7 @@ import SearchFoodsList from "./SearchFoodsList";
 
 interface SearchFoodProps {
   handleAddCustomFood: () => void;
-  handleFoodPress: () => void;
+  handleFoodPress: (food: Food) => void;
   filteredFoods: Food[];
 }
 
