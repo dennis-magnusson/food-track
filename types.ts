@@ -123,6 +123,13 @@ export type DayAction =
       };
     }
   | {
+      type: "DELETE_FOOD_ENTRY";
+      payload: {
+        entryId: number;
+        mealType: MealType;
+      };
+    }
+  | {
       type: "SET_DAY_DATA";
       payload: {
         meals: DayContextType["meals"];

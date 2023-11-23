@@ -59,6 +59,19 @@ export function dayReducer(
           },
         },
       };
+    case "DELETE_FOOD_ENTRY":
+      return {
+        ...day,
+        meals: {
+          ...day.meals,
+          [action.payload.mealType]: {
+            ...day.meals[action.payload.mealType],
+            entries: day.meals[action.payload.mealType].entries.filter(
+              (foodEntry) => foodEntry.id !== action.payload.entryId
+            ),
+          },
+        },
+      };
     default:
       throw Error("Unknown action");
   }
