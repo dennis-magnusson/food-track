@@ -1,41 +1,4 @@
-import { DayContextType, FoodEntry, MealType } from "../types";
-
-export type DayAction =
-  | {
-      type: "ADD_FOOD";
-      payload: {
-        mealType: MealType;
-        food: FoodEntry;
-      };
-    }
-  | {
-      type: "REMOVE_FOOD";
-      payload: {
-        mealType: MealType;
-        foodId: number;
-      };
-    }
-  | {
-      type: "CHANGE_FOOD_AMOUNT";
-      payload: {
-        mealType: MealType;
-        foodId: number;
-        newAmount: number;
-      };
-    }
-  | {
-      type: "SET_DAY_DATA";
-      payload: {
-        meals: DayContextType["meals"];
-        date: string;
-      };
-    }
-  | {
-      type: "SET_LOADING";
-      payload: {
-        loading: boolean;
-      };
-    };
+import { DayAction, DayContextType } from "../types";
 
 export function dayReducer(
   day: DayContextType,

@@ -45,7 +45,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
         type: "ADD_FOOD",
         payload: {
           mealType: mealType,
-          food: { foodEntry, id: insertedId },
+          food: { ...foodEntry, id: insertedId },
         },
       });
       navigation.navigate("Meal", { mealType: route.params.mealType });

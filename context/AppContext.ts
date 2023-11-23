@@ -1,5 +1,6 @@
 import { createContext } from "react";
-import { DayContextType } from "../types";
+import { DayAction, DayContextType } from "../types";
 
 export const DayContext = createContext<DayContextType>(null);
-export const DayDispatchContext = createContext(null);
+export const DayDispatchContext =
+  createContext<React.Dispatch<DayAction>>(null);
