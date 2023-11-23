@@ -4,6 +4,7 @@ import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
+  DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   INSERT_FOOD,
@@ -124,6 +125,22 @@ export const insertFoodEntryToMeal = (
             resolve(insertedMealFoodId);
           }
         );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const deleteFoodEntry = (entryId: number): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(DELETE_FOOD_ENTRY, [entryId], (_, result) => {
+          resolve(result.rowsAffected);
+        });
       },
       (error) => {
         console.log(error);

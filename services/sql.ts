@@ -59,6 +59,10 @@ export const UPDATE_AMOUNT_FOOD_ENTRY = `
     UPDATE MealFood SET amount = ? WHERE id = ?
 `;
 
+export const DELETE_FOOD_ENTRY = `
+    DELETE FROM MealFood WHERE id = ?;
+`;
+
 export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
   SELECT 
     Meal.id AS meal_id, 
