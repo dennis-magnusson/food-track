@@ -14,7 +14,8 @@ function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
 
     if (row.name) {
       const entry: FoodEntry = {
-        id: row.meal_id,
+        id: row.entry_id,
+        meal_id: row.meal_id,
         food: {
           id: row.food_id,
           name: row.name,

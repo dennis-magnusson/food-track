@@ -61,6 +61,7 @@ export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
     Meal.date, 
     Meal.type, 
     MealFood.food_id,
+    MealFood.id AS entry_id,
     Food.name,
     Food.calories,
     Food.protein,

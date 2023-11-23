@@ -15,6 +15,7 @@ export type Food = {
 
 export type FoodEntry = {
   id: number;
+  meal_id: number;
   food: Food;
   amount: number;
 };
@@ -56,6 +57,7 @@ export interface RawMealDataRow {
   fat: number | null;
   fiber: number | null;
   food_id: number | null;
+  entry_id: number | null;
   meal_id: number;
   name: string | null;
   per100unit: Food["per100unit"] | null;
