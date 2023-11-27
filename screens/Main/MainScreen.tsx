@@ -15,10 +15,14 @@ const MainScreen: React.FC = (): JSX.Element => {
     navigation.navigate("Meal", { mealType });
   };
 
+  const changeDay = (newDay: Date) => {
+    console.log(newDay);
+  };
+
   return (
     <MySafeAreaView>
       <ScrollView contentContainerStyle={styles.containerInner}>
-        <DateSelector />
+        <DateSelector changeDay={changeDay} />
         <DailyTotals />
         <MealsList handleMealPress={handleMealPress} />
       </ScrollView>

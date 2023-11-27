@@ -1,12 +1,21 @@
 import { Ionicons } from "@expo/vector-icons";
-import { format, isToday, isYesterday, parseISO } from "date-fns";
+import {
+  addDays,
+  format,
+  isToday,
+  isYesterday,
+  parseISO,
+  subDays,
+} from "date-fns";
 import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 
-interface DateSelectorProps {}
+interface DateSelectorProps {
+  changeDay: (toDate: Date) => void;
+}
 
-const DateSelector: React.FC<DateSelectorProps> = () => {
+const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
   const day = useContext(DayContext);
   const isoDate = parseISO(day.date);
   const readableDate = isToday(isoDate)
@@ -15,15 +24,23 @@ const DateSelector: React.FC<DateSelectorProps> = () => {
     ? "Yesterday"
     : format(isoDate, "MMMM d, yyyy");
 
+  const handleNextPress = () => {
+    changeDay(addDays(isoDate, 1));
+  };
+
+  const handlePreviousPress = () => {
+    changeDay(subDays(isoDate, 1));
+  };
+
   return (
     <View style={styles.rootContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handlePreviousPress}>
         <View style={styles.iconContainer}>
           <Ionicons name="caret-back" size={24} color="black" />
         </View>
       </TouchableOpacity>
       <Text style={styles.dateText}>{readableDate}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleNextPress}>
         <View style={styles.iconContainer}>
           <Ionicons name="caret-forward" size={24} color="black" />
         </View>
