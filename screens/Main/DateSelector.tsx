@@ -1,6 +1,7 @@
+import { Ionicons } from "@expo/vector-icons";
 import { format, isToday, isYesterday, parseISO } from "date-fns";
 import { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 
 interface DateSelectorProps {}
@@ -16,13 +17,17 @@ const DateSelector: React.FC<DateSelectorProps> = () => {
 
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.iconContainer}>
-        <Text style={styles.iconText}>{"<"}</Text>
-      </View>
+      <TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <Ionicons name="caret-back" size={24} color="black" />
+        </View>
+      </TouchableOpacity>
       <Text style={styles.dateText}>{readableDate}</Text>
-      <View style={styles.iconContainer}>
-        <Text style={styles.iconText}>{">"}</Text>
-      </View>
+      <TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <Ionicons name="caret-forward" size={24} color="black" />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -34,9 +39,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-  },
-  iconText: {
-    fontWeight: "700",
   },
   iconContainer: {
     padding: 10,
