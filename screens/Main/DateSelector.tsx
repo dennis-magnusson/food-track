@@ -3,6 +3,7 @@ import {
   addDays,
   format,
   isToday,
+  isTomorrow,
   isYesterday,
   parseISO,
   subDays,
@@ -22,6 +23,8 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
     ? "Today"
     : isYesterday(isoDate)
     ? "Yesterday"
+    : isTomorrow(isoDate)
+    ? "Tomorrow"
     : format(isoDate, "MMMM d, yyyy");
 
   const handleNextPress = () => {
