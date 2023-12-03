@@ -6,7 +6,12 @@ export const colors: Record<string, string> = {
   accent: "#ff9500",
   lightText: "#fff",
   lightBackground: "#f5f5f5",
+  darkerBackground: "#efefef",
   accentBackground: "#fff",
+  calories: "#FFA07A",
+  carbs: "#ff5e57",
+  fat: "#ffc048",
+  protein: "#0be881",
 };
 
 const baseTitleStyle: TextStyle = {
