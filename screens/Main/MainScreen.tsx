@@ -24,7 +24,7 @@ const MainScreen: React.FC = (): JSX.Element => {
 
   return (
     <MySafeAreaView>
-      <ScrollView contentContainerStyle={styles.containerInner}>
+      <ScrollView contentContainerStyle={styles.containerInner} bounces={false}>
         <DateSelector changeDay={changeDay} />
         <DailyTotals />
         <MealsList handleMealPress={handleMealPress} />
