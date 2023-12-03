@@ -5,8 +5,8 @@ import { TextStyle, ViewStyle } from "react-native";
 export const colors: Record<string, string> = {
   accent: "#ff9500",
   lightText: "#fff",
-  lightBackground: "#fff",
-  accentBackground: "#eee",
+  lightBackground: "#f5f5f5",
+  accentBackground: "#fff",
 };
 
 const baseTitleStyle: TextStyle = {

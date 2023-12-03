@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: barHeight,
-    backgroundColor: colors.lightBackground,
+    backgroundColor: colors.accentBackground,
     borderRadius: 5,
     paddingHorizontal: 10,
   },
