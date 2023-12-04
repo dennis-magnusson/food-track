@@ -33,6 +33,21 @@ export const CREATE_TABLE_MEAL_FOODS = `
   )
 `;
 
+export const CREATE_TABLE_SETTINGS = `
+  CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+  )
+`;
+
+export const INSERT_SETTING = `
+  INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)
+`;
+
+export const FETCH_SETTING = `
+  SELECT value FROM settings WHERE key = ?
+`;
+
 export const INSERT_FOOD = `
   INSERT INTO food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)

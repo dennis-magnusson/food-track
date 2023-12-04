@@ -4,12 +4,15 @@ import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
+  CREATE_TABLE_SETTINGS,
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
+  FETCH_SETTING,
   INSERT_FOOD,
   INSERT_FOOD_TO_MEAL,
   INSERT_OR_IGNORE_MEAL,
+  INSERT_SETTING,
   UPDATE_AMOUNT_FOOD_ENTRY,
 } from "./sql";
 
@@ -21,6 +24,7 @@ export const initializeDB = () => {
       tx.executeSql(CREATE_TABLE_FOODS);
       tx.executeSql(CREATE_TABLE_MEALS);
       tx.executeSql(CREATE_TABLE_MEAL_FOODS);
+      tx.executeSql(CREATE_TABLE_SETTINGS);
     },
     (error) => console.log(error)
   );
@@ -164,6 +168,43 @@ export const updateAmountToFoodEntry = (
             resolve(result.rowsAffected);
           }
         );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const insertOrUpdateSetting = (
+  key: string,
+  value: string
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(INSERT_SETTING, [key, value], () => resolve());
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const fetchSetting = (key: string): Promise<string | undefined> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(FETCH_SETTING, [key], (_, resultSet) => {
+          if (resultSet.rows.length > 0) {
+            resolve(resultSet.rows.item(0).value);
+          } else {
+            resolve(undefined);
+          }
+        });
       },
       (error) => {
         console.log(error);
