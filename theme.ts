@@ -3,7 +3,7 @@
 import { TextStyle, ViewStyle } from "react-native";
 
 export const colors: Record<string, string> = {
-  accent: "#ff9500",
+  accent: "#0652dd",
   lightText: "#fff",
   secondaryText: "#666",
   lightBackground: "#f5f5f5",
