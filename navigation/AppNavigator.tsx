@@ -2,8 +2,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
-import HistoryStack from "./HistoryStack";
 import HomeStack from "./HomeStack";
+import SettingsStack from "./SettingsStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,10 +22,10 @@ function AppNavigator() {
         }}
       />
       <Tab.Screen
-        name="History"
-        component={HistoryStack}
+        name="Settings"
+        component={SettingsStack}
         options={{
-          tabBarIcon: () => <Ionicons name="book" size={24} color="black" />,
+          tabBarIcon: () => <Ionicons name="cog" size={24} color="black" />,
         }}
       />
     </Tab.Navigator>
