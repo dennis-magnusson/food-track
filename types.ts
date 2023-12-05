@@ -56,6 +56,10 @@ export type RootStackParamList = {
   };
 };
 
+export type SettingsStackParamList = {
+  MainSettings: undefined;
+};
+
 export interface RawMealDataRow {
   amount: number | null;
   calories: number | null;
