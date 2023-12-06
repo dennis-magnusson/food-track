@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   containerInner: {
     flex: 1,
   },
-  title: { ...typography.title1, margin: 15 },
+  title: { ...typography.title1, marginLeft: 15 },
   scrollView: {
     backgroundColor: colors.lightBackground,
   },
