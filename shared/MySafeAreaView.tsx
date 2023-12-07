@@ -3,7 +3,7 @@ import { SafeAreaView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { colors } from "../theme";
 
 interface MySafeAreaViewProps {
-  children: JSX.Element;
+  children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
