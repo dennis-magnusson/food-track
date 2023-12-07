@@ -18,6 +18,7 @@ export const colors: Record<string, string> = {
 const baseTitleStyle: TextStyle = {
   fontWeight: "bold",
   marginBottom: 5,
+  marginTop: 10,
 };
 
 export const typography: { [key: string]: TextStyle } = {
