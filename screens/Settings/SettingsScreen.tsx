@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, View } from "react-native";
 import MySafeAreaView from "../../shared/MySafeAreaView";
+import { MyText } from "../../shared/MyText";
 import { colors, layout, typography } from "../../theme";
 
 const SettingsScreen: React.FC = () => {
@@ -16,21 +17,13 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <MySafeAreaView style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
+      <MyText style={styles.title}>Settings</MyText>
       <ScrollView bounces={true} style={styles.scrollView}>
         <View style={styles.buttonContainer}>
-          <Button
-            title="About"
-            style={styles.button}
-            onPress={() => console.log("About pressed")}
-          />
+          <Button title="About" onPress={() => console.log("About pressed")} />
         </View>
         <View style={styles.buttonContainer}>
-          <Button
-            title="Export Data"
-            style={styles.button}
-            onPress={handleExportData}
-          />
+          <Button title="Export Data" onPress={handleExportData} />
         </View>
       </ScrollView>
     </MySafeAreaView>
