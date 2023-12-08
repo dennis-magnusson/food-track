@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { MyText } from "../../shared/MyText";
 import { colors, layout, typography } from "../../theme";
 import { Meal, MealType } from "../../types";
 import { getTotals } from "../../utils/getTotals";
@@ -23,13 +24,13 @@ const MealBox: React.FC<MealBoxProps> = ({
       onPress={() => handleMealPress(mealData.type)}
     >
       <View>
-        <Text style={styles.mealBoxTitle}>{capitalize(mealData.type)}</Text>
+        <MyText style={styles.mealBoxTitle}>{capitalize(mealData.type)}</MyText>
         {mealData.meal.entries.map((entry, index) => (
-          <Text key={index} style={styles.foodsText}>
+          <MyText key={index} style={styles.foodsText}>
             {entry.food.name}
-          </Text>
+          </MyText>
         ))}
-        <Text style={styles.caloriesText}>{totalCalories} calories</Text>
+        <MyText style={styles.caloriesText}>{totalCalories} calories</MyText>
       </View>
       <View>
         <Ionicons name="add-circle-outline" size={38} color="black" />

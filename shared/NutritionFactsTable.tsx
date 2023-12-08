@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Food } from "../types";
+import { MyText } from "./MyText";
 
 interface NutritionFactsTableProps {
   food: Food;
@@ -20,36 +21,36 @@ const NutritionFactsTable: React.FC<NutritionFactsTableProps> = ({
 
   return (
     <View style={styles.nutritionInfo}>
-      <Text style={styles.nutritionTitle}>Nutrition facts</Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Calories: </Text>
+      <MyText style={styles.nutritionTitle}>Nutrition facts</MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Calories: </MyText>
         {computeNutritionValue(food.calories)}
-      </Text>
+      </MyText>
       <View style={styles.separator} />
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Carbs: </Text>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Carbs: </MyText>
         {computeNutritionValue(food.carbs)}g
-      </Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Fat: </Text>
+      </MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Fat: </MyText>
         {computeNutritionValue(food.fat)}g
-      </Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Protein: </Text>
+      </MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Protein: </MyText>
         {computeNutritionValue(food.protein)}g
-      </Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Sugar: </Text>
+      </MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Sugar: </MyText>
         {food.sugar ? computeNutritionValue(food.sugar) : "- "}g
-      </Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Fiber: </Text>
+      </MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Fiber: </MyText>
         {food.fiber ? computeNutritionValue(food.fiber) : "- "}g
-      </Text>
-      <Text style={styles.labelLine}>
-        <Text style={styles.bold}>Salt: </Text>
+      </MyText>
+      <MyText style={styles.labelLine}>
+        <MyText style={styles.bold}>Salt: </MyText>
         {food.salt ? computeNutritionValue(food.salt) : "- "}g
-      </Text>
+      </MyText>
     </View>
   );
 };
