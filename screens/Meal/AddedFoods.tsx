@@ -1,10 +1,5 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { MyText } from "../../shared/MyText";
 import { layout, typography } from "../../theme";
 import { FoodEntry, Meal } from "../../types";
 
@@ -26,10 +21,10 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
       onPress={() => handleEntryPress(item.id, item.food, item.amount)}
     >
       <View style={{ ...layout.accentContainer1 }}>
-        <Text style={{ ...typography.title3, marginBottom: 0 }}>
+        <MyText style={{ ...typography.title3, marginBottom: 0 }}>
           {item.food.name} {item.amount}
           {item.food.per100unit}
-        </Text>
+        </MyText>
       </View>
     </TouchableOpacity>
   );
@@ -44,7 +39,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
         />
       ) : (
         <View style={styles.nothingContainer}>
-          <Text style={styles.nothingText}>No food tracked...</Text>
+          <MyText style={styles.nothingText}>No food tracked...</MyText>
         </View>
       )}
     </View>

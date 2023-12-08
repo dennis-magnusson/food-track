@@ -1,5 +1,6 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { MyText } from "../../shared/MyText";
 import { colors } from "../../theme";
 import { Food } from "../../types";
 
@@ -20,11 +21,11 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
         handleFoodPress(item);
       }}
     >
-      <Text style={styles.foodName}>{item.name}</Text>
-      <Text style={styles.calories}>
+      <MyText style={styles.foodName}>{item.name}</MyText>
+      <MyText style={styles.calories}>
         {item.calories} kcal, {item.protein}g Protein | {item.carbs}g Carbs |{" "}
         {item.fat}g Fat
-      </Text>
+      </MyText>
     </TouchableOpacity>
   );
 

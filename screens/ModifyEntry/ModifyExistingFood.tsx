@@ -3,7 +3,6 @@ import React, { useContext, useState } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
@@ -11,6 +10,7 @@ import { DayDispatchContext } from "../../context/AppContext";
 import { updateAmountToFoodEntry } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
+import { MyText } from "../../shared/MyText";
 import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import { inputs, typography } from "../../theme";
 import {
@@ -65,7 +65,7 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
     <MySafeAreaView>
       <KeyboardAvoidingView>
         <View style={styles.container}>
-          <Text style={styles.title}>{food.name}</Text>
+          <MyText style={styles.title}>{food.name}</MyText>
           <View style={styles.inputContainer}>
             <TextInput
               autoFocus={true}
@@ -75,7 +75,7 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
               onChangeText={handleInputChange}
               value={servingSize}
             />
-            <Text style={styles.inputUnits}>{food.per100unit}</Text>
+            <MyText style={styles.inputUnits}>{food.per100unit}</MyText>
           </View>
           <NutritionFactsTable food={food} amountInput={servingSize} />
           <MyButton

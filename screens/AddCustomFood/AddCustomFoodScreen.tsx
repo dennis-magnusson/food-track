@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -13,6 +12,7 @@ import {
 import { insertFood } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
+import { MyText } from "../../shared/MyText";
 import { inputs, typography } from "../../theme";
 import {
   AddCustomFoodScreenNavigationProp,
@@ -110,7 +110,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         ]}
         onPress={() => setPer100unit(value)}
       >
-        <Text style={styles.unitButtonText}>{label}</Text>
+        <MyText style={styles.unitButtonText}>{label}</MyText>
       </TouchableOpacity>
     );
   };
@@ -122,7 +122,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         style={{ flex: 1 }}
       >
         <ScrollView style={styles.container} bounces={false}>
-          <Text style={styles.topTitle}>Name of the food</Text>
+          <MyText style={styles.topTitle}>Name of the food</MyText>
           <View style={styles.row}>
             <TextInput
               style={[styles.input, styles.columnFull]}
@@ -131,7 +131,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
               onChangeText={setName}
             />
           </View>
-          <Text style={styles.title}>Per 100 unit</Text>
+          <MyText style={styles.title}>Per 100 unit</MyText>
           <View style={styles.row}>
             <View style={styles.columnLeft}>
               <UnitButton label="grams" value="g" />
@@ -141,12 +141,12 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
             </View>
           </View>
 
-          <Text style={styles.title}>
+          <MyText style={styles.title}>
             Nutritional info (per 100{per100unit})
-          </Text>
+          </MyText>
           <View style={styles.row}>
             <View style={styles.columnLeft}>
-              <Text style={styles.label}>Calories (kcal)</Text>
+              <MyText style={styles.label}>Calories (kcal)</MyText>
               <TextInput
                 style={styles.input}
                 value={calories}
@@ -156,7 +156,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
               />
             </View>
             <View style={styles.columnRight}>
-              <Text style={styles.label}>Carbs (g)</Text>
+              <MyText style={styles.label}>Carbs (g)</MyText>
               <TextInput
                 style={styles.input}
                 placeholder="-"
@@ -169,7 +169,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
 
           <View style={styles.row}>
             <View style={styles.columnLeft}>
-              <Text style={styles.label}>Protein (g)</Text>
+              <MyText style={styles.label}>Protein (g)</MyText>
               <TextInput
                 style={styles.input}
                 value={protein}
@@ -179,7 +179,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
               />
             </View>
             <View style={styles.columnRight}>
-              <Text style={styles.label}>Fat (g)</Text>
+              <MyText style={styles.label}>Fat (g)</MyText>
               <TextInput
                 style={styles.input}
                 value={fat}
@@ -192,7 +192,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
 
           <View style={styles.row}>
             <View style={styles.columnLeft}>
-              <Text style={styles.label}>Fiber (g)</Text>
+              <MyText style={styles.label}>Fiber (g)</MyText>
               <TextInput
                 style={styles.input}
                 value={fiber}
@@ -202,7 +202,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
               />
             </View>
             <View style={styles.columnRight}>
-              <Text style={styles.label}>Salt (g)</Text>
+              <MyText style={styles.label}>Salt (g)</MyText>
               <TextInput
                 style={styles.input}
                 value={salt}
@@ -215,7 +215,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
 
           <View style={styles.row}>
             <View style={styles.columnLeft}>
-              <Text style={styles.label}>Sugar (g)</Text>
+              <MyText style={styles.label}>Sugar (g)</MyText>
               <TextInput
                 style={styles.input}
                 value={sugar}

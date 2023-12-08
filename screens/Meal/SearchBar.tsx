@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import {
   GestureResponderEvent,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { MyText } from "../../shared/MyText";
 import { colors, layout } from "../../theme";
 
 interface SearchBarProps {
@@ -67,7 +67,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           style={styles.cancelButton}
           onPress={handleCancelPress}
         >
-          <Text style={styles.cancelButtonText}>Cancel</Text>
+          <MyText style={styles.cancelButtonText}>Cancel</MyText>
         </TouchableOpacity>
       )}
     </View>
@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: barHeight,
-    backgroundColor: colors.accentBackground,
-    borderRadius: 5,
-    paddingHorizontal: 10,
   },
   cancelButton: {
     backgroundColor: colors.accent,

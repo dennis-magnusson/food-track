@@ -1,11 +1,11 @@
 import {
   StyleProp,
   StyleSheet,
-  Text,
   TouchableOpacity,
   ViewStyle,
 } from "react-native";
 import { colors } from "../theme";
+import { MyText } from "./MyText";
 
 interface MyButtonProps {
   onPress: () => void;
@@ -17,7 +17,7 @@ const MyButton = ({ onPress, text, style, ...rest }: MyButtonProps) => {
   const containerStyles = [styles.addButton, style];
   return (
     <TouchableOpacity onPress={onPress} style={containerStyles} {...rest}>
-      <Text style={styles.addButtonLabel}>{text}</Text>
+      <MyText style={styles.addButtonLabel}>{text}</MyText>
     </TouchableOpacity>
   );
 };

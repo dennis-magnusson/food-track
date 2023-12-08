@@ -5,10 +5,11 @@ import {
 } from "@react-navigation/native";
 import * as Device from "expo-device";
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
 import MySafeAreaView from "../../shared/MySafeAreaView";
+import { MyText } from "../../shared/MyText";
 import { colors, typography } from "../../theme";
 import {
   AddCustomFoodScreenNavigationProp,
@@ -86,7 +87,9 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
         style={styles.container}
       >
         <View style={styles.containerInner}>
-          <Text style={styles.title}>{capitalize(route.params.mealType)}</Text>
+          <MyText style={styles.title}>
+            {capitalize(route.params.mealType)}
+          </MyText>
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

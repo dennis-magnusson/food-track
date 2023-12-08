@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { colors, typography } from "../theme";
+import { MyText } from "./MyText";
 
 interface ProgressBarProps {
   amount: number;
@@ -40,11 +41,11 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       </View>
 
       <View style={styles.textBox}>
-        <Text style={styles.amountText}>
+        <MyText style={styles.amountText}>
           {amount}
           {category != "Calories" ? "g" : ""}
-        </Text>
-        <Text style={styles.categoryText}>{category}</Text>
+        </MyText>
+        <MyText style={styles.categoryText}>{category}</MyText>
       </View>
     </View>
   );

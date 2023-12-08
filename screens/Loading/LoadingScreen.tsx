@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { MyText } from "../../shared/MyText";
 
 interface LoadingScreenProps {}
 
@@ -6,7 +7,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = () => {
   return (
     <>
       <View>
-        <Text>Loading...</Text>
+        <MyText>Loading...</MyText>
       </View>
     </>
   );
