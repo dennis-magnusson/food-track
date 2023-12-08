@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   mealBoxTitle: {
     ...typography.title2,
+    marginTop: 0,
   },
   caloriesText: {
     color: colors.secondaryText,
