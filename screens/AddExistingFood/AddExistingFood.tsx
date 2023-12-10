@@ -40,7 +40,6 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
 
     try {
       const insertedId = await insertFoodEntryToMeal(mealId, foodEntry);
-      console.log(insertedId);
       dispatch({
         type: "ADD_FOOD",
         payload: {
