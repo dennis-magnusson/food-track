@@ -11,6 +11,7 @@ export type Food = {
   fiber?: number;
   salt?: number;
   per100unit: "g" | "ml";
+  servingSizes: ServingSize[];
 };
 
 export type FoodEntry = {
@@ -23,6 +24,11 @@ export type FoodEntry = {
 export type Meal = {
   id: number;
   entries: FoodEntry[];
+};
+
+export type ServingSize = {
+  description: string;
+  amount: string;
 };
 
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
