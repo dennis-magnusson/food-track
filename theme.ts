@@ -1,5 +1,3 @@
-// theme.js
-
 import { TextStyle, ViewStyle } from "react-native";
 
 export const colors: Record<string, string> = {
@@ -54,10 +52,11 @@ const textInputBase: TextStyle = {
 export const inputs: { [key: string]: TextStyle } = {
   textInput: {
     ...textInputBase,
+    fontSize: 16,
   },
   textInputLarge: {
     ...textInputBase,
-    fontSize: 16,
+    fontSize: 22,
   },
 };
 
