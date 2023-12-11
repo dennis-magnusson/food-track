@@ -44,12 +44,19 @@ export const typography: { [key: string]: TextStyle } = {
   },
 };
 
+const textInputBase: TextStyle = {
+  borderWidth: 1,
+  borderColor: "#ccc",
+  borderRadius: 5,
+  padding: 10,
+};
+
 export const inputs: { [key: string]: TextStyle } = {
   textInput: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
+    ...textInputBase,
+  },
+  textInputLarge: {
+    ...textInputBase,
     fontSize: 16,
   },
 };
