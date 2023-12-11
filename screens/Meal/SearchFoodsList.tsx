@@ -2,18 +2,18 @@ import React from "react";
 import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { MyText } from "../../shared/MyText";
 import { colors } from "../../theme";
-import { Food } from "../../types";
+import { FoodWithoutServingSizes } from "../../types";
 
 interface FoodsListProps {
-  foods: Food[];
-  handleFoodPress: (food: Food) => void;
+  foods: FoodWithoutServingSizes[];
+  handleFoodPress: (food: FoodWithoutServingSizes) => void;
 }
 
 const SearchFoodsList: React.FC<FoodsListProps> = ({
   foods,
   handleFoodPress,
 }): JSX.Element => {
-  const renderItem = ({ item }: { item: Food }) => (
+  const renderItem = ({ item }: { item: FoodWithoutServingSizes }) => (
     <TouchableOpacity
       style={styles.foodItem}
       key={item.id}

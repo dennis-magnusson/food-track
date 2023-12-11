@@ -84,6 +84,8 @@ export interface RawMealDataRow {
   type: string;
 }
 
+export type FoodWithoutServingSizes = Omit<Food, "servingSizes">;
+
 export type MainScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Main"
