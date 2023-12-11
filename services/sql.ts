@@ -40,6 +40,16 @@ export const CREATE_TABLE_SETTINGS = `
   )
 `;
 
+export const CREATE_TABLE_SERVINGSIZE = `
+  CREATE TABLE IF NOT EXISTS servingsize (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    food_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    FOREIGN KEY (food_id) REFERENCES food(id)
+  )
+`;
+
 export const INSERT_SETTING = `
   INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)
 `;
