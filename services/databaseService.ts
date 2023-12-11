@@ -4,6 +4,7 @@ import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
+  CREATE_TABLE_SERVINGSIZE,
   CREATE_TABLE_SETTINGS,
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
@@ -25,6 +26,7 @@ export const initializeDB = () => {
       tx.executeSql(CREATE_TABLE_MEALS);
       tx.executeSql(CREATE_TABLE_MEAL_FOODS);
       tx.executeSql(CREATE_TABLE_SETTINGS);
+      tx.executeSql(CREATE_TABLE_SERVINGSIZE);
     },
     (error) => console.log(error)
   );
