@@ -6,7 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { insertFood } from "../../services/databaseService";
@@ -18,6 +17,10 @@ import {
   AddCustomFoodScreenNavigationProp,
   RootStackParamList,
 } from "../../types";
+import NutritionInputGrid from "./NutritionInputGrid";
+import ServingSizeInput from "./ServingSizeInput";
+import UnitButtons from "./UnitButtons";
+import sharedStyles from "./sharedStyles";
 
 interface AddCustomFoodScreenProps {
   route: RouteProp<RootStackParamList, "AddCustomFood">;
@@ -35,6 +38,35 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
   const [fiber, setFiber] = useState<string>("");
   const [salt, setSalt] = useState<string>("");
   const [per100unit, setPer100unit] = useState<"g" | "ml">("g");
+
+  const [servingSizes, setServingSizes] = useState<
+    Array<{ amount: string; description: string }>
+  >([
+    {
+      amount: "",
+      description: "",
+    },
+  ]);
+
+  const handleAddServingSize = (): void => {
+    setServingSizes([...servingSizes, { amount: "", description: "" }]);
+  };
+
+  const handleRemoveServingSize = (index: number): void => {
+    const newServingSizes = [...servingSizes];
+    newServingSizes.splice(index, 1);
+    setServingSizes(newServingSizes);
+  };
+
+  const handleUpdateServingSize = (
+    index: number,
+    field: "amount" | "description",
+    value: string
+  ): void => {
+    const newServingSizes = [...servingSizes];
+    newServingSizes[index] = { ...newServingSizes[index], [field]: value };
+    setServingSizes(newServingSizes);
+  };
 
   const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
 
@@ -70,6 +102,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
       fat: parseFloat(fat),
       salt: salt ? parseFloat(salt) : null,
       per100unit,
+      servingSizes,
     };
 
     try {
@@ -94,27 +127,6 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
     }
   };
 
-  const UnitButton = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: "g" | "ml";
-  }) => {
-    const isSelected = per100unit === value;
-    return (
-      <TouchableOpacity
-        style={[
-          styles.unitButton,
-          isSelected ? styles.selected : styles.unselected,
-        ]}
-        onPress={() => setPer100unit(value)}
-      >
-        <MyText style={styles.unitButtonText}>{label}</MyText>
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView
@@ -122,112 +134,46 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         style={{ flex: 1 }}
       >
         <ScrollView style={styles.container} bounces={false}>
-          <MyText style={styles.topTitle}>Name of the food</MyText>
-          <View style={styles.row}>
+          <MyText style={styles.topTitle}>Food name</MyText>
+          <View style={sharedStyles.row}>
             <TextInput
-              style={[styles.input, styles.columnFull]}
+              style={[inputs.textInput, styles.columnFull]}
               value={name}
               placeholder="eg. Mango"
               onChangeText={setName}
             />
           </View>
-          <MyText style={styles.title}>Per 100 unit</MyText>
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <UnitButton label="grams" value="g" />
-            </View>
-            <View style={styles.columnRight}>
-              <UnitButton label="millilitres" value="ml" />
-            </View>
-          </View>
+          <UnitButtons per100unit={per100unit} setPer100unit={setPer100unit} />
 
-          <MyText style={styles.title}>
+          <MyText style={sharedStyles.title}>
             Nutritional info (per 100{per100unit})
           </MyText>
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <MyText style={styles.label}>Calories (kcal)</MyText>
-              <TextInput
-                style={styles.input}
-                value={calories}
-                onChangeText={setCalories}
-                placeholder="-"
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.columnRight}>
-              <MyText style={styles.label}>Carbs (g)</MyText>
-              <TextInput
-                style={styles.input}
-                placeholder="-"
-                value={carbs}
-                onChangeText={setCarbs}
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
+          <NutritionInputGrid
+            calories={calories}
+            setCalories={setCalories}
+            fat={fat}
+            setFat={setFat}
+            carbs={carbs}
+            setCarbs={setCarbs}
+            protein={protein}
+            setProtein={setProtein}
+            fiber={fiber}
+            setFiber={setFiber}
+            salt={salt}
+            setSalt={setSalt}
+            sugar={sugar}
+            setSugar={setSugar}
+          />
 
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <MyText style={styles.label}>Protein (g)</MyText>
-              <TextInput
-                style={styles.input}
-                value={protein}
-                onChangeText={setProtein}
-                placeholder="-"
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.columnRight}>
-              <MyText style={styles.label}>Fat (g)</MyText>
-              <TextInput
-                style={styles.input}
-                value={fat}
-                onChangeText={setFat}
-                placeholder="-"
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
+          <ServingSizeInput
+            handleAddServingSize={handleAddServingSize}
+            handleRemoveServingSize={handleRemoveServingSize}
+            handleUpdateServingSize={handleUpdateServingSize}
+            per100unit={per100unit}
+            servingSizes={servingSizes}
+          />
 
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <MyText style={styles.label}>Fiber (g)</MyText>
-              <TextInput
-                style={styles.input}
-                value={fiber}
-                placeholder="-"
-                onChangeText={setFiber}
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.columnRight}>
-              <MyText style={styles.label}>Salt (g)</MyText>
-              <TextInput
-                style={styles.input}
-                value={salt}
-                onChangeText={setSalt}
-                placeholder="-"
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
-
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <MyText style={styles.label}>Sugar (g)</MyText>
-              <TextInput
-                style={styles.input}
-                value={sugar}
-                onChangeText={setSugar}
-                placeholder="-"
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.columnRight}></View>
-          </View>
-
-          <View style={styles.row}>
+          <View style={sharedStyles.row}>
             <View style={styles.columnFull}>
               <MyButton
                 text="Add new food"
@@ -250,47 +196,11 @@ const styles = StyleSheet.create({
     ...typography.title1,
     marginBottom: 8,
   },
-  title: {
-    ...typography.title1,
-    marginVertical: 16,
-  },
-  row: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  columnLeft: {
-    flex: 1,
-    paddingRight: 5,
-  },
-  columnRight: {
-    flex: 1,
-    paddingLeft: 5,
-  },
   columnFull: {
     flex: 1,
   },
   label: {
     marginBottom: 5,
-  },
-  input: {
-    ...inputs.textInput,
-  },
-  unitButton: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  unitButtonText: {
-    fontSize: 16,
-  },
-  selected: {
-    opacity: 1,
-  },
-  unselected: {
-    opacity: 0.3,
   },
 });
 
