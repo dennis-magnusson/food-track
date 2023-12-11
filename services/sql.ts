@@ -72,6 +72,14 @@ export const INSERT_FOOD_TO_MEAL = `
     VALUES (?, ?, ?)
 `;
 
+export const INSERT_SERVING_SIZE = `
+  INSERT INTO servingsize (food_id, description, amount) VALUES (?, ?, ?)
+`;
+
+export const FETCH_ALL_SERVING_SIZES_FOR_FOOD = `
+  SELECT * FROM servingsize WHERE food_id = ?
+`;
+
 export const FETCH_ALL_FOODS = `
   SELECT * FROM food
 `;
