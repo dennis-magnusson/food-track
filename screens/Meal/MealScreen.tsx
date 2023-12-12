@@ -3,9 +3,8 @@ import {
   useFocusEffect,
   useNavigation,
 } from "@react-navigation/native";
-import * as Device from "expo-device";
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
 import BackButton from "../../shared/BackButton";
@@ -24,8 +23,6 @@ import { capitalize } from "../../utils/textOps";
 import AddedFoods from "./AddedFoods";
 import SearchBar from "./SearchBar";
 import SearchFood from "./SearchFood";
-
-const DEFAULT_FOOD_QUANTITY = 100;
 
 interface MealScreenProps {
   route: RouteProp<RootStackParamList, "Meal">;
@@ -84,44 +81,36 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
 
   return (
     <MySafeAreaView>
-      <KeyboardAvoidingView
-        behavior={Device.osName === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-        <View style={styles.containerInner}>
-          <BackButton backFunction={() => navigation.goBack()} />
-          <MyText style={styles.title}>
-            {capitalize(route.params.mealType)}
-          </MyText>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            isFocused={isSearching}
-            onFocus={() => setIsSearching(true)}
-            onBlur={() => setIsSearching(false)}
+      <View style={styles.containerInner}>
+        <BackButton backFunction={() => navigation.goBack()} />
+        <MyText style={styles.title}>
+          {capitalize(route.params.mealType)}
+        </MyText>
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          isFocused={isSearching}
+          onFocus={() => setIsSearching(true)}
+          onBlur={() => setIsSearching(false)}
+        />
+        {isSearching ? (
+          <SearchFood
+            handleAddCustomFood={handleAddCustomFood}
+            filteredFoods={filteredFoods}
+            handleFoodPress={handleFoodPress}
           />
-          {isSearching ? (
-            <SearchFood
-              handleAddCustomFood={handleAddCustomFood}
-              filteredFoods={filteredFoods}
-              handleFoodPress={handleFoodPress}
-            />
-          ) : (
-            <AddedFoods
-              meal={meals[route.params.mealType]}
-              handleEntryPress={handleEntryPress}
-            />
-          )}
-        </View>
-      </KeyboardAvoidingView>
+        ) : (
+          <AddedFoods
+            meal={meals[route.params.mealType]}
+            handleEntryPress={handleEntryPress}
+          />
+        )}
+      </View>
     </MySafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   containerInner: {
     flex: 1,
   },

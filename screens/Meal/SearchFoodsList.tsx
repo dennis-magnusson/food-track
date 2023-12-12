@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, Keyboard, StyleSheet, TouchableOpacity } from "react-native";
 import { MyText } from "../../shared/MyText";
 import { colors } from "../../theme";
 import { FoodWithoutServingSizes } from "../../types";
@@ -13,6 +13,29 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
   foods,
   handleFoodPress,
 }): JSX.Element => {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      (event) => {
+        setKeyboardHeight(event.endCoordinates.height);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardHeight(0);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   const renderItem = ({ item }: { item: FoodWithoutServingSizes }) => (
     <TouchableOpacity
       style={styles.foodItem}
@@ -36,7 +59,10 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
       scrollEnabled={true}
       keyboardShouldPersistTaps="always"
       keyExtractor={(item) => item.id.toString()}
-      contentContainerStyle={styles.foodContainer}
+      contentContainerStyle={[
+        styles.foodContainer,
+        { paddingBottom: keyboardHeight },
+      ]}
     />
   );
 };
