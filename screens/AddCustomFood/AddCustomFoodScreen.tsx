@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { insertFood } from "../../services/databaseService";
+import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
@@ -133,6 +134,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         behavior={Device.osName === "iOS" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
+        <BackButton backFunction={() => navigation.goBack()} />
         <ScrollView style={styles.container} bounces={false}>
           <MyText style={styles.topTitle}>Food name</MyText>
           <View style={sharedStyles.row}>

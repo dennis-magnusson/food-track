@@ -8,6 +8,7 @@ import React, { useCallback, useContext, useMemo, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
 import { fetchAllFoods } from "../../services/databaseService";
+import BackButton from "../../shared/BackButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
 import { colors, typography } from "../../theme";
@@ -88,6 +89,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
         style={styles.container}
       >
         <View style={styles.containerInner}>
+          <BackButton backFunction={() => navigation.goBack()} />
           <MyText style={styles.title}>
             {capitalize(route.params.mealType)}
           </MyText>

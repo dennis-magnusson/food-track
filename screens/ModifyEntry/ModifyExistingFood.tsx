@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { DayDispatchContext } from "../../context/AppContext";
 import { updateAmountToFoodEntry } from "../../services/databaseService";
+import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
@@ -64,6 +65,7 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView>
+        <BackButton backFunction={() => navigation.goBack()} />
         <View style={styles.container}>
           <MyText style={styles.title}>{food.name}</MyText>
           <View style={styles.inputContainer}>
