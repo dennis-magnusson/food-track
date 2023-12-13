@@ -16,7 +16,6 @@ import {
   DayContextType,
   Food,
   FoodEntry,
-  FoodWithoutServingSizes,
   RootStackParamList,
 } from "../../types";
 import { capitalize } from "../../utils/textOps";
@@ -30,7 +29,7 @@ interface MealScreenProps {
 
 const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [foods, setFoods] = useState<FoodWithoutServingSizes[]>([]);
+  const [foods, setFoods] = useState<Food[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const { meals }: DayContextType = useContext(DayContext);

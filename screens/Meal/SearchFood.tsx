@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import MyButton from "../../shared/MyButton";
-import { FoodWithoutServingSizes } from "../../types";
+import { Food } from "../../types";
 import SearchFoodsList from "./SearchFoodsList";
 
 interface SearchFoodProps {
   handleAddCustomFood: () => void;
-  handleFoodPress: (food: FoodWithoutServingSizes) => void;
-  filteredFoods: FoodWithoutServingSizes[];
+  handleFoodPress: (food: Food) => void;
+  filteredFoods: Food[];
 }
 
 const SearchFood: React.FC<SearchFoodProps> = ({
