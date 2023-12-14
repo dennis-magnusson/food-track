@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     ...typography.title3,
   },
   categoryText: {
-    color: "#666",
+    ...typography.secondary,
   },
 });
 
