@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Keyboard, StyleSheet, TouchableOpacity } from "react-native";
 import { MyText } from "../../shared/MyText";
 import { colors } from "../../theme";
-import { FoodWithoutServingSizes } from "../../types";
+import { Food } from "../../types";
 
 interface FoodsListProps {
-  foods: FoodWithoutServingSizes[];
-  handleFoodPress: (food: FoodWithoutServingSizes) => void;
+  foods: Food[];
+  handleFoodPress: (food: Food) => void;
 }
 
 const SearchFoodsList: React.FC<FoodsListProps> = ({
@@ -36,7 +36,7 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
     };
   }, []);
 
-  const renderItem = ({ item }: { item: FoodWithoutServingSizes }) => (
+  const renderItem = ({ item }: { item: Food }) => (
     <TouchableOpacity
       style={styles.foodItem}
       key={item.id}
