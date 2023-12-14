@@ -1,12 +1,14 @@
-import { Picker } from "@react-native-picker/picker";
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 import { DayDispatchContext } from "../../context/AppContext";
 import {
   fetchServingSizesForFood,
@@ -16,6 +18,7 @@ import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
+import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import { inputs, typography } from "../../theme";
 import {
   AddExistingFoodScreenNavigationProp,
@@ -32,19 +35,20 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   route,
 }) => {
   const { food, mealType, mealId } = route.params;
-  const [foodAmount, setFoodAmount] = useState<string>("100");
-  const [servingSizes, setServingSizes] = useState<ServingSize[]>([]);
-
+  const customSize: ServingSize = {
+    description: "Custom amount",
+    amount: 1,
+  };
+  const [multiplier, setMultiplier] = useState<string>("1");
+  const [servingSize, setServingSize] = useState<ServingSize>(customSize);
+  const [servingSizes, setServingSizes] = useState<ServingSize[]>([customSize]);
   const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
 
   useEffect(() => {
     const fetchServingSizes = async () => {
       const fetchedServingSizes = await fetchServingSizesForFood(food.id);
-      setServingSizes(fetchedServingSizes);
-      if (fetchedServingSizes.length > 0) {
-        setFoodAmount(fetchedServingSizes[0].amount.toString());
-      }
+      setServingSizes([...servingSizes, ...fetchedServingSizes]);
     };
 
     fetchServingSizes();
@@ -53,7 +57,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   const handleLogFood = async () => {
     const foodEntry: Omit<FoodEntry, "meal_id" | "id"> = {
       food: food,
-      amount: parseFloat(foodAmount) || 100,
+      amount: getAmount(),
     };
 
     try {
@@ -71,14 +75,29 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     }
   };
 
+  const getAmount = (): number => {
+    const amnt =
+      multiplier == ""
+        ? 0
+        : parseFloat(multiplier.replace(",", ".")) * servingSize.amount;
+    console.log(amnt);
+    return amnt;
+  };
+
   const handleInputChange = (text: string) => {
     if (
       (text === "" || /^[\d]*[.,]?[\d]*$/.test(text)) &&
       !/^[.,]$/.test(text)
     ) {
-      setFoodAmount(text);
+      setMultiplier(text);
     }
   };
+
+  const refRBSheet = useRef();
+
+  if (servingSizes.length === 0) {
+    return <MyText>Loading...</MyText>;
+  }
 
   return (
     <MySafeAreaView>
@@ -86,37 +105,60 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
         <BackButton backFunction={() => navigation.goBack()} />
         <View style={styles.container}>
           <MyText style={styles.title}>{food.name}</MyText>
-          {servingSizes.length > 0 && (
-            <Picker
-              selectedValue={foodAmount}
-              onValueChange={(itemValue) => setFoodAmount(itemValue)}
-              style={styles.picker}
-            >
-              {servingSizes.map((size, i) => (
-                <Picker.Item
-                  key={i}
-                  label={`${size.description} (${size.amount}${food.per100unit})`}
-                  value={size.amount}
-                />
-              ))}
-            </Picker>
-          )}
           <View style={styles.inputContainer}>
             <TextInput
-              // autoFocus={servingSizes.length == 0}
               style={styles.input}
-              placeholder="Custom amount"
               keyboardType="numeric"
               onChangeText={handleInputChange}
-              value={foodAmount}
+              value={multiplier}
+              autoFocus={true}
             />
-            <MyText style={styles.inputUnits}>{food.per100unit}</MyText>
+            <TouchableOpacity
+              onPress={() => refRBSheet.current?.open()}
+              style={styles.selectorButton}
+            >
+              <MyText>{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
+            </TouchableOpacity>
           </View>
-          {/* <NutritionFactsTable food={food} amountInput={foodAmount} /> */}
+          <RBSheet
+            ref={refRBSheet}
+            closeOnDragDown={true}
+            height={300}
+            customStyles={{
+              wrapper: {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
+            <ScrollView
+              style={{ margin: 10, paddingBottom: 100 }}
+              bounces={false}
+            >
+              <MyText style={{ ...typography.title2, marginBottom: 10 }}>
+                Select serving size
+              </MyText>
+              {servingSizes.map((servingSize, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  onPress={() => {
+                    setServingSize(servingSize);
+                    refRBSheet.current?.close();
+                  }}
+                  style={{ marginBottom: 10, paddingVertical: 5 }}
+                >
+                  <MyText
+                    style={inputs.textInput}
+                  >{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </RBSheet>
+
+          <NutritionFactsTable food={food} amount={getAmount()} />
           <MyButton
             text="Log food"
             onPress={handleLogFood}
-            style={{ marginTop: 10 }}
+            style={{ marginTop: 20 }}
           />
         </View>
       </KeyboardAvoidingView>
@@ -132,18 +174,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
   },
-  inputUnits: {
-    fontSize: 18,
-    padding: 10,
-    fontWeight: "bold",
-  },
   input: {
     ...inputs.textInput,
-    flex: 1,
+    marginRight: 10,
+    flex: 0.1,
   },
-  picker: {
+  selectorButton: {
+    flex: 0.9,
     ...inputs.textInput,
-    marginBottom: 10,
   },
 });
 
