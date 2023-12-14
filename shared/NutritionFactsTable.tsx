@@ -27,30 +27,36 @@ const NutritionFactsTable: React.FC<NutritionFactsTableProps> = ({
         {computeNutritionValue(food.calories)}
       </MyText>
       <View style={styles.separator} />
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Carbs: </MyText>
-        {computeNutritionValue(food.carbs)}g
-      </MyText>
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Fat: </MyText>
-        {computeNutritionValue(food.fat)}g
-      </MyText>
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Protein: </MyText>
-        {computeNutritionValue(food.protein)}g
-      </MyText>
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Sugar: </MyText>
-        {food.sugar ? computeNutritionValue(food.sugar) : "- "}g
-      </MyText>
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Fiber: </MyText>
-        {food.fiber ? computeNutritionValue(food.fiber) : "- "}g
-      </MyText>
-      <MyText style={styles.labelLine}>
-        <MyText style={styles.bold}>Salt: </MyText>
-        {food.salt ? computeNutritionValue(food.salt) : "- "}g
-      </MyText>
+      <View style={styles.columnsContainer}>
+        <View style={styles.leftColumn}>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Carbs: </MyText>
+            {computeNutritionValue(food.carbs)}g
+          </MyText>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Fat: </MyText>
+            {computeNutritionValue(food.fat)}g
+          </MyText>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Protein: </MyText>
+            {computeNutritionValue(food.protein)}g
+          </MyText>
+        </View>
+        <View style={styles.rightColumn}>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Sugar: </MyText>
+            {food.sugar ? computeNutritionValue(food.sugar) : "- "}g
+          </MyText>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Fiber: </MyText>
+            {food.fiber ? computeNutritionValue(food.fiber) : "- "}g
+          </MyText>
+          <MyText style={styles.labelLine}>
+            <MyText style={styles.bold}>Salt: </MyText>
+            {food.salt ? computeNutritionValue(food.salt) : "- "}g
+          </MyText>
+        </View>
+      </View>
     </View>
   );
 };
@@ -68,6 +74,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: 10,
+  },
+  columnsContainer: {
+    flexDirection: "row",
+  },
+  rightColumn: {
+    flex: 0.5,
+    flexDirection: "column",
+  },
+  leftColumn: {
+    flex: 0.5,
+    flexDirection: "column",
   },
   labelLine: {
     fontSize: 16,
