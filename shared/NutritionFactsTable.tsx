@@ -4,16 +4,13 @@ import { MyText } from "./MyText";
 
 interface NutritionFactsTableProps {
   food: Food;
-  amountInput: string;
+  amount: number;
 }
 
 const NutritionFactsTable: React.FC<NutritionFactsTableProps> = ({
   food,
-  amountInput,
+  amount,
 }) => {
-  const amountFloat = parseFloat(amountInput);
-  const amount = isNaN(amountFloat) ? 0 : amountFloat;
-
   const computeNutritionValue = (baseValue: number) => {
     const computedValue = (baseValue * amount) / 100;
     return Math.floor(computedValue * 10) / 10;
