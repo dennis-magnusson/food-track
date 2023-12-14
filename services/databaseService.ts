@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import { Food, FoodEntry, Meal, RawMealDataRow } from "../types";
+import { Food, FoodEntry, Meal, RawMealDataRow, ServingSize } from "../types";
 import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
@@ -8,11 +8,13 @@ import {
   CREATE_TABLE_SETTINGS,
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
+  FETCH_ALL_SERVING_SIZES_FOR_FOOD,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   FETCH_SETTING,
   INSERT_FOOD,
   INSERT_FOOD_TO_MEAL,
   INSERT_OR_IGNORE_MEAL,
+  INSERT_SERVING_SIZE,
   INSERT_SETTING,
   UPDATE_AMOUNT_FOOD_ENTRY,
 } from "./sql";
@@ -57,6 +59,7 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
       fat,
       salt,
       per100unit,
+      servingSizes,
     } = food;
 
     db.transaction(
@@ -67,13 +70,24 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
           (_, result) => {
             const insertedId = result.insertId;
             const insertedFood = { ...food, id: insertedId };
+
+            // Insert each serving size into the servingSize table
+            servingSizes.forEach((servingSize) => {
+              tx.executeSql(
+                INSERT_SERVING_SIZE,
+                [insertedId, servingSize.description, servingSize.amount],
+                (_, resultSet) => {
+                  console.log(resultSet.insertId);
+                }
+              );
+            });
+
             resolve(insertedFood);
           }
         );
       },
       (error) => {
         console.log(error);
-        reject(error);
       }
     );
   });
@@ -90,6 +104,28 @@ export const fetchAllFoods = (
     },
     (error) => console.log(error)
   );
+};
+
+export const fetchServingSizesForFood = (
+  id: number
+): Promise<ServingSize[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          FETCH_ALL_SERVING_SIZES_FOR_FOOD,
+          [id],
+          (_, resultSet) => {
+            resolve(resultSet.rows._array);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
 };
 
 export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
