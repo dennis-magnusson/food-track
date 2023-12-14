@@ -36,8 +36,9 @@ export const typography: { [key: string]: TextStyle } = {
     ...baseTitleStyle,
     fontSize: 14,
   },
-  body: {
-    fontSize: 12,
+  secondary: {
+    fontSize: 14,
+    color: colors.secondaryText,
     fontWeight: "normal",
   },
 };
