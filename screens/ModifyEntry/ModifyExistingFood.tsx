@@ -12,7 +12,6 @@ import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
-import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import { inputs, typography } from "../../theme";
 import {
   ModifyFoodEntryScreenNavigationProp,
@@ -79,7 +78,7 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
             />
             <MyText style={styles.inputUnits}>{food.per100unit}</MyText>
           </View>
-          <NutritionFactsTable food={food} amountInput={servingSize} />
+          {/* <NutritionFactsTable food={food} amount={servingSize} /> */}
           <MyButton
             text="Update"
             onPress={handleModifyFoodEntry}
