@@ -1,6 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useEffect, useState, } from "react";
 import { Button, View, StyleSheet, Text, SafeAreaView } from "react-native";
+import TextScreen from "../../shared/TextScreen";
+import { colors } from "../../theme";
 
 interface BarcodeScannerScreenProps {
 }
@@ -9,6 +13,8 @@ const BarcodeScannerScreen: React.FC<BarcodeScannerScreenProps> = ({ }): JSX.Ele
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
+    const navigation = useNavigation();
+
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
           const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -16,28 +22,50 @@ const BarcodeScannerScreen: React.FC<BarcodeScannerScreenProps> = ({ }): JSX.Ele
         };
     
         getBarCodeScannerPermissions();
-      }, []);
+    }, []);
 
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        console.log(type, data)
+
+        // check database if barcode exists
+
+        // if barcode exists, navigate to AddExistingFoodScreen with food data
+
+        // if barcode does not exist, call API to get food data
+        try {
+            const response = await axios.get(`https://world.openfoodfacts.net/api/v2/product/${data}?fields=product_name,nutriments`);
+            const result = response.data;
+    
+            // Check if the API returned what you want
+            if (result.status === 1) { // Adjust this condition based on your API's response
+                // 
+                console.log(result)
+            } else {
+                alert('An API error occurred while scanning the barcode.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred while scanning the barcode.');
+        }
     };
 
     if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
+        return <TextScreen text="Requesting for camera permission" />
       }
     if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <TextScreen text="No access to camera" />
     }
+
+    const borderColor = scanned ? colors.accent : colors.carbs;
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Barcode Scanner</Text>
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
             />
-
+            {!scanned && <View style={[styles.scannerBox, {borderColor}]} />}
             {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
         </SafeAreaView>
   );
@@ -53,10 +81,9 @@ const styles = StyleSheet.create({
         left: '20%', // adjust as needed
         width: '60%', // adjust as needed
         height: '20%', // adjust as needed
-        borderWidth: 2,
-        borderColor: 'white',
+        borderWidth: 4,
         borderRadius: 10,
-        borderStyle: 'dashed',
+        // borderStyle: 'dashed',
     }
 }); 
 
