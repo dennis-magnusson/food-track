@@ -12,6 +12,7 @@ export type Food = {
   salt?: number;
   per100unit: "g" | "ml";
   servingSizes: ServingSize[];
+  barcode?: string
 };
 
 export type FoodEntry = {
