@@ -49,6 +49,10 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
     }, [])
   );
 
+  const handleScanBarcode = () => {
+    navigation.navigate("BarcodeScanner");
+  }
+
   const handleAddCustomFood = () => {
     navigation.navigate("AddCustomFood", {
       mealType: route.params.mealType,
@@ -97,6 +101,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
             handleAddCustomFood={handleAddCustomFood}
             filteredFoods={filteredFoods}
             handleFoodPress={handleFoodPress}
+            handleScanBarcode={handleScanBarcode}
           />
         ) : (
           <AddedFoods

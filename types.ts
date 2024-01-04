@@ -60,6 +60,7 @@ export type RootStackParamList = {
     food: Food;
     currentAmount: number;
   };
+  BarcodeScanner:undefined;
 };
 
 export type SettingsStackParamList = {
@@ -107,6 +108,11 @@ export type AddExistingFoodScreenNavigationProp = NativeStackNavigationProp<
 export type ModifyFoodEntryScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "ModifyFoodEntry"
+>;
+
+export type BarcodeScannerScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "BarcodeScanner"
 >;
 
 export type DayAction =
