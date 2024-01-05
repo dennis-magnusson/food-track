@@ -12,6 +12,7 @@ function AppNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
