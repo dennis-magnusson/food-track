@@ -22,6 +22,8 @@ import { capitalize } from "../../utils/textOps";
 import AddedFoods from "./AddedFoods";
 import SearchBar from "./SearchBar";
 import SearchFood from "./SearchFood";
+import ActionButtons from "./ActionButtons";
+import SearchFoodsList from "./SearchFoodsList";
 
 interface MealScreenProps {
   route: RouteProp<RootStackParamList, "Meal">;
@@ -96,18 +98,21 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
           onFocus={() => setIsSearching(true)}
           onBlur={() => setIsSearching(false)}
         />
+        
         {isSearching ? (
-          <SearchFood
-            handleAddCustomFood={handleAddCustomFood}
-            filteredFoods={filteredFoods}
-            handleFoodPress={handleFoodPress}
-            handleScanBarcode={handleScanBarcode}
-          />
+          <SearchFoodsList
+          foods={filteredFoods}
+          handleFoodPress={handleFoodPress}
+        />
         ) : (
+          <><ActionButtons
+          handleAddCustomFood={handleAddCustomFood}
+          handleScanBarcode={handleScanBarcode}
+          />
           <AddedFoods
             meal={meals[route.params.mealType]}
             handleEntryPress={handleEntryPress}
-          />
+          /></>
         )}
       </View>
     </MySafeAreaView>
