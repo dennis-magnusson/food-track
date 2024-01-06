@@ -106,6 +106,30 @@ export const fetchAllFoods = (
   );
 };
 
+export const fetchFoodByBarcode = (barcode: string): Promise<Food | null> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          ,
+          [barcode],
+          (_, resultSet) => {
+            if (resultSet.rows.length > 0) {
+              resolve(resultSet.rows.item(0));
+            } else {
+              resolve(null);
+            }
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+}
+
 export const fetchServingSizesForFood = (
   id: number
 ): Promise<ServingSize[]> => {
