@@ -19,10 +19,9 @@ import {
   RootStackParamList,
 } from "../../types";
 import { capitalize } from "../../utils/textOps";
+import ActionButtons from "./ActionButtons";
 import AddedFoods from "./AddedFoods";
 import SearchBar from "./SearchBar";
-import SearchFood from "./SearchFood";
-import ActionButtons from "./ActionButtons";
 import SearchFoodsList from "./SearchFoodsList";
 
 interface MealScreenProps {
@@ -53,7 +52,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
 
   const handleScanBarcode = () => {
     navigation.navigate("BarcodeScanner");
-  }
+  };
 
   const handleAddCustomFood = () => {
     navigation.navigate("AddCustomFood", {
@@ -98,21 +97,23 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
           onFocus={() => setIsSearching(true)}
           onBlur={() => setIsSearching(false)}
         />
-        
+
         {isSearching ? (
           <SearchFoodsList
-          foods={filteredFoods}
-          handleFoodPress={handleFoodPress}
-        />
-        ) : (
-          <><ActionButtons
-          handleAddCustomFood={handleAddCustomFood}
-          handleScanBarcode={handleScanBarcode}
+            foods={filteredFoods}
+            handleFoodPress={handleFoodPress}
           />
-          <AddedFoods
-            meal={meals[route.params.mealType]}
-            handleEntryPress={handleEntryPress}
-          /></>
+        ) : (
+          <>
+            <ActionButtons
+              handleAddCustomFood={handleAddCustomFood}
+              handleScanBarcode={handleScanBarcode}
+            />
+            <AddedFoods
+              meal={meals[route.params.mealType]}
+              handleEntryPress={handleEntryPress}
+            />
+          </>
         )}
       </View>
     </MySafeAreaView>
