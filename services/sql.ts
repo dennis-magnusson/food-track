@@ -9,7 +9,8 @@ export const CREATE_TABLE_FOODS = `
     fiber REAL,
     fat REAL NOT NULL,
     salt REAL,
-    per100unit TEXT CHECK(per100unit IN ('g', 'ml'))
+    per100unit TEXT CHECK(per100unit IN ('g', 'ml')),
+    barcode: TEXT
   )
 `;
 
@@ -59,8 +60,8 @@ export const FETCH_SETTING = `
 `;
 
 export const INSERT_FOOD = `
-  INSERT INTO food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  INSERT INTO food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit, barcode)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
 export const INSERT_MEAL = `
@@ -82,6 +83,10 @@ export const FETCH_ALL_SERVING_SIZES_FOR_FOOD = `
 
 export const FETCH_ALL_FOODS = `
   SELECT * FROM food
+`;
+
+export const FETCH_FOOD_BY_BARCODE = `
+  SELECT * FROM Food WHERE barcode = ?
 `;
 
 export const INSERT_OR_IGNORE_MEAL = `
