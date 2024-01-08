@@ -1,17 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useEffect, useState } from "react";
 import { Button, SafeAreaView, StyleSheet, View } from "react-native";
 import TextScreen from "../../shared/TextScreen";
 import { colors } from "../../theme";
-import parseAPIFood from "../../utils/parseAPIFood";
 
-interface BarcodeScannerScreenProps {}
-
-const BarcodeScannerScreen: React.FC<
-  BarcodeScannerScreenProps
-> = ({}): JSX.Element => {
+const BarcodeScannerScreen = ({ route }): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -28,32 +22,8 @@ const BarcodeScannerScreen: React.FC<
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    console.log(type, data);
+    route.params.afterScan(data);
     navigation.goBack();
-
-    // check database if barcode exists
-
-    // if barcode exists, navigate to AddExistingFoodScreen with food data
-
-    // if barcode does not exist, call API to get food data
-    try {
-      const response = await axios.get(
-        `https://world.openfoodfacts.net/api/v2/product/${data}?fields=product_name,nutriments`
-      );
-      const result = response.data;
-
-      // Check if the API returned what you want
-      if (result.status === 1) {
-        console.log("result: ", result);
-        const parsedFood = parseAPIFood(result, data);
-        console.log(parsedFood);
-      } else {
-        alert("An API error occurred while scanning the barcode.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred while scanning the barcode.");
-    }
   };
 
   if (hasPermission === null) {
@@ -63,7 +33,7 @@ const BarcodeScannerScreen: React.FC<
     return <TextScreen text="No access to camera" />;
   }
 
-  const borderColor = scanned ? colors.accent : colors.carbs;
+  const borderColor = colors.accent;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,7 +41,12 @@ const BarcodeScannerScreen: React.FC<
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {!scanned && <View style={[styles.scannerBox, { borderColor }]} />}
+      {!scanned && (
+        <>
+          <View style={[styles.leftBracket, { borderColor }]} />
+          <View style={[styles.rightBracket, { borderColor }]} />
+        </>
+      )}
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
       )}
@@ -79,19 +54,35 @@ const BarcodeScannerScreen: React.FC<
   );
 };
 
+const BORDER_WIDTH = 5;
+const TOP = "40%";
+const HEIGHT = "20%";
+const WIDTH = "10%";
+const LEFT_OR_RIGHT = "10%";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scannerBox: {
+  leftBracket: {
     position: "absolute",
-    top: "40%", // adjust as needed
-    left: "20%", // adjust as needed
-    width: "60%", // adjust as needed
-    height: "20%", // adjust as needed
-    borderWidth: 4,
-    borderRadius: 10,
-    // borderStyle: 'dashed',
+    top: TOP,
+    left: LEFT_OR_RIGHT,
+    width: WIDTH,
+    height: HEIGHT,
+    borderLeftWidth: BORDER_WIDTH,
+    borderBottomWidth: BORDER_WIDTH,
+    borderTopWidth: BORDER_WIDTH,
+  },
+  rightBracket: {
+    position: "absolute",
+    top: TOP,
+    right: LEFT_OR_RIGHT,
+    width: WIDTH,
+    height: HEIGHT,
+    borderRightWidth: BORDER_WIDTH,
+    borderTopWidth: BORDER_WIDTH,
+    borderBottomWidth: BORDER_WIDTH,
   },
 });
 
