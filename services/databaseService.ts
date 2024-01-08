@@ -60,13 +60,25 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
       salt,
       per100unit,
       servingSizes,
+      barcode,
     } = food;
 
     db.transaction(
       (tx) => {
         tx.executeSql(
           INSERT_FOOD,
-          [name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit],
+          [
+            name,
+            calories,
+            protein,
+            carbs,
+            sugar,
+            fiber,
+            fat,
+            salt,
+            per100unit,
+            barcode,
+          ],
           (_, result) => {
             const insertedId = result.insertId;
             const insertedFood = { ...food, id: insertedId };
