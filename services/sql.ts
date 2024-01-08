@@ -10,8 +10,12 @@ export const CREATE_TABLE_FOODS = `
     fat REAL NOT NULL,
     salt REAL,
     per100unit TEXT CHECK(per100unit IN ('g', 'ml')),
-    barcode: TEXT
+    barcode TEXT
   )
+`;
+
+export const ALTER_ADD_BARCODE_TO_FOOD = `
+  ALTER TABLE food ADD COLUMN barcode TEXT
 `;
 
 export const CREATE_TABLE_MEALS = `
