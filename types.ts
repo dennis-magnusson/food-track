@@ -12,7 +12,7 @@ export type Food = {
   salt?: number;
   per100unit: "g" | "ml";
   servingSizes: ServingSize[];
-  barcode?: string
+  barcode?: string;
 };
 
 export type FoodEntry = {
@@ -61,7 +61,9 @@ export type RootStackParamList = {
     food: Food;
     currentAmount: number;
   };
-  BarcodeScanner:undefined;
+  BarcodeScanner: {
+    afterScan: React.Dispatch<React.SetStateAction<string>>;
+  };
 };
 
 export type SettingsStackParamList = {
