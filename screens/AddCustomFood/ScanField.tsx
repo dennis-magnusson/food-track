@@ -5,15 +5,16 @@ import { inputs } from "../../theme";
 
 interface ScanFieldProps {
   onPress: () => void;
-  scanned: boolean;
+  barcode: string;
 }
 
-const ScanField: React.FC<ScanFieldProps> = ({ onPress, scanned }) => {
+const ScanField: React.FC<ScanFieldProps> = ({ onPress, barcode }) => {
+  const scanned = barcode !== "";
   const onPressScan = (): void => {
     if (!scanned) {
       onPress();
     } else {
-      Alert.alert("Replace the existing barcode?", "", [
+      Alert.alert("Replace the existing barcode?", `Replace ${barcode}?`, [
         {
           text: "Cancel",
           style: "cancel",
@@ -43,7 +44,7 @@ const ScanField: React.FC<ScanFieldProps> = ({ onPress, scanned }) => {
         />
         <MyText style={{ textAlign: "center" }}>
           {" "}
-          {scanned ? "Scanned" : "Scan barcode"}
+          {scanned ? barcode : "Scan barcode"}
         </MyText>
       </View>
     </TouchableOpacity>

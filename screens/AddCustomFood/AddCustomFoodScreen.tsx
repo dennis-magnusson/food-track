@@ -19,6 +19,7 @@ import {
   RootStackParamList,
 } from "../../types";
 import NutritionInputGrid from "./NutritionInputGrid";
+import ScanField from "./ScanField";
 import ServingSizeInput from "./ServingSizeInput";
 import UnitButtons from "./UnitButtons";
 import sharedStyles from "./sharedStyles";
@@ -39,6 +40,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
   const [fiber, setFiber] = useState<string>("");
   const [salt, setSalt] = useState<string>("");
   const [per100unit, setPer100unit] = useState<"g" | "ml">("g");
+  const [barcode, setBarcode] = useState<string>("");
 
   const [servingSizes, setServingSizes] = useState<
     Array<{ amount: string; description: string }>
@@ -176,6 +178,17 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
           />
 
           <View style={sharedStyles.row}>
+            <MyText style={sharedStyles.title}>Add barcode</MyText>
+          </View>
+
+          <ScanField
+            onPress={() =>
+              navigation.navigate("BarcodeScanner", { afterScan: setBarcode })
+            }
+            barcode={barcode}
+          />
+
+          <View style={sharedStyles.row}>
             <View style={styles.columnFull}>
               <MyButton
                 text="Add new food"
@@ -203,6 +216,9 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5,
+  },
+  barcodeContainer: {
+    marginTop: 20,
   },
 });
 
