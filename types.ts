@@ -62,7 +62,7 @@ export type RootStackParamList = {
     currentAmount: number;
   };
   BarcodeScanner: {
-    afterScan: React.Dispatch<React.SetStateAction<string>>;
+    afterScan: (barcode_data: string) => void;
   };
 };
 
