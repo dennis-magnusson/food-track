@@ -183,7 +183,11 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
 
           <ScanField
             onPress={() =>
-              navigation.navigate("BarcodeScanner", { afterScan: setBarcode })
+              navigation.navigate("BarcodeScanner", {
+                afterScan: (barcode_data) => {
+                  setBarcode(barcode_data);
+                },
+              })
             }
             barcode={barcode}
           />
