@@ -6,7 +6,10 @@ import {
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
-import { fetchAllFoods } from "../../services/databaseService";
+import {
+  fetchAllFoods,
+  fetchFoodByBarcode,
+} from "../../services/databaseService";
 import BackButton from "../../shared/BackButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
@@ -50,8 +53,26 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
     }, [])
   );
 
+  const barcodeScanned = (barcode_data: string) => {
+    // check if database contains food with barcode
+    fetchFoodByBarcode(barcode_data)
+      .then((food) => {
+        console.log("food: ", food);
+        if (!food) {
+          alert("Food not found");
+        } else {
+          alert("found food: " + food.name);
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
+    // if yes, navigate to add food screen with food data
+    // if no, alert that food not found with possibility to navigate to add custom food
+  };
+
   const handleScanBarcode = () => {
-    navigation.navigate("BarcodeScanner");
+    navigation.navigate("BarcodeScanner", { afterScan: barcodeScanned });
   };
 
   const handleAddCustomFood = () => {
