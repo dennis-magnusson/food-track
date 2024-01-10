@@ -106,6 +106,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
       salt: salt ? parseFloat(salt) : null,
       per100unit,
       servingSizes,
+      barcode,
     };
 
     try {
