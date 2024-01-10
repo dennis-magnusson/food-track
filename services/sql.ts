@@ -90,7 +90,7 @@ export const FETCH_ALL_FOODS = `
 `;
 
 export const FETCH_FOOD_BY_BARCODE = `
-  SELECT * FROM Food WHERE barcode = ?
+  SELECT * FROM food WHERE barcode = ?
 `;
 
 export const INSERT_OR_IGNORE_MEAL = `

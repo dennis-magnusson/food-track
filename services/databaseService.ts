@@ -9,6 +9,7 @@ import {
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
   FETCH_ALL_SERVING_SIZES_FOR_FOOD,
+  FETCH_FOOD_BY_BARCODE,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   FETCH_SETTING,
   INSERT_FOOD,
@@ -118,29 +119,25 @@ export const fetchAllFoods = (
   );
 };
 
-// export const fetchFoodByBarcode = (barcode: string): Promise<Food | null> => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction(
-//       (tx) => {
-//         tx.executeSql(
-//           ,
-//           [barcode],
-//           (_, resultSet) => {
-//             if (resultSet.rows.length > 0) {
-//               resolve(resultSet.rows.item(0));
-//             } else {
-//               resolve(null);
-//             }
-//           }
-//         );
-//       },
-//       (error) => {
-//         console.log(error);
-//         reject(error);
-//       }
-//     );
-//   });
-// }
+export const fetchFoodByBarcode = (barcode: string): Promise<Food | null> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(FETCH_FOOD_BY_BARCODE, [barcode], (_, resultSet) => {
+          if (resultSet.rows.length > 0) {
+            resolve(resultSet.rows.item(0));
+          } else {
+            resolve(null);
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
 
 export const fetchServingSizesForFood = (
   id: number
