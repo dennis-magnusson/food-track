@@ -105,7 +105,10 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
       fat: parseFloat(fat),
       salt: salt ? parseFloat(salt) : null,
       per100unit,
-      servingSizes,
+      servingSizes: servingSizes.map((size) => ({
+        ...size,
+        amount: parseFloat(size.amount),
+      })),
       barcode,
     };
 
@@ -175,7 +178,10 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
             handleRemoveServingSize={handleRemoveServingSize}
             handleUpdateServingSize={handleUpdateServingSize}
             per100unit={per100unit}
-            servingSizes={servingSizes}
+            servingSizes={servingSizes.map((size) => ({
+              ...size,
+              amount: parseFloat(size.amount),
+            }))}
           />
 
           <View style={sharedStyles.row}>
