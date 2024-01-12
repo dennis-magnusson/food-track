@@ -2,8 +2,8 @@ import {
   StyleProp,
   StyleSheet,
   TouchableOpacity,
+  View,
   ViewStyle,
-  View
 } from "react-native";
 import { colors } from "../theme";
 import { MyText } from "./MyText";
@@ -19,7 +19,10 @@ const MyButton = ({ onPress, text, style, icon, ...rest }: MyButtonProps) => {
   const containerStyles = [styles.buttonBase, style];
   return (
     <TouchableOpacity onPress={onPress} style={containerStyles} {...rest}>
-      <View style={styles.container}>{icon}<MyText style={styles.buttonLabel}>{text}</MyText></View>
+      <View style={styles.container}>
+        {icon}
+        <MyText style={styles.buttonLabel}>{text}</MyText>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -41,8 +44,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
-    gap: 5
-  }
+    gap: 5,
+  },
 });
 
 export default MyButton;
