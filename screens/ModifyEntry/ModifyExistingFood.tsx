@@ -7,12 +7,15 @@ import {
   View,
 } from "react-native";
 import { DayDispatchContext } from "../../context/AppContext";
-import { updateAmountToFoodEntry } from "../../services/databaseService";
+import {
+  deleteFoodEntry,
+  updateAmountToFoodEntry,
+} from "../../services/databaseService";
 import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
-import { inputs, typography } from "../../theme";
+import { colors, inputs, typography } from "../../theme";
 import {
   ModifyFoodEntryScreenNavigationProp,
   RootStackParamList,
@@ -52,6 +55,22 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
     }
   };
 
+  const handleRemoveFoodEntry = async () => {
+    try {
+      await deleteFoodEntry(entryId);
+      dispatch({
+        type: "DELETE_FOOD_ENTRY",
+        payload: {
+          mealType,
+          entryId,
+        },
+      });
+      navigation.navigate("Meal", { mealType });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const handleInputChange = (text: string) => {
     if (
       (text === "" || /^[\d]*[.,]?[\d]*$/.test(text)) &&
@@ -83,6 +102,12 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
             text="Update"
             onPress={handleModifyFoodEntry}
             style={{ marginTop: 20 }}
+          />
+
+          <MyButton
+            text="Remove entry"
+            onPress={handleRemoveFoodEntry}
+            style={{ backgroundColor: colors.carbs, marginTop: 10 }}
           />
         </View>
       </KeyboardAvoidingView>
