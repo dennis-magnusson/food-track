@@ -61,7 +61,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
         if (!food) {
           alert("Food not found");
         } else {
-          alert("found food: " + food.name);
+          handleFoodPress(food);
         }
       })
       .catch((err) => {
