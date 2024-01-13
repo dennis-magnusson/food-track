@@ -5,6 +5,7 @@ import BackButton from "../../shared/BackButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { GoalsScreenNavigationProp } from "../../types";
 import DailyIntake from "./DailyIntake";
+import DailyProgressChart from "./DailyProgressChart";
 import EditGoalsModal from "./EditGoalsModal";
 
 interface GoalsScreenProps {}
@@ -38,6 +39,7 @@ const GoalsScreen: React.FC<GoalsScreenProps> = () => {
         savingUpdates={savingUpdates}
       />
       <DailyIntake nutrientGoals={nutrientGoals} />
+      <DailyProgressChart />
     </MySafeAreaView>
   );
 };
