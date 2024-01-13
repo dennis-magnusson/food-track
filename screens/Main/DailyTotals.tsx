@@ -22,7 +22,7 @@ const DailyTotals: React.FC<DailyTotalsProps> = ({
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
 
-  const nutrientGoals = useNutrientGoals();
+  const { nutrientGoals } = useNutrientGoals();
 
   const loading = Object.keys(nutrientGoals).length === 0;
 

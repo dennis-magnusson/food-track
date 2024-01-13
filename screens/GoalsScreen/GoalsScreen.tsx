@@ -1,28 +1,44 @@
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
+import { useNutrientGoals } from "../../hooks/useNutrientGoals";
 import BackButton from "../../shared/BackButton";
+import MySafeAreaView from "../../shared/MySafeAreaView";
 import { GoalsScreenNavigationProp } from "../../types";
 import DailyIntake from "./DailyIntake";
+import EditGoalsModal from "./EditGoalsModal";
 
 interface GoalsScreenProps {}
 
 const GoalsScreen: React.FC<GoalsScreenProps> = () => {
   const navigation = useNavigation<GoalsScreenNavigationProp>();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [savingUpdates, setSavingUpdates] = useState(false);
+  const { nutrientGoals, updateAndStoreNutrientGoals } = useNutrientGoals();
 
-  const handleEditGoals = () => {
-    // navigation.navigate("EditGoals");
-    alert("Edit Goals");
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
-    <SafeAreaView>
+    <MySafeAreaView>
       <BackButton
         backFunction={() => navigation.goBack()}
-        actionFunction={handleEditGoals}
+        actionFunction={openModal}
         actionIcon="options-outline"
       />
-      <DailyIntake />
-    </SafeAreaView>
+      <EditGoalsModal
+        visible={modalVisible}
+        onCloseModal={closeModal}
+        updateNutrientGoals={updateAndStoreNutrientGoals}
+        nutrientGoals={nutrientGoals}
+        savingUpdates={savingUpdates}
+      />
+      <DailyIntake nutrientGoals={nutrientGoals} />
+    </MySafeAreaView>
   );
 };
 

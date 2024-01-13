@@ -173,3 +173,11 @@ export type NutrientGoalKey =
   | "proteinGoal"
   | "fatGoal"
   | "caloriesGoal";
+
+export type CompleteNutrientGoals = {
+  [K in NutrientGoalKey]: number;
+};
+
+export type IncompleteNutrientGoals = {
+  [K in NutrientGoalKey]?: number;
+};

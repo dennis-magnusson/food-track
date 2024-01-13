@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
-import { useNutrientGoals } from "../../hooks/useNutrientGoals";
 import { MyText } from "../../shared/MyText";
 import { colors, layout, typography } from "../../theme";
+import { IncompleteNutrientGoals } from "../../types";
 import { getTotals } from "../../utils/getTotals";
 import NutrientIntakeBar from "./NutrientIntakeBar";
 
-interface DailyIntakeProps {}
+interface DailyIntakeProps {
+  nutrientGoals: IncompleteNutrientGoals;
+}
 
-const DailyIntake: React.FC<DailyIntakeProps> = () => {
+const DailyIntake: React.FC<DailyIntakeProps> = ({ nutrientGoals }) => {
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
-
-  const nutrientGoals = useNutrientGoals();
 
   const loading = Object.keys(nutrientGoals).length === 0;
 
