@@ -1,8 +1,15 @@
 import React, { useContext } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { DayContext } from "../../context/AppContext";
+import { useNutrientGoals } from "../../hooks/useNutrientGoals";
+import { MyText } from "../../shared/MyText";
 import ProgressBarVertical from "../../shared/ProgressBarVertical";
-import { layout, typography } from "../../theme";
+import { colors, layout, typography } from "../../theme";
 import { getTotals } from "../../utils/getTotals";
 
 interface DailyTotalsProps {
@@ -14,30 +21,49 @@ const DailyTotals: React.FC<DailyTotalsProps> = ({
 }): JSX.Element => {
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
-  const calorieGoal = 2500;
-  const carbsGoal = 100;
-  const proteinGoal = 150;
-  const fatGoal = 100;
+
+  const nutrientGoals = useNutrientGoals();
+
+  const loading = Object.keys(nutrientGoals).length === 0;
+
+  if (loading)
+    return (
+      <View style={layout.accentContainer1}>
+        <View>
+          <ActivityIndicator size="small" />
+          <MyText
+            style={{
+              textAlign: "center",
+              marginTop: 10,
+              color: colors.secondaryText,
+            }}
+          >
+            Loading totals
+          </MyText>
+        </View>
+      </View>
+    );
+
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
       <ProgressBarVertical
         amount={totalCalories}
-        goalAmount={calorieGoal}
+        goalAmount={nutrientGoals.caloriesGoal}
         category="Calories"
       />
       <ProgressBarVertical
         amount={totalCarbs}
-        goalAmount={carbsGoal}
+        goalAmount={nutrientGoals.carbGoal}
         category="Carbs"
       />
       <ProgressBarVertical
         amount={totalProtein}
-        goalAmount={proteinGoal}
+        goalAmount={nutrientGoals.proteinGoal}
         category="Protein"
       />
       <ProgressBarVertical
         amount={totalFat}
-        goalAmount={fatGoal}
+        goalAmount={nutrientGoals.fatGoal}
         category="Fat"
       />
     </TouchableOpacity>

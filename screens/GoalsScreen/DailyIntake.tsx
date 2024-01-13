@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
+import { useNutrientGoals } from "../../hooks/useNutrientGoals";
 import { MyText } from "../../shared/MyText";
-import { layout, typography } from "../../theme";
+import { colors, layout, typography } from "../../theme";
 import { getTotals } from "../../utils/getTotals";
 import NutrientIntakeBar from "./NutrientIntakeBar";
 
@@ -11,6 +12,29 @@ interface DailyIntakeProps {}
 const DailyIntake: React.FC<DailyIntakeProps> = () => {
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
+
+  const nutrientGoals = useNutrientGoals();
+
+  const loading = Object.keys(nutrientGoals).length === 0;
+
+  if (loading)
+    return (
+      <View style={layout.accentContainer1}>
+        <View>
+          <ActivityIndicator size="small" />
+          <MyText
+            style={{
+              textAlign: "center",
+              marginTop: 10,
+              color: colors.secondaryText,
+            }}
+          >
+            Loading totals
+          </MyText>
+        </View>
+      </View>
+    );
+
   return (
     <View>
       <View style={layout.accentContainer1}>
@@ -19,23 +43,23 @@ const DailyIntake: React.FC<DailyIntakeProps> = () => {
           <NutrientIntakeBar
             nutrientName="Calories"
             nutrientAmount={totalCalories}
-            nutrientGoal={2500}
+            nutrientGoal={nutrientGoals.caloriesGoal}
           />
         </View>
         <NutrientIntakeBar
           nutrientName="Carbs"
           nutrientAmount={totalCarbs}
-          nutrientGoal={343}
+          nutrientGoal={nutrientGoals.carbGoal}
         />
         <NutrientIntakeBar
           nutrientName="Protein"
           nutrientAmount={totalProtein}
-          nutrientGoal={142}
+          nutrientGoal={nutrientGoals.proteinGoal}
         />
         <NutrientIntakeBar
           nutrientName="Fat"
           nutrientAmount={totalFat}
-          nutrientGoal={90}
+          nutrientGoal={nutrientGoals.fatGoal}
         />
       </View>
     </View>
