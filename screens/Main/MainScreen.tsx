@@ -18,6 +18,10 @@ const MainScreen: React.FC = (): JSX.Element => {
     navigation.navigate("Meal", { mealType });
   };
 
+  const navigateToGoals = () => {
+    navigation.navigate("Goals");
+  };
+
   const changeDay = (newDay: Date) => {
     loadDayData(dispatch, newDay);
   };
@@ -26,7 +30,7 @@ const MainScreen: React.FC = (): JSX.Element => {
     <MySafeAreaView>
       <ScrollView contentContainerStyle={styles.containerInner} bounces={false}>
         <DateSelector changeDay={changeDay} />
-        <DailyTotals />
+        <DailyTotals handlePress={navigateToGoals} />
         <MealsList handleMealPress={handleMealPress} />
       </ScrollView>
     </MySafeAreaView>
