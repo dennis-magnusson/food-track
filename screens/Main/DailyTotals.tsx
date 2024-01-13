@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { DayContext } from "../../context/AppContext";
-import ProgressBar from "../../shared/ProgressBar";
+import ProgressBarVertical from "../../shared/ProgressBarVertical";
 import { layout, typography } from "../../theme";
 import { getTotals } from "../../utils/getTotals";
 
-const DailyTotals: React.FC = (): JSX.Element => {
+interface DailyTotalsProps {
+  handlePress: () => void;
+}
+
+const DailyTotals: React.FC<DailyTotalsProps> = ({
+  handlePress,
+}): JSX.Element => {
   const day = useContext(DayContext);
   const { totalCalories, totalFat, totalCarbs, totalProtein } = getTotals(day);
   const calorieGoal = 2500;
@@ -13,24 +19,28 @@ const DailyTotals: React.FC = (): JSX.Element => {
   const proteinGoal = 150;
   const fatGoal = 100;
   return (
-    <View style={styles.container}>
-      <ProgressBar
+    <TouchableOpacity onPress={handlePress} style={styles.container}>
+      <ProgressBarVertical
         amount={totalCalories}
         goalAmount={calorieGoal}
         category="Calories"
       />
-      <ProgressBar
+      <ProgressBarVertical
         amount={totalCarbs}
         goalAmount={carbsGoal}
         category="Carbs"
       />
-      <ProgressBar
+      <ProgressBarVertical
         amount={totalProtein}
         goalAmount={proteinGoal}
         category="Protein"
       />
-      <ProgressBar amount={totalFat} goalAmount={fatGoal} category="Fat" />
-    </View>
+      <ProgressBarVertical
+        amount={totalFat}
+        goalAmount={fatGoal}
+        category="Fat"
+      />
+    </TouchableOpacity>
   );
 };
 
