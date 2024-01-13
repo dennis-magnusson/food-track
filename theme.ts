@@ -24,6 +24,10 @@ export const typography: { [key: string]: TextStyle } = {
     fontSize: 26,
     marginTop: 10,
   },
+  title1NoMargin: {
+    ...baseTitleStyle,
+    fontSize: 26,
+  },
   title2: {
     ...baseTitleStyle,
     fontSize: 22,
