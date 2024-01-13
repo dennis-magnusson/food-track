@@ -71,7 +71,12 @@ export const FETCH_ALL_SERVING_SIZES_FOR_FOOD = `
 `;
 
 export const FETCH_ALL_FOODS = `
-  SELECT * FROM food
+  SELECT food.*, MAX(meal.date) as last_used
+  FROM food
+  LEFT JOIN mealfood ON food.id = mealfood.food_id
+  LEFT JOIN meal ON mealfood.meal_id = meal.id
+  GROUP BY food.id
+  ORDER BY last_used DESC
 `;
 
 export const FETCH_FOOD_BY_BARCODE = `
