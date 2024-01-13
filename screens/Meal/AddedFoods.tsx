@@ -21,11 +21,11 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
       onPress={() => handleEntryPress(item.id, item.food, item.amount)}
     >
       <View style={{ ...layout.accentContainer1 }}>
-        <MyText style={typography.title3}>
-          {item.food.name}
-        </MyText>
+        <MyText style={typography.title3}>{item.food.name}</MyText>
         <MyText style={{ ...typography.secondary, marginBottom: 0 }}>
-          {item.amount} {item.food.per100unit} · {Math.floor(item.amount / 100 * item.food.calories)} cal</MyText>
+          {item.amount} {item.food.per100unit} ·{" "}
+          {Math.floor((item.amount / 100) * item.food.calories)} cal
+        </MyText>
       </View>
     </TouchableOpacity>
   );
@@ -35,7 +35,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
         <FlatList
           data={meal.entries}
           renderItem={renderItem}
-          keyExtractor={(item, i) => (item.id + i).toString()} // TODO: use only the id but combine the elements that share the same food id into one
+          keyExtractor={(item, i) => item.id.toString()}
           scrollEnabled={true}
         />
       ) : (
