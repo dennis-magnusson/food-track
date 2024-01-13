@@ -3,13 +3,13 @@ import { StyleSheet, View } from "react-native";
 import { colors, typography } from "../theme";
 import { MyText } from "./MyText";
 
-interface ProgressBarProps {
+interface ProgressBarVerticalProps {
   amount: number;
   goalAmount: number;
   category: string;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
+const ProgressBarVertical: React.FC<ProgressBarVerticalProps> = ({
   amount,
   goalAmount,
   category,
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgressBar;
+export default ProgressBarVertical;
