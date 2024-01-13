@@ -6,6 +6,7 @@ import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
 import AppNavigator from "./navigation/AppNavigator";
 import LoadingScreen from "./screens/Loading/LoadingScreen";
+import { initializeAsyncStorage } from "./services/asyncStorage";
 import { initializeDB } from "./services/databaseService";
 import { loadDayData } from "./utils/loadDayData";
 
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
     initializeDB();
+    initializeAsyncStorage();
     loadDayData(dispatch);
   }, []);
 

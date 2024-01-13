@@ -167,3 +167,9 @@ export type DayAction =
         loading: boolean;
       };
     };
+
+export type NutrientGoalKey =
+  | "carbGoal"
+  | "proteinGoal"
+  | "fatGoal"
+  | "caloriesGoal";
