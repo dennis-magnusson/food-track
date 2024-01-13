@@ -64,6 +64,7 @@ export type RootStackParamList = {
   BarcodeScanner: {
     afterScan: (barcode_data: string) => void;
   };
+  Goals: {};
 };
 
 export type SettingsStackParamList = {
@@ -116,6 +117,11 @@ export type ModifyFoodEntryScreenNavigationProp = NativeStackNavigationProp<
 export type BarcodeScannerScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "BarcodeScanner"
+>;
+
+export type GoalsScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Goals"
 >;
 
 export type DayAction =
