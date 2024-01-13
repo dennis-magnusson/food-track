@@ -38,13 +38,6 @@ export const CREATE_TABLE_MEAL_FOODS = `
   )
 `;
 
-export const CREATE_TABLE_SETTINGS = `
-  CREATE TABLE IF NOT EXISTS settings (
-    key TEXT PRIMARY KEY,
-    value TEXT NOT NULL
-  )
-`;
-
 export const CREATE_TABLE_SERVINGSIZE = `
   CREATE TABLE IF NOT EXISTS servingsize (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,14 +46,6 @@ export const CREATE_TABLE_SERVINGSIZE = `
     amount INTEGER NOT NULL,
     FOREIGN KEY (food_id) REFERENCES food(id)
   )
-`;
-
-export const INSERT_SETTING = `
-  INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)
-`;
-
-export const FETCH_SETTING = `
-  SELECT value FROM settings WHERE key = ?
 `;
 
 export const INSERT_FOOD = `
