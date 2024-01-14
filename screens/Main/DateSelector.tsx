@@ -42,7 +42,9 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
           <Ionicons name="caret-back" size={24} color="black" />
         </View>
       </TouchableOpacity>
-      <Text style={styles.dateText}>{readableDate}</Text>
+      <TouchableOpacity onPress={() => alert("open date picker")}>
+        <Text style={styles.dateText}>{readableDate}</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={handleNextPress}>
         <View style={styles.iconContainer}>
           <Ionicons name="caret-forward" size={24} color="black" />
