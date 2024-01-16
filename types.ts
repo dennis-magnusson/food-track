@@ -45,6 +45,12 @@ export type DayContextType = {
   loading: boolean;
 };
 
+export type BarcodeContextType = {
+  barcode: string | null;
+  updateBarcode: (newBarcode: string) => void;
+  clearBarcode: () => void;
+};
+
 export type RootStackParamList = {
   Main: undefined;
   Meal: { mealType: MealType };
@@ -61,9 +67,7 @@ export type RootStackParamList = {
     food: Food;
     currentAmount: number;
   };
-  BarcodeScanner: {
-    afterScan: (barcode_data: string) => void;
-  };
+  BarcodeScanner: {};
   Goals: {};
 };
 
