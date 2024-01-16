@@ -8,13 +8,14 @@ export const colors: Record<string, string> = {
   darkerBackground: "#efefef",
   accentBackground: "#fff",
   calories: "#FFA07A",
-  carbs: "#ff5e57",
-  fat: "#ffc048",
-  protein: "#0be881",
+  fat: "#A59BDE",
+  carbs: "#F7C648",
+  protein: "#68BE70",
+  danger: "#ff5e57",
 };
 
 const baseTitleStyle: TextStyle = {
-  fontWeight: "bold",
+  fontFamily: "Work Sans Medium",
   marginBottom: 5,
 };
 
@@ -49,9 +50,10 @@ export const typography: { [key: string]: TextStyle } = {
 
 const textInputBase: TextStyle = {
   borderWidth: 1,
-  borderColor: "#ccc",
+  borderColor: "#e2e2e2",
   borderRadius: 5,
   padding: 10,
+  fontFamily: "Work Sans Regular",
 };
 
 export const inputs: { [key: string]: TextStyle } = {
@@ -68,7 +70,9 @@ export const inputs: { [key: string]: TextStyle } = {
 export const layout: { [key: string]: ViewStyle } = {
   accentContainer1: {
     backgroundColor: colors.accentBackground,
-    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#e2e2e2",
+    borderRadius: 18,
     marginHorizontal: 10,
     marginVertical: 8,
     padding: 15,
