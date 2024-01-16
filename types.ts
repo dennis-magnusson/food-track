@@ -69,6 +69,7 @@ export type RootStackParamList = {
   };
   BarcodeScanner: {};
   Goals: {};
+  Settings: {};
 };
 
 export type SettingsStackParamList = {
@@ -126,6 +127,11 @@ export type BarcodeScannerScreenNavigationProp = NativeStackNavigationProp<
 export type GoalsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Goals"
+>;
+
+export type SettingsScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Settings"
 >;
 
 export type DayAction =

@@ -4,7 +4,7 @@ import { StatusBar } from "react-native";
 import loadingDayContext from "./constants/loadingDayContext";
 import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
-import AppNavigator from "./navigation/AppNavigator";
+import MainStack from "./navigation/MainStack";
 import LoadingScreen from "./screens/Loading/LoadingScreen";
 import { initializeAsyncStorage } from "./services/asyncStorage";
 import { initializeDB } from "./services/databaseService";
@@ -29,7 +29,7 @@ function App() {
       <DayContext.Provider value={day}>
         <DayDispatchContext.Provider value={dispatch}>
           <NavigationContainer>
-            <AppNavigator />
+            <MainStack />
           </NavigationContainer>
         </DayDispatchContext.Provider>
       </DayContext.Provider>

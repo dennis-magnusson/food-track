@@ -1,18 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { DayDispatchContext } from "../../context/AppContext";
-import MySafeAreaView from "../../shared/MySafeAreaView";
-import { colors } from "../../theme";
 import { MainScreenNavigationProp, MealType } from "../../types";
 import { loadDayData } from "../../utils/loadDayData";
 import DailyTotals from "./DailyTotals";
 import DateSelector from "./DateSelector";
 import MealsList from "./MealsList";
+import TopBar from "./TopBar";
 
 const MainScreen: React.FC = (): JSX.Element => {
   const navigation = useNavigation<MainScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
+
+  const insets = useSafeAreaInsets();
 
   const handleMealPress = (mealType: MealType): void => {
     navigation.navigate("Meal", { mealType });
@@ -27,20 +29,18 @@ const MainScreen: React.FC = (): JSX.Element => {
   };
 
   return (
-    <MySafeAreaView>
-      <ScrollView contentContainerStyle={styles.containerInner} bounces={false}>
-        <DateSelector changeDay={changeDay} />
+    <>
+      <TopBar topPaddingAmount={insets.top} />
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: insets.bottom }}
+        bounces={true}
+      >
         <DailyTotals handlePress={navigateToGoals} />
+        <DateSelector changeDay={changeDay} />
         <MealsList handleMealPress={handleMealPress} />
       </ScrollView>
-    </MySafeAreaView>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  containerInner: {
-    backgroundColor: colors.lightBackground,
-  },
-});
 
 export default MainScreen;

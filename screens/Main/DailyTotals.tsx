@@ -45,38 +45,40 @@ const DailyTotals: React.FC<DailyTotalsProps> = ({
     );
 
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <ProgressBarVertical
-        amount={totalCalories}
-        goalAmount={nutrientGoals.caloriesGoal}
-        category="Calories"
-      />
-      <ProgressBarVertical
-        amount={totalCarbs}
-        goalAmount={nutrientGoals.carbGoal}
-        category="Carbs"
-      />
-      <ProgressBarVertical
-        amount={totalProtein}
-        goalAmount={nutrientGoals.proteinGoal}
-        category="Protein"
-      />
-      <ProgressBarVertical
-        amount={totalFat}
-        goalAmount={nutrientGoals.fatGoal}
-        category="Fat"
-      />
+    <TouchableOpacity onPress={handlePress} style={layout.accentContainer1}>
+      <MyText style={styles.title}>Daily Totals</MyText>
+      <View style={styles.container}>
+        <ProgressBarVertical
+          amount={totalCalories}
+          goalAmount={nutrientGoals.caloriesGoal}
+          category="Calories"
+        />
+        <ProgressBarVertical
+          amount={totalCarbs}
+          goalAmount={nutrientGoals.carbGoal}
+          category="Carbs"
+        />
+        <ProgressBarVertical
+          amount={totalProtein}
+          goalAmount={nutrientGoals.proteinGoal}
+          category="Protein"
+        />
+        <ProgressBarVertical
+          amount={totalFat}
+          goalAmount={nutrientGoals.fatGoal}
+          category="Fat"
+        />
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    ...layout.accentContainer1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  title: { ...typography.title1, marginBottom: 8 },
+  title: { ...typography.title1NoMargin, marginBottom: 10 },
   stat: typography.title3,
 });
 

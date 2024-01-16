@@ -7,9 +7,10 @@ import GoalsScreen from "../screens/GoalsScreen/GoalsScreen";
 import MainScreen from "../screens/Main/MainScreen";
 import MealScreen from "../screens/Meal/MealScreen";
 import ModifyFoodEntryScreen from "../screens/ModifyEntry/ModifyExistingFood";
+import SettingsScreen from "../screens/Settings/SettingsScreen";
 import { RootStackParamList } from "../types";
 
-const HomeStack = (): JSX.Element => {
+const MainStack = (): JSX.Element => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
@@ -31,9 +32,10 @@ const HomeStack = (): JSX.Element => {
         />
         <Stack.Screen name="BarcodeScanner" component={BarcodeScannerScreen} />
         <Stack.Screen name="Goals" component={GoalsScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </BarcodeProvider>
   );
 };
 
-export default HomeStack;
+export default MainStack;
