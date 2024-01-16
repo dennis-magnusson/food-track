@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import * as Device from "expo-device";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useBarcode } from "../../hooks/useBarcode";
 import { insertFood } from "../../services/databaseService";
 import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
@@ -40,7 +41,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
   const [fiber, setFiber] = useState<string>("");
   const [salt, setSalt] = useState<string>("");
   const [per100unit, setPer100unit] = useState<"g" | "ml">("g");
-  const [barcode, setBarcode] = useState<string>("");
+  const [barcodeInput, setBarcodeInput] = useState<string>("");
 
   const [servingSizes, setServingSizes] = useState<
     Array<{ amount: string; description: string }>
@@ -50,6 +51,17 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
       description: "",
     },
   ]);
+
+  const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
+
+  const { barcode, clearBarcode } = useBarcode();
+
+  useEffect(() => {
+    if (barcode) {
+      setBarcodeInput(barcode);
+      clearBarcode();
+    }
+  }, [barcode, clearBarcode]);
 
   const handleAddServingSize = (): void => {
     setServingSizes([...servingSizes, { amount: "", description: "" }]);
@@ -70,8 +82,6 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
     newServingSizes[index] = { ...newServingSizes[index], [field]: value };
     setServingSizes(newServingSizes);
   };
-
-  const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
 
   const handleAddCustomFood = async () => {
     if (!name.trim()) {
@@ -109,7 +119,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         ...size,
         amount: parseFloat(size.amount),
       })),
-      barcode,
+      barcodeInput,
     };
 
     try {
@@ -189,14 +199,8 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
           </View>
 
           <ScanField
-            onPress={() =>
-              navigation.navigate("BarcodeScanner", {
-                afterScan: (barcode_data) => {
-                  setBarcode(barcode_data);
-                },
-              })
-            }
-            barcode={barcode}
+            onPress={() => navigation.navigate("BarcodeScanner")}
+            barcode={barcodeInput}
           />
 
           <View style={sharedStyles.row}>

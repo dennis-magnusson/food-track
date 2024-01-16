@@ -2,12 +2,15 @@ import { useNavigation } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useEffect, useState } from "react";
 import { Button, SafeAreaView, StyleSheet, View } from "react-native";
+import { useBarcode } from "../../hooks/useBarcode";
 import TextScreen from "../../shared/TextScreen";
 import { colors } from "../../theme";
 
 const BarcodeScannerScreen = ({ route }): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+
+  const { updateBarcode } = useBarcode();
 
   const navigation = useNavigation();
 
@@ -22,7 +25,7 @@ const BarcodeScannerScreen = ({ route }): JSX.Element => {
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    route.params.afterScan(data);
+    updateBarcode(data);
     navigation.goBack();
   };
 
