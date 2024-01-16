@@ -3,7 +3,6 @@ import {
   addDays,
   format,
   isToday,
-  isTomorrow,
   isYesterday,
   parseISO,
   subDays,
@@ -11,6 +10,7 @@ import {
 import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
+import { colors } from "../../theme";
 
 interface DateSelectorProps {
   changeDay: (toDate: Date) => void;
@@ -20,12 +20,10 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
   const day = useContext(DayContext);
   const isoDate = parseISO(day.date);
   const readableDate = isToday(isoDate)
-    ? "Today"
+    ? `Today, ${format(isoDate, "dd MMM")}`
     : isYesterday(isoDate)
-    ? "Yesterday"
-    : isTomorrow(isoDate)
-    ? "Tomorrow"
-    : format(isoDate, "MMMM d, yyyy");
+    ? `Yesterday, ${format(isoDate, "dd MMM")}`
+    : format(isoDate, "EEEE, dd MMM");
 
   const handleNextPress = () => {
     changeDay(addDays(isoDate, 1));
@@ -61,6 +59,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
+    backgroundColor: colors.accentBackground,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    marginTop: 14,
+    marginBottom: 10,
+    paddingVertical: 10,
   },
   iconContainer: {
     padding: 10,
