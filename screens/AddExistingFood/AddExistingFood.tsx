@@ -80,7 +80,6 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
       multiplier == ""
         ? 0
         : parseFloat(multiplier.replace(",", ".")) * servingSize.amount;
-    console.log(amnt);
     return amnt;
   };
 

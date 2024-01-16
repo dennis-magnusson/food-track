@@ -3,9 +3,16 @@ import {
   useFocusEffect,
   useNavigation,
 } from "@react-navigation/native";
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { StyleSheet, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
+import { useBarcode } from "../../hooks/useBarcode";
 import {
   fetchAllFoods,
   fetchFoodByBarcode,
@@ -53,11 +60,23 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
     }, [])
   );
 
+  const { barcode, clearBarcode } = useBarcode();
+
+  const isFocused = navigation.isFocused();
+
+  useEffect(() => {
+    if (barcode && isFocused) {
+      barcodeScanned(barcode);
+    }
+    return () => {
+      clearBarcode();
+    };
+  }, [barcode, clearBarcode]);
+
   const barcodeScanned = (barcode_data: string) => {
     // check if database contains food with barcode
     fetchFoodByBarcode(barcode_data)
       .then((food) => {
-        console.log("food: ", food);
         if (!food) {
           alert("Food not found");
         } else {
@@ -72,7 +91,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   };
 
   const handleScanBarcode = () => {
-    navigation.navigate("BarcodeScanner", { afterScan: barcodeScanned });
+    navigation.navigate("BarcodeScanner");
   };
 
   const handleAddCustomFood = () => {
