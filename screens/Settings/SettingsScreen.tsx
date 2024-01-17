@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, ScrollView, StyleSheet, View } from "react-native";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
-import { colors, layout, typography } from "../../theme";
+import { layout, typography } from "../../theme";
 
 const SettingsScreen: React.FC = () => {
   const [theme, setTheme] = useState("auto");
@@ -33,7 +33,6 @@ const SettingsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.lightBackground,
   },
   title: {
     ...typography.title1,
