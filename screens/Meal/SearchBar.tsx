@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { MyText } from "../../shared/MyText";
-import { colors, layout } from "../../theme";
+import { colors, inputs } from "../../theme";
 
 interface SearchBarProps {
   searchQuery: string;
@@ -61,6 +61,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         onChangeText={(query: string) => setSearchQuery(query)}
         onBlur={onBlur}
         onFocus={onFocus}
+        autoFocus={isFocused}
       />
       {isFocused && (
         <TouchableOpacity
@@ -80,11 +81,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    ...layout.accentContainer2,
+    margin: 10,
   },
   searchInput: {
     flex: 1,
-    height: barHeight,
+    ...inputs.textInput,
   },
   cancelButton: {
     backgroundColor: colors.accent,

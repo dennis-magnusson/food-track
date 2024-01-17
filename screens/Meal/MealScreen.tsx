@@ -20,7 +20,7 @@ import {
 import BackButton from "../../shared/BackButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
-import { colors, typography } from "../../theme";
+import { typography } from "../../theme";
 import {
   AddCustomFoodScreenNavigationProp,
   DayContextType,
@@ -130,28 +130,42 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
         <MyText style={styles.title}>
           {capitalize(route.params.mealType)}
         </MyText>
-        <SearchBar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          isFocused={isSearching}
-          onFocus={() => setIsSearching(true)}
-          onBlur={() => setIsSearching(false)}
-        />
 
         {isSearching ? (
-          <SearchFoodsList
-            foods={filteredFoods}
-            handleFoodPress={handleFoodPress}
-          />
+          <>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              isFocused={isSearching}
+              onFocus={() => setIsSearching(true)}
+              onBlur={() => setIsSearching(false)}
+            />
+            <MyText
+              style={{ ...typography.title2, marginLeft: 15, marginTop: 10 }}
+            >
+              Search results
+            </MyText>
+            <SearchFoodsList
+              foods={filteredFoods}
+              handleFoodPress={handleFoodPress}
+            />
+          </>
         ) : (
           <>
-            <ActionButtons
-              handleAddCustomFood={handleAddCustomFood}
-              handleScanBarcode={handleScanBarcode}
-            />
             <AddedFoods
               meal={meals[route.params.mealType]}
               handleEntryPress={handleEntryPress}
+            />
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              isFocused={isSearching}
+              onFocus={() => setIsSearching(true)}
+              onBlur={() => setIsSearching(false)}
+            />
+            <ActionButtons
+              handleAddCustomFood={handleAddCustomFood}
+              handleScanBarcode={handleScanBarcode}
             />
           </>
         )}
@@ -165,9 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: { ...typography.title1, marginLeft: 15 },
-  scrollView: {
-    backgroundColor: colors.lightBackground,
-  },
+  scrollView: {},
 });
 
 export default MealScreen;

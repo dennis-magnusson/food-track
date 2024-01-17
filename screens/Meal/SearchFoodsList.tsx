@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Keyboard, StyleSheet, TouchableOpacity } from "react-native";
 import { MyText } from "../../shared/MyText";
-import { colors } from "../../theme";
+import { layout, typography } from "../../theme";
 import { Food } from "../../types";
 
 interface FoodsListProps {
@@ -70,18 +70,9 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
 const styles = StyleSheet.create({
   foodContainer: {},
   foodItem: {
-    backgroundColor: colors.accentBackground,
-    borderRadius: 10,
-    marginHorizontal: 10,
-    marginTop: 6,
-    marginBottom: 6,
-    padding: 16,
-    elevation: 2,
+    ...layout.accentContainer1,
   },
-  foodName: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
+  foodName: typography.title3,
   calories: {
     fontSize: 14,
   },

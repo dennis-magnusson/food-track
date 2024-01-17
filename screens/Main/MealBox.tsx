@@ -26,11 +26,11 @@ const MealBox: React.FC<MealBoxProps> = ({
       <View>
         <MyText style={styles.mealBoxTitle}>{capitalize(mealData.type)}</MyText>
         <MyText style={styles.caloriesText}>{totalCalories} calories</MyText>
-        {mealData.meal.entries.map((entry, index) => (
+        {/* {mealData.meal.entries.map((entry, index) => (
           <MyText key={index} style={styles.foodsText}>
             {entry.food.name}
           </MyText>
-        ))}
+        ))} */}
       </View>
       <View>
         <Ionicons name="add-circle-outline" size={38} color="black" />

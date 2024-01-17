@@ -32,8 +32,11 @@ const MainScreen: React.FC = (): JSX.Element => {
     <>
       <TopBar topPaddingAmount={insets.top} />
       <ScrollView
-        contentContainerStyle={{ paddingBottom: insets.bottom }}
-        bounces={true}
+        contentContainerStyle={{
+          paddingBottom: insets.bottom,
+          backgroundColor: "#fff",
+        }}
+        bounces={false}
       >
         <DailyTotals handlePress={navigateToGoals} />
         <DateSelector changeDay={changeDay} />

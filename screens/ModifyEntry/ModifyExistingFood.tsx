@@ -97,18 +97,27 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
             />
             <MyText style={styles.inputUnits}>{food.per100unit}</MyText>
           </View>
-          {/* <NutritionFactsTable food={food} amount={servingSize} /> */}
-          <MyButton
-            text="Update"
-            onPress={handleModifyFoodEntry}
-            style={{ marginTop: 20 }}
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 20,
+              justifyContent: "space-between",
+              gap: 10,
+            }}
+          >
+            <MyButton
+              text="Update"
+              onPress={handleModifyFoodEntry}
+              style={{ flex: 1 }}
+            />
 
-          <MyButton
-            text="Remove entry"
-            onPress={handleRemoveFoodEntry}
-            style={{ backgroundColor: colors.carbs, marginTop: 10 }}
-          />
+            <MyButton
+              text="Remove entry"
+              onPress={handleRemoveFoodEntry}
+              style={{ backgroundColor: colors.danger, flex: 1 }}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
     </MySafeAreaView>
