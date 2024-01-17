@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
   barContainer: {
     flex: 1,
     height: 10,
-    backgroundColor: colors.darkerBackground,
     borderRadius: 10,
     overflow: "hidden",
+    backgroundColor: "#eee",
   },
   bar: {
     height: "100%",
