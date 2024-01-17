@@ -8,8 +8,9 @@ import {
   subDays,
 } from "date-fns";
 import { useContext } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { DayContext } from "../../context/AppContext";
+import { MyText } from "../../shared/MyText";
 
 interface DateSelectorProps {
   changeDay: (toDate: Date) => void;
@@ -42,7 +43,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => alert("open date picker")}>
-        <Text style={styles.dateText}>{readableDate}</Text>
+        <MyText style={styles.dateText}>{readableDate}</MyText>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleNextPress}>
         <View style={styles.iconContainer}>

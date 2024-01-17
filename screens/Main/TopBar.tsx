@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors } from "../../theme";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { MyText } from "../../shared/MyText";
+import { colors, typography } from "../../theme";
 import { SettingsScreenNavigationProp } from "../../types";
 
 interface TopBarProps {
@@ -23,7 +24,7 @@ const TopBar: React.FC<TopBarProps> = ({ topPaddingAmount }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => alert("open date picker")}>
-        <Text style={styles.dateText}>Food Tracker</Text>
+        <MyText style={styles.text}>Forkful</MyText>
       </TouchableOpacity>
       <TouchableOpacity onPress={navigateSettings}>
         <View style={styles.iconContainer}>
@@ -42,16 +43,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     backgroundColor: colors.accentBackground,
-    paddingVertical: 10,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
+    paddingVertical: 6,
+    // borderColor: "#ddd",
+    // borderBottomWidth: 1,
   },
   iconContainer: {
     padding: 10,
     paddingHorizontal: 20,
   },
-  dateText: {
+  text: {
     fontSize: 22,
     fontWeight: "bold",
+    ...typography.title,
   },
 });
