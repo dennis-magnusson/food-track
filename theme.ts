@@ -1,7 +1,7 @@
 import { TextStyle, ViewStyle } from "react-native";
 
 export const colors: Record<string, string> = {
-  accent: "#0652dd",
+  accent: "#FE7648",
   lightText: "#fff",
   secondaryText: "#666",
   lightBackground: "#f5f5f5",
@@ -12,7 +12,10 @@ export const colors: Record<string, string> = {
   carbs: "#F7C648",
   protein: "#68BE70",
   danger: "#ff5e57",
+  greyBorder: "#e2e2e2",
 };
+
+export const baseFont: string = "Work Sans Regular";
 
 const baseTitleStyle: TextStyle = {
   fontFamily: "Work Sans Medium",
@@ -71,7 +74,7 @@ export const layout: { [key: string]: ViewStyle } = {
   accentContainer1: {
     backgroundColor: colors.accentBackground,
     borderWidth: 1,
-    borderColor: "#e2e2e2",
+    borderColor: colors.greyBorder,
     borderRadius: 18,
     marginHorizontal: 10,
     marginVertical: 8,
