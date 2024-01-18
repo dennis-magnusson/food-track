@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { ScrollView } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { DayDispatchContext } from "../../context/AppContext";
 import { MainScreenNavigationProp, MealType } from "../../types";
@@ -13,8 +14,9 @@ import TopBar from "./TopBar";
 const MainScreen: React.FC = (): JSX.Element => {
   const navigation = useNavigation<MainScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
-
   const insets = useSafeAreaInsets();
+
+  const dateSheetRef = useRef<RBSheet>();
 
   const handleMealPress = (mealType: MealType): void => {
     navigation.navigate("Meal", { mealType });

@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import {
   addDays,
   format,
@@ -7,10 +7,13 @@ import {
   parseISO,
   subDays,
 } from "date-fns";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { DateData } from "react-native-calendars";
+import RBSheet from "react-native-raw-bottom-sheet";
 import { DayContext } from "../../context/AppContext";
 import { MyText } from "../../shared/MyText";
+import CalendarSheet from "./CalendarSheet";
 
 interface DateSelectorProps {
   changeDay: (toDate: Date) => void;
@@ -20,6 +23,8 @@ const COLORS = "grey";
 
 const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
   const day = useContext(DayContext);
+  const calendarSelectorRef = useRef<RBSheet>();
+
   const isoDate = parseISO(day.date);
   const readableDate = isToday(isoDate)
     ? `Today, ${format(isoDate, "dd MMM")}`.toUpperCase()
@@ -35,22 +40,36 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
     changeDay(subDays(isoDate, 1));
   };
 
+  const onDayPress = (date: DateData) => {
+    changeDay(parseISO(date.dateString));
+    calendarSelectorRef.current.close();
+  };
+
   return (
-    <View style={styles.rootContainer}>
-      <TouchableOpacity onPress={handlePreviousPress}>
-        <View style={styles.iconContainer}>
-          <AntDesign name="left" size={18} color={COLORS} />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => alert("open date picker")}>
-        <MyText style={styles.dateText}>{readableDate}</MyText>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleNextPress}>
-        <View style={styles.iconContainer}>
-          <AntDesign name="right" size={18} color={COLORS} />
-        </View>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={styles.rootContainer}>
+        <TouchableOpacity onPress={handlePreviousPress}>
+          <View style={styles.iconContainer}>
+            <AntDesign name="left" size={18} color={COLORS} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => calendarSelectorRef.current.open()}>
+          <MyText style={styles.dateText}>
+            <Ionicons name="calendar" size={18} color={COLORS} /> {readableDate}
+          </MyText>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNextPress}>
+          <View style={styles.iconContainer}>
+            <AntDesign name="right" size={18} color={COLORS} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <CalendarSheet
+        calendarSelectorRef={calendarSelectorRef}
+        onDayPress={onDayPress}
+        selectedDate={isoDate}
+      />
+    </>
   );
 };
 

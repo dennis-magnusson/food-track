@@ -92,7 +92,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     }
   };
 
-  const refRBSheet = useRef();
+  const refRBSheet = useRef<RBSheet>();
 
   if (servingSizes.length === 0) {
     return <MyText>Loading...</MyText>;
