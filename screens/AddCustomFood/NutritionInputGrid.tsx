@@ -44,6 +44,7 @@ const NutritionInputGrid: React.FC<NutritionInputGridProps> = ({
             value={calories}
             setValue={setCalories}
             labelText="Calories (kcal)"
+            isRequired
           />
         </View>
         <View style={sharedStyles.columnRight}>
@@ -51,6 +52,7 @@ const NutritionInputGrid: React.FC<NutritionInputGridProps> = ({
             value={carbs}
             setValue={setCarbs}
             labelText="Carbs (g)"
+            isRequired
           />
         </View>
       </View>
@@ -61,10 +63,16 @@ const NutritionInputGrid: React.FC<NutritionInputGridProps> = ({
             value={protein}
             setValue={setProtein}
             labelText="Protein (g)"
+            isRequired
           />
         </View>
         <View style={sharedStyles.columnRight}>
-          <NutritionInput value={fat} setValue={setFat} labelText="Fat (g)" />
+          <NutritionInput
+            value={fat}
+            setValue={setFat}
+            labelText="Fat (g)"
+            isRequired
+          />
         </View>
       </View>
 

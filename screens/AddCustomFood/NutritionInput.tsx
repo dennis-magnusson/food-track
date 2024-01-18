@@ -7,12 +7,14 @@ interface NutritionInputProps {
   value: string;
   labelText: string;
   setValue: (value: string) => void;
+  isRequired?: boolean;
 }
 
 const NutritionInput: React.FC<NutritionInputProps> = ({
   value,
   labelText,
   setValue,
+  isRequired,
 }) => {
   return (
     <>
@@ -21,7 +23,7 @@ const NutritionInput: React.FC<NutritionInputProps> = ({
         style={styles.input}
         value={value}
         onChangeText={setValue}
-        placeholder="-"
+        placeholder={isRequired ? "required" : "-"}
         keyboardType="numeric"
       />
     </>

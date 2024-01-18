@@ -157,7 +157,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
             <TextInput
               style={[inputs.textInput, styles.columnFull]}
               value={name}
-              placeholder="eg. Mango"
+              placeholder="required"
               onChangeText={setName}
             />
           </View>
