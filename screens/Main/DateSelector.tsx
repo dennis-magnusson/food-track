@@ -45,6 +45,11 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
     calendarSelectorRef.current.close();
   };
 
+  const goToToday = () => {
+    changeDay(new Date());
+    calendarSelectorRef.current.close();
+  };
+
   return (
     <>
       <View style={styles.rootContainer}>
@@ -68,6 +73,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
         calendarSelectorRef={calendarSelectorRef}
         onDayPress={onDayPress}
         selectedDate={isoDate}
+        goToToday={goToToday}
       />
     </>
   );

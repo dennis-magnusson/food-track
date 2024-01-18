@@ -1,18 +1,21 @@
 import { format } from "date-fns";
 import { Calendar, DateData } from "react-native-calendars";
 import RBSheet from "react-native-raw-bottom-sheet";
+import MyButton from "../../shared/MyButton";
 import { baseFont, colors } from "../../theme";
 
 interface CalendarSheetProps {
   calendarSelectorRef: React.MutableRefObject<RBSheet>;
   onDayPress: (date: DateData) => void;
   selectedDate: Date;
+  goToToday: () => void;
 }
 
 const CalendarSheet: React.FC<CalendarSheetProps> = ({
   calendarSelectorRef,
   onDayPress,
   selectedDate,
+  goToToday,
 }) => {
   const markedDates = {
     [format(selectedDate, "yyyy-MM-dd")]: {
@@ -47,7 +50,8 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({
         ref={calendarSelectorRef}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={400}
+        animationType="none"
+        height={450}
         customStyles={{
           wrapper: {
             backgroundColor: "rgba(0,0,0,0.1)",
@@ -69,6 +73,11 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({
           initialDate={format(selectedDate, "yyyy-MM-dd")}
           markedDates={markedDates}
           theme={calendarTheme}
+        />
+        <MyButton
+          onPress={goToToday}
+          style={{ margin: 10 }}
+          text={"Go to today"}
         />
       </RBSheet>
     </>
