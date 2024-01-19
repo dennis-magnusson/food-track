@@ -109,17 +109,11 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
     });
   };
 
-  const handleEntryPress = (
-    id: FoodEntry["id"],
-    food: FoodEntry["food"],
-    currentAmount: FoodEntry["amount"]
-  ) => {
+  const handleEntryPress = (entry: FoodEntry) => {
     navigation.navigate("ModifyFoodEntry", {
       mealType: route.params.mealType,
-      entryId: id,
-      food,
+      entry,
       mealId: meals[route.params.mealType].id,
-      currentAmount,
     });
   };
 

@@ -28,9 +28,10 @@ interface ModifyFoodEntryScreenProps {
 const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
   route,
 }) => {
-  const { entryId, food, mealType, currentAmount } = route.params;
+  const { entry, mealType } = route.params;
+  console.log(entry, mealType);
   const [servingSize, setServingSize] = useState<string>(
-    currentAmount.toString()
+    entry.amount.toString()
   );
 
   const navigation = useNavigation<ModifyFoodEntryScreenNavigationProp>();
@@ -40,12 +41,12 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
     const newAmount = parseFloat(servingSize) || 100;
 
     try {
-      await updateAmountToFoodEntry(entryId, newAmount);
+      await updateAmountToFoodEntry(entry.id, newAmount);
       dispatch({
         type: "CHANGE_FOOD_AMOUNT",
         payload: {
           mealType,
-          entryId,
+          entryId: entry.id,
           newAmount,
         },
       });
@@ -57,12 +58,12 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
 
   const handleRemoveFoodEntry = async () => {
     try {
-      await deleteFoodEntry(entryId);
+      await deleteFoodEntry(entry.id);
       dispatch({
         type: "DELETE_FOOD_ENTRY",
         payload: {
           mealType,
-          entryId,
+          entryId: entry.id,
         },
       });
       navigation.navigate("Meal", { mealType });
@@ -80,12 +81,14 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
     }
   };
 
+  console.log();
+
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView>
         <BackButton backFunction={() => navigation.goBack()} />
         <View style={styles.container}>
-          <MyText style={styles.title}>{food.name}</MyText>
+          <MyText style={styles.title}>{entry.food.name}</MyText>
           <View style={styles.inputContainer}>
             <TextInput
               autoFocus={true}
@@ -95,7 +98,7 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
               onChangeText={handleInputChange}
               value={servingSize}
             />
-            <MyText style={styles.inputUnits}>{food.per100unit}</MyText>
+            <MyText style={styles.inputUnits}>{entry.food.per100unit}</MyText>
           </View>
           <View
             style={{

@@ -11,11 +11,7 @@ import { FoodEntry, Meal } from "../../types";
 
 interface AddedFoodsProps {
   meal: Meal;
-  handleEntryPress: (
-    id: FoodEntry["id"],
-    food: FoodEntry["food"],
-    currentAmount: FoodEntry["amount"]
-  ) => void;
+  handleEntryPress: (entry: FoodEntry) => void;
 }
 
 const AddedFoods: React.FC<AddedFoodsProps> = ({
@@ -23,9 +19,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
   handleEntryPress,
 }): JSX.Element => {
   const renderItem = ({ item }: { item: FoodEntry }) => (
-    <TouchableOpacity
-      onPress={() => handleEntryPress(item.id, item.food, item.amount)}
-    >
+    <TouchableOpacity onPress={() => handleEntryPress(item)}>
       <View></View>
       <View style={{ ...layout.accentContainer1 }}>
         <View

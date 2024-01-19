@@ -23,7 +23,9 @@ function App() {
   });
 
   useEffect(() => {
+    //dropAllTables();
     initializeDB();
+    // insertAllBasicFoods();
     initializeAsyncStorage();
     loadDayData(dispatch);
   }, []);

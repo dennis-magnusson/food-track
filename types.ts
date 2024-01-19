@@ -20,6 +20,7 @@ export type FoodEntry = {
   meal_id: number;
   food: Food;
   amount: number;
+  servingSize_id?: number;
 };
 
 export type Meal = {
@@ -28,8 +29,15 @@ export type Meal = {
 };
 
 export type ServingSize = {
+  id: number;
+  food_id: number;
   description: string;
   amount: number;
+};
+
+export type ServingSizeInputValues = {
+  description: string;
+  amount: string;
 };
 
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
@@ -61,11 +69,9 @@ export type RootStackParamList = {
     food: Food;
   };
   ModifyFoodEntry: {
-    entryId: number;
+    entry: FoodEntry;
     mealId: number;
     mealType: MealType;
-    food: Food;
-    currentAmount: number;
   };
   BarcodeScanner: {};
   Goals: {};

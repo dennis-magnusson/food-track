@@ -33,6 +33,8 @@ export const CREATE_TABLE_MEAL_FOODS = `
     meal_id INTEGER NOT NULL,
     food_id INTEGER NOT NULL,
     amount REAL NOT NULL,
+    servingsize_id INTEGER,
+    FOREIGN KEY (servingsize_id) REFERENCES servingsize(id),
     FOREIGN KEY (meal_id) REFERENCES meal(id),
     FOREIGN KEY (food_id) REFERENCES food(id)
   )
@@ -60,6 +62,11 @@ export const INSERT_MEAL = `
 export const INSERT_FOOD_TO_MEAL = `
     INSERT INTO mealfood (meal_id, food_id, amount)
     VALUES (?, ?, ?)
+`;
+
+export const INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE = `
+    INSERT INTO mealfood (meal_id, food_id, amount, servingsize_id)
+    VALUES (?, ?, ?, ?)
 `;
 
 export const INSERT_SERVING_SIZE = `

@@ -18,6 +18,7 @@ import { inputs, typography } from "../../theme";
 import {
   AddCustomFoodScreenNavigationProp,
   RootStackParamList,
+  ServingSizeInputValues,
 } from "../../types";
 import NutritionInputGrid from "./NutritionInputGrid";
 import ScanField from "./ScanField";
@@ -44,7 +45,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
   const [barcodeInput, setBarcodeInput] = useState<string>("");
 
   const [servingSizes, setServingSizes] = useState<
-    Array<{ amount: string; description: string }>
+    Array<ServingSizeInputValues>
   >([
     {
       amount: "",
@@ -190,7 +191,7 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
             per100unit={per100unit}
             servingSizes={servingSizes.map((size) => ({
               ...size,
-              amount: parseFloat(size.amount),
+              amount: size.amount,
             }))}
           />
 

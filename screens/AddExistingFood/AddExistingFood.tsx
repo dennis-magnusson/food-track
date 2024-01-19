@@ -31,17 +31,21 @@ interface AddExistingFoodScreenProps {
   route: RouteProp<RootStackParamList, "AddExistingFood">;
 }
 
+type CustomServingSize = Omit<ServingSize, "food_id" | "id">;
+
 const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   route,
 }) => {
   const { food, mealType, mealId } = route.params;
-  const customSize: ServingSize = {
+  const customSize: CustomServingSize = {
     description: "Custom amount",
     amount: 1,
   };
   const [multiplier, setMultiplier] = useState<string>("1");
-  const [servingSize, setServingSize] = useState<ServingSize>(customSize);
-  const [servingSizes, setServingSizes] = useState<ServingSize[]>([customSize]);
+  const [servingSize, setServingSize] = useState<
+    ServingSize | CustomServingSize
+  >(customSize);
+  const [servingSizes, setServingSizes] = useState<ServingSize[]>([]);
   const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
 
@@ -58,6 +62,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     const foodEntry: Omit<FoodEntry, "meal_id" | "id"> = {
       food: food,
       amount: getAmount(),
+      ...("id" in servingSize ? { servingSize_id: servingSize.id } : {}),
     };
 
     try {
@@ -136,9 +141,9 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
               <MyText style={{ ...typography.title2, marginBottom: 10 }}>
                 Select serving size
               </MyText>
-              {servingSizes.map((servingSize, idx) => (
+              {servingSizes.map((servingSize) => (
                 <TouchableOpacity
-                  key={idx}
+                  key={servingSize.id}
                   onPress={() => {
                     setServingSize(servingSize);
                     refRBSheet.current?.close();
@@ -150,6 +155,15 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
                   >{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
                 </TouchableOpacity>
               ))}
+              <TouchableOpacity
+                onPress={() => {
+                  setServingSize(customSize);
+                  refRBSheet.current?.close();
+                }}
+                style={{ marginBottom: 10, paddingVertical: 5 }}
+              >
+                <MyText style={inputs.textInput}>Custom amount (1g)</MyText>
+              </TouchableOpacity>
             </ScrollView>
           </RBSheet>
 

@@ -1,4 +1,5 @@
 import * as SQLite from "expo-sqlite";
+import { basicFoods } from "../constants/basicFoods";
 import { Food, FoodEntry, Meal, RawMealDataRow, ServingSize } from "../types";
 import {
   CREATE_TABLE_FOODS,
@@ -12,6 +13,7 @@ import {
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   INSERT_FOOD,
   INSERT_FOOD_TO_MEAL,
+  INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE,
   INSERT_OR_IGNORE_MEAL,
   INSERT_SERVING_SIZE,
   UPDATE_AMOUNT_FOOD_ENTRY,
@@ -31,18 +33,14 @@ export const initializeDB = () => {
   );
 };
 
-// export const populateBasicFoods = () => {
-//   basicFoods.forEach((food) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "INSERT INTO Food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit) SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM Food WHERE name = ?)",
-//         [...food, food[0]],
-//         () => {},
-//         (_, error) => console.log(error)
-//       );
-//     });
-//   });
-// };
+export const insertAllBasicFoods = async (): Promise<void> => {
+  console.log("INSERTING BASIC FOODS");
+  for (const food of basicFoods) {
+    try {
+      const insertedFood = await insertFood(food);
+    } catch (error) {}
+  }
+};
 
 export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
   return new Promise((resolve, reject) => {
@@ -79,18 +77,16 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
           (_, result) => {
             const insertedId = result.insertId;
             const insertedFood = { ...food, id: insertedId };
-
-            // Insert each serving size into the servingSize table
             servingSizes.forEach((servingSize) => {
+              if (!servingSize.description || !servingSize.amount) return;
               tx.executeSql(
                 INSERT_SERVING_SIZE,
                 [insertedId, servingSize.description, servingSize.amount],
                 (_, resultSet) => {
-                  console.log(resultSet.insertId);
+                  // console.log(resultSet.insertId);
                 }
               );
             });
-
             resolve(insertedFood);
           }
         );
@@ -188,9 +184,13 @@ export const insertFoodEntryToMeal = (
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
+        let query = INSERT_FOOD_TO_MEAL;
+        if (entry.servingSize_id) {
+          query = INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE;
+        }
         tx.executeSql(
-          INSERT_FOOD_TO_MEAL,
-          [mealId, entry.food.id, entry.amount],
+          query,
+          [mealId, entry.food.id, entry.amount, entry.servingSize_id],
           (_, result) => {
             const insertedMealFoodId = result.insertId;
             resolve(insertedMealFoodId);
@@ -239,6 +239,37 @@ export const updateAmountToFoodEntry = (
       (error) => {
         console.log(error);
         reject(error);
+      }
+    );
+  });
+};
+
+export const dropAllTables = () => {
+  console.log("WARNING: DROPPING ALL TABLES");
+  db.transaction((tx) => {
+    // Get all table names
+    tx.executeSql(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';",
+      [],
+      (_, { rows }) => {
+        let tables = rows._array.map((row) => row.name);
+
+        // Drop each table
+        tables.forEach((table) => {
+          tx.executeSql(
+            `DROP TABLE IF EXISTS ${table};`,
+            [],
+            (_, result) => {
+              console.log(`Dropped ${table}`);
+            },
+            (error) => {
+              console.log(`Error dropping ${table}: ${error}`);
+            }
+          );
+        });
+      },
+      (error) => {
+        console.log("Error fetching tables: " + error.message);
       }
     );
   });

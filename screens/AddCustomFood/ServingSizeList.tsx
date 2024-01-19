@@ -1,12 +1,12 @@
 import React from "react";
 import { TextInput, View } from "react-native";
 import { inputs } from "../../theme";
-import { ServingSize } from "../../types";
+import { ServingSizeInputValues } from "../../types";
 import IconButton from "./IconButton";
 import sharedStyles from "./sharedStyles";
 
 interface ServingSizeListProps {
-  servingSizes: ServingSize[];
+  servingSizes: ServingSizeInputValues[];
   handleUpdateServingSize: (
     index: number,
     field: "amount" | "description",
@@ -44,7 +44,7 @@ const ServingSizeList: React.FC<ServingSizeListProps> = ({
               onChangeText={(value) =>
                 handleUpdateServingSize(index, "description", value)
               }
-              placeholder="eg. 1 medium"
+              placeholder="eg. tablespoon"
             />
           </View>
           {servingSizes.length > 1 && (

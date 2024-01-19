@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import { MyText } from "../../shared/MyText";
-import { ServingSize } from "../../types";
+import { ServingSizeInputValues } from "../../types";
 import IconButton from "./IconButton";
 import ServingSizeList from "./ServingSizeList";
 import sharedStyles from "./sharedStyles";
 
 interface ServingSizeInputProps {
-  servingSizes: ServingSize[];
+  servingSizes: ServingSizeInputValues[];
   handleUpdateServingSize: (
     index: number,
     field: "amount" | "description",
