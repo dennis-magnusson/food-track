@@ -11,7 +11,7 @@ export type Food = {
   fiber?: number;
   salt?: number;
   per100unit: "g" | "ml";
-  servingSizes: ServingSize[];
+  servingSizes?: ServingSize[];
   barcode?: string;
 };
 
@@ -38,6 +38,13 @@ export type ServingSize = {
 export type ServingSizeInputValues = {
   description: string;
   amount: string;
+};
+
+export type ServingSizeBeforeInsert = Omit<ServingSize, "id" | "food_id">;
+export type CustomServingSize = Omit<ServingSize, "food_id" | "id">;
+
+export type FoodBeforeInsert = Omit<Food, "id" | "servingSizes"> & {
+  servingSizes: ServingSizeBeforeInsert[];
 };
 
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
@@ -83,6 +90,7 @@ export type SettingsStackParamList = {
 };
 
 export interface RawMealDataRow {
+  servingSize_id: number;
   amount: number | null;
   calories: number | null;
   carbs: number | null;
