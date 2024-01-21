@@ -1,10 +1,4 @@
-import { Food, ServingSize } from "../types";
-
-type ServingSizeBeforeInsert = Omit<ServingSize, "id" | "food_id">;
-
-type FoodBeforeInsert = Omit<Food, "id" | "servingSizes"> & {
-  servingSizes: ServingSizeBeforeInsert[];
-};
+import { FoodBeforeInsert } from "../types";
 
 export const basicFoods: FoodBeforeInsert[] = [
   {
