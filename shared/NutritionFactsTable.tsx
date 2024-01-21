@@ -12,7 +12,8 @@ const NutritionFactsTable: React.FC<NutritionFactsTableProps> = ({
   amount,
 }) => {
   const computeNutritionValue = (baseValue: number) => {
-    const computedValue = (baseValue * amount) / 100;
+    const am = Number.isNaN(amount) ? 0 : amount;
+    const computedValue = (baseValue * am) / 100;
     return Math.floor(computedValue * 10) / 10;
   };
 
