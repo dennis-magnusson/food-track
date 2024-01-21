@@ -14,10 +14,6 @@ export const CREATE_TABLE_FOODS = `
   )
 `;
 
-export const ALTER_ADD_BARCODE_TO_FOOD = `
-  ALTER TABLE food ADD COLUMN barcode TEXT
-`;
-
 export const CREATE_TABLE_MEALS = `
   CREATE TABLE IF NOT EXISTS meal (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,11 +28,16 @@ export const CREATE_TABLE_MEAL_FOODS = `
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     meal_id INTEGER NOT NULL,
     food_id INTEGER NOT NULL,
-    amount REAL NOT NULL,
+    n_servings REAL,
     servingsize_id INTEGER,
+    custom_amount REAL,
     FOREIGN KEY (servingsize_id) REFERENCES servingsize(id),
     FOREIGN KEY (meal_id) REFERENCES meal(id),
-    FOREIGN KEY (food_id) REFERENCES food(id)
+    FOREIGN KEY (food_id) REFERENCES food(id),
+    CHECK (
+      (custom_amount IS NOT NULL AND servingsize_id IS NULL AND n_servings IS NULL) OR 
+      (custom_amount IS NULL AND servingsize_id IS NOT NULL AND n_servings IS NOT NULL)
+    )
   )
 `;
 
@@ -60,12 +61,12 @@ export const INSERT_MEAL = `
 `;
 
 export const INSERT_FOOD_TO_MEAL = `
-    INSERT INTO mealfood (meal_id, food_id, amount)
+    INSERT INTO mealfood (meal_id, food_id, custom_amount)
     VALUES (?, ?, ?)
 `;
 
 export const INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE = `
-    INSERT INTO mealfood (meal_id, food_id, amount, servingsize_id)
+    INSERT INTO mealfood (meal_id, food_id, n_servings, servingsize_id)
     VALUES (?, ?, ?, ?)
 `;
 
@@ -118,7 +119,9 @@ export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
     food.fat,
     food.salt,
     food.per100unit,
-    mealfood.amount
+    mealfood.n_servings,
+    mealfood.servingsize_id,
+    mealfood.custom_amount
   FROM meal 
   LEFT JOIN mealfood ON meal.id = mealfood.meal_id
   LEFT JOIN food ON mealfood.food_id = food.id
