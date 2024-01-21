@@ -15,13 +15,26 @@ export type Food = {
   barcode?: string;
 };
 
-export type FoodEntry = {
+export type FoodEntry = FoodEntryWithServingSize | FoodEntryWithCustomAmount;
+
+export type FoodEntryWithServingSize = FoodEntryBase & {
+  servingSize_id: number;
+  n_servings: number;
+};
+
+export type FoodEntryWithCustomAmount = FoodEntryBase & {
+  custom_amount: number;
+};
+
+export type FoodEntryBase = {
   id: number;
   meal_id: number;
   food: Food;
-  amount: number;
-  servingSize_id?: number;
 };
+
+export type FoodEntryBeforeInsert =
+  | Omit<FoodEntryWithCustomAmount, "id" | "meal_id">
+  | Omit<FoodEntryWithServingSize, "id" | "meal_id">;
 
 export type Meal = {
   id: number;
@@ -35,13 +48,17 @@ export type ServingSize = {
   amount: number;
 };
 
+export type CustomServingSize = {
+  amount: number;
+  description: "Custom amount";
+};
+
 export type ServingSizeInputValues = {
   description: string;
   amount: string;
 };
 
 export type ServingSizeBeforeInsert = Omit<ServingSize, "id" | "food_id">;
-export type CustomServingSize = Omit<ServingSize, "food_id" | "id">;
 
 export type FoodBeforeInsert = Omit<Food, "id" | "servingSizes"> & {
   servingSizes: ServingSizeBeforeInsert[];
