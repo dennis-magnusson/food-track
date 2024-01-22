@@ -6,7 +6,11 @@ import { DayContext, DayDispatchContext } from "./context/AppContext";
 import { dayReducer } from "./context/reducers";
 import MainStack from "./navigation/MainStack";
 import { initializeAsyncStorage } from "./services/asyncStorage";
-import { initializeDB } from "./services/databaseService";
+import {
+  dropAllTables,
+  initializeDB,
+  insertAllBasicFoods,
+} from "./services/databaseService";
 import { loadDayData } from "./utils/loadDayData";
 
 // Add missing import for useFonts
@@ -23,9 +27,9 @@ function App() {
   });
 
   useEffect(() => {
-    //dropAllTables();
+    dropAllTables();
     initializeDB();
-    // insertAllBasicFoods();
+    insertAllBasicFoods();
     initializeAsyncStorage();
     loadDayData(dispatch);
   }, []);
