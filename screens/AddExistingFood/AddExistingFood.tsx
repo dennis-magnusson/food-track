@@ -2,13 +2,13 @@ import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
-  ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { CUSTOM_SERVING_SIZE_OPTION } from "../../constants/customFood";
 import { DayDispatchContext } from "../../context/AppContext";
 import {
   fetchServingSizesForFood,
@@ -18,11 +18,11 @@ import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
-import NutritionFactsTable from "../../shared/NutritionFactsTable";
+import ServingSizesSheet from "../../shared/ServingSizesSheet";
 import { inputs, typography } from "../../theme";
 import {
   AddExistingFoodScreenNavigationProp,
-  FoodEntry,
+  FoodEntryBeforeInsert,
   RootStackParamList,
   ServingSize,
 } from "../../types";
@@ -31,23 +31,17 @@ interface AddExistingFoodScreenProps {
   route: RouteProp<RootStackParamList, "AddExistingFood">;
 }
 
-type CustomServingSize = Omit<ServingSize, "food_id" | "id">;
-
 const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   route,
 }) => {
-  const { food, mealType, mealId } = route.params;
-  const customSize: CustomServingSize = {
-    description: "Custom amount",
-    amount: 1,
-  };
-  const [multiplier, setMultiplier] = useState<string>("1");
-  const [servingSize, setServingSize] = useState<
-    ServingSize | CustomServingSize
-  >(customSize);
+  const [nServings, setNServings] = useState<string>("1");
+  const [servingSize, setServingSize] = useState<ServingSize>(null);
   const [servingSizes, setServingSizes] = useState<ServingSize[]>([]);
+
   const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
+
+  const { food, mealType, mealId } = route.params;
 
   useEffect(() => {
     const fetchServingSizes = async () => {
@@ -58,13 +52,38 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     fetchServingSizes();
   }, []);
 
-  const handleLogFood = async () => {
-    const foodEntry: Omit<FoodEntry, "meal_id" | "id"> = {
-      food: food,
-      amount: getAmount(),
-      ...("id" in servingSize ? { servingSize_id: servingSize.id } : {}),
-    };
+  const getNServingsInputValueParsed = (): number =>
+    parseFloat(nServings.replace(",", "."));
 
+  const handleInputChange = (text: string) => {
+    if (
+      (text === "" || /^[\d]*[.,]?[\d]*$/.test(text)) &&
+      !/^[.,]$/.test(text)
+    ) {
+      setNServings(text);
+    }
+  };
+
+  const refRBSheet = useRef<RBSheet>();
+
+  const handleLogFood = async () => {
+    if (nServings === "") {
+      alert("Please enter a valid amount");
+      return;
+    }
+    let foodEntry: FoodEntryBeforeInsert;
+    if (servingSize === null) {
+      foodEntry = {
+        food: food,
+        custom_amount: getNServingsInputValueParsed(),
+      };
+    } else {
+      foodEntry = {
+        food: food,
+        servingSize_id: servingSize.id,
+        n_servings: getNServingsInputValueParsed(),
+      };
+    }
     try {
       const insertedId = await insertFoodEntryToMeal(mealId, foodEntry);
       dispatch({
@@ -79,25 +98,6 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
       alert(error);
     }
   };
-
-  const getAmount = (): number => {
-    const amnt =
-      multiplier == ""
-        ? 0
-        : parseFloat(multiplier.replace(",", ".")) * servingSize.amount;
-    return amnt;
-  };
-
-  const handleInputChange = (text: string) => {
-    if (
-      (text === "" || /^[\d]*[.,]?[\d]*$/.test(text)) &&
-      !/^[.,]$/.test(text)
-    ) {
-      setMultiplier(text);
-    }
-  };
-
-  const refRBSheet = useRef<RBSheet>();
 
   if (servingSizes.length === 0) {
     return <MyText>Loading...</MyText>;
@@ -114,60 +114,27 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
               style={styles.input}
               keyboardType="numeric"
               onChangeText={handleInputChange}
-              value={multiplier}
+              value={nServings}
               autoFocus={true}
             />
             <TouchableOpacity
               onPress={() => refRBSheet.current?.open()}
               style={styles.selectorButton}
             >
-              <MyText>{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
+              {servingSize === null ? (
+                <MyText>{`${CUSTOM_SERVING_SIZE_OPTION.description} (${CUSTOM_SERVING_SIZE_OPTION.amount}${food.per100unit})`}</MyText>
+              ) : (
+                <MyText>{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
+              )}
             </TouchableOpacity>
           </View>
-          <RBSheet
-            ref={refRBSheet}
-            closeOnDragDown={true}
-            height={300}
-            customStyles={{
-              wrapper: {
-                backgroundColor: "transparent",
-              },
-            }}
-          >
-            <ScrollView
-              style={{ margin: 10, paddingBottom: 100 }}
-              bounces={false}
-            >
-              <MyText style={{ ...typography.title2, marginBottom: 10 }}>
-                Select serving size
-              </MyText>
-              {servingSizes.map((servingSize) => (
-                <TouchableOpacity
-                  key={servingSize.id}
-                  onPress={() => {
-                    setServingSize(servingSize);
-                    refRBSheet.current?.close();
-                  }}
-                  style={{ marginBottom: 10, paddingVertical: 5 }}
-                >
-                  <MyText
-                    style={inputs.textInput}
-                  >{`${servingSize.description} (${servingSize.amount}${food.per100unit})`}</MyText>
-                </TouchableOpacity>
-              ))}
-              <TouchableOpacity
-                onPress={() => {
-                  setServingSize(customSize);
-                  refRBSheet.current?.close();
-                }}
-                style={{ marginBottom: 10, paddingVertical: 5 }}
-              >
-                <MyText style={inputs.textInput}>Custom amount (1g)</MyText>
-              </TouchableOpacity>
-            </ScrollView>
-          </RBSheet>
-
-          <NutritionFactsTable food={food} amount={getAmount()} />
+          <ServingSizesSheet
+            sheetRef={refRBSheet}
+            servingSizes={servingSizes}
+            setServingSize={setServingSize}
+            food={food}
+            currentlySelectedAmount={getNServingsInputValueParsed()}
+          />
           <MyButton
             text="Log food"
             onPress={handleLogFood}

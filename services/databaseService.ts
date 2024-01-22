@@ -1,6 +1,13 @@
 import * as SQLite from "expo-sqlite";
 import { basicFoods } from "../constants/basicFoods";
-import { Food, FoodEntry, Meal, RawMealDataRow, ServingSize } from "../types";
+import {
+  Food,
+  FoodBeforeInsert,
+  FoodEntryBeforeInsert,
+  Meal,
+  RawMealDataRow,
+  ServingSize,
+} from "../types";
 import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
@@ -42,7 +49,7 @@ export const insertAllBasicFoods = async (): Promise<void> => {
   }
 };
 
-export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
+export const insertFood = (food: FoodBeforeInsert): Promise<Food> => {
   return new Promise((resolve, reject) => {
     const {
       name,
@@ -83,11 +90,21 @@ export const insertFood = (food: Omit<Food, "id">): Promise<Food> => {
                 INSERT_SERVING_SIZE,
                 [insertedId, servingSize.description, servingSize.amount],
                 (_, resultSet) => {
-                  // console.log(resultSet.insertId);
+                  const insertedServingSizeId = resultSet.insertId;
+                  const insertedServingSize: ServingSize = {
+                    ...servingSize,
+                    id: insertedServingSizeId,
+                    food_id: insertedId,
+                    description: servingSize.description,
+                    amount: servingSize.amount,
+                  };
+                  resolve({
+                    ...insertedFood,
+                    servingSizes: [insertedServingSize],
+                  });
                 }
               );
             });
-            resolve(insertedFood);
           }
         );
       },
@@ -131,9 +148,7 @@ export const fetchFoodByBarcode = (barcode: string): Promise<Food | null> => {
   });
 };
 
-export const fetchServingSizesForFood = (
-  id: number
-): Promise<ServingSize[]> => {
+export const fetchServingSizesForFood = (id: number): any => {
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
@@ -179,23 +194,35 @@ export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
 
 export const insertFoodEntryToMeal = (
   mealId: Meal["id"],
-  entry: Omit<FoodEntry, "id" | "meal_id">
+  entry: FoodEntryBeforeInsert
 ): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
-        let query = INSERT_FOOD_TO_MEAL;
-        if (entry.servingSize_id) {
-          query = INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE;
-        }
-        tx.executeSql(
-          query,
-          [mealId, entry.food.id, entry.amount, entry.servingSize_id],
-          (_, result) => {
-            const insertedMealFoodId = result.insertId;
-            resolve(insertedMealFoodId);
-          }
-        );
+        if ("servingSize_id" in entry && "n_servings" in entry) {
+          // if using a serving size from database
+          tx.executeSql(
+            INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE,
+            [mealId, entry.food.id, entry.n_servings, entry.servingSize_id],
+            (_, result) => {
+              const insertedMealFoodId = result.insertId;
+              resolve(insertedMealFoodId);
+            }
+          );
+        } else if ("custom_amount" in entry) {
+          // if using a custom amount instead
+          tx.executeSql(
+            INSERT_FOOD_TO_MEAL,
+            [mealId, entry.food.id, entry.custom_amount],
+            (_, result) => {
+              const insertedMealFoodId = result.insertId;
+              resolve(insertedMealFoodId);
+            }
+          );
+        } else
+          throw new Error(
+            "No serving size or custom amount provided for food entry"
+          );
       },
       (error) => {
         console.log(error);
@@ -264,12 +291,14 @@ export const dropAllTables = () => {
             },
             (error) => {
               console.log(`Error dropping ${table}: ${error}`);
+              return false;
             }
           );
         });
       },
       (error) => {
-        console.log("Error fetching tables: " + error.message);
+        console.log("Error fetching tables: " + error);
+        return false;
       }
     );
   });
