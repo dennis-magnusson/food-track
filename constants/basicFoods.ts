@@ -11,8 +11,8 @@ export const basicFoods: FoodBeforeInsert[] = [
     fiber: 2.4,
     per100unit: "g",
     servingSizes: [
-      { description: "Small", amount: 150 },
-      { description: "Large", amount: 220 },
+      { description: "small", amount: 150 },
+      { description: "large", amount: 220 },
     ],
   },
   {
@@ -23,8 +23,8 @@ export const basicFoods: FoodBeforeInsert[] = [
     carbs: 0,
     per100unit: "g",
     servingSizes: [
-      { description: "100g serving", amount: 100 },
-      { description: "200g serving", amount: 200 },
+      { description: "Medium", amount: 150 },
+      { description: "Large", amount: 210 },
     ],
   },
   {
@@ -35,10 +35,7 @@ export const basicFoods: FoodBeforeInsert[] = [
     carbs: 26,
     fiber: 1.8,
     per100unit: "g",
-    servingSizes: [
-      { description: "100g serving", amount: 100 },
-      { description: "200g serving", amount: 200 },
-    ],
+    servingSizes: [{ description: "deciliter", amount: 90 }],
   },
   {
     name: "Banana",
@@ -50,8 +47,8 @@ export const basicFoods: FoodBeforeInsert[] = [
     fiber: 2.6,
     per100unit: "g",
     servingSizes: [
-      { description: "Medium banana", amount: 118 },
-      { description: "Large banana", amount: 136 },
+      { description: "medium", amount: 118 },
+      { description: "large", amount: 136 },
     ],
   },
   {
@@ -63,21 +60,8 @@ export const basicFoods: FoodBeforeInsert[] = [
     fiber: 12.5,
     per100unit: "g",
     servingSizes: [
-      { description: "30g serving", amount: 30 },
-      { description: "60g serving", amount: 60 },
-    ],
-  },
-  {
-    name: "Spinach (Raw)",
-    calories: 23,
-    protein: 2.9,
-    fat: 0.4,
-    carbs: 3.6,
-    fiber: 2.2,
-    per100unit: "g",
-    servingSizes: [
-      { description: "50g serving", amount: 50 },
-      { description: "100g serving", amount: 100 },
+      { description: "piece", amount: 1.5 },
+      { description: "deciliter", amount: 75 },
     ],
   },
   {
@@ -87,10 +71,7 @@ export const basicFoods: FoodBeforeInsert[] = [
     fat: 13,
     carbs: 0,
     per100unit: "g",
-    servingSizes: [
-      { description: "100g serving", amount: 100 },
-      { description: "200g serving", amount: 200 },
-    ],
+    servingSizes: [],
   },
   {
     name: "Greek Yogurt (Plain, 0% Fat)",
@@ -100,10 +81,7 @@ export const basicFoods: FoodBeforeInsert[] = [
     carbs: 3.6,
     sugar: 3.6,
     per100unit: "g",
-    servingSizes: [
-      { description: "100g serving", amount: 100 },
-      { description: "200g serving", amount: 200 },
-    ],
+    servingSizes: [{ description: "deciliter", amount: 100 }],
   },
   {
     name: "Rolled Oats (Uncooked)",
@@ -113,6 +91,73 @@ export const basicFoods: FoodBeforeInsert[] = [
     carbs: 68,
     fiber: 10.6,
     per100unit: "g",
-    servingSizes: [{ description: "1 dl", amount: 40 }],
+    servingSizes: [{ description: "deciliter", amount: 40 }],
+  },
+  {
+    name: "Olive Oil",
+    calories: 884,
+    protein: 0,
+    fat: 100,
+    carbs: 0,
+    fiber: 0,
+    per100unit: "g",
+    servingSizes: [{ description: "tablespoon", amount: 13.5 }],
+  },
+  {
+    name: "Potato",
+    calories: 77,
+    protein: 2,
+    fat: 0.1,
+    carbs: 17,
+    fiber: 2.2,
+    per100unit: "g",
+    servingSizes: [
+      { description: "small", amount: 75 },
+      { description: "medium", amount: 150 },
+      { description: "large", amount: 300 },
+    ],
+  },
+  {
+    name: "Egg",
+    calories: 68,
+    protein: 5.5,
+    fat: 4.7,
+    carbs: 0.6,
+    fiber: 0,
+    per100unit: "g",
+    servingSizes: [{ description: "medium", amount: 44 }],
+  },
+  {
+    name: "0% Fat Milk",
+    calories: 35,
+    protein: 3.4,
+    fat: 0.1,
+    carbs: 5,
+    fiber: 0,
+    per100unit: "ml",
+    servingSizes: [{ description: "deciliter", amount: 100 }],
+  },
+  {
+    name: "1.5% Fat Milk",
+    calories: 47,
+    protein: 3.4,
+    fat: 1.5,
+    carbs: 5,
+    fiber: 0,
+    per100unit: "ml",
+    servingSizes: [{ description: "deciliter", amount: 100 }],
+  },
+  {
+    name: "Onion",
+    calories: 40,
+    protein: 1.1,
+    fat: 0.1,
+    carbs: 9.3,
+    fiber: 1.7,
+    per100unit: "g",
+    servingSizes: [
+      { description: "small", amount: 70 },
+      { description: "medium", amount: 110 },
+    ],
   },
 ];
