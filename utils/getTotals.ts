@@ -28,13 +28,20 @@ export function getTotals(input: Meal | DayContextType): Totals {
   } else {
     const meal = input as Meal;
     meal.entries.forEach((entry: FoodEntry) => {
-      const { food, amount } = entry;
+      let amount = 1;
+      if ("nServings" in entry && "servingSize_id" in entry) {
+        // TODO: get amount from serving size from db
+      } else if ("customAmount" in entry) {
+        amount = entry.customAmount;
+      } else {
+        console.log("Invalid entry type");
+      }
       const ratio = amount / 100;
 
-      totalCalories += food.calories * ratio;
-      totalCarbs += food.carbs * ratio;
-      totalFat += food.fat * ratio;
-      totalProtein += food.protein * ratio;
+      totalCalories += entry.food.calories * ratio;
+      totalCarbs += entry.food.carbs * ratio;
+      totalFat += entry.food.fat * ratio;
+      totalProtein += entry.food.protein * ratio;
     });
   }
 

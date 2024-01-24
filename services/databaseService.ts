@@ -3,6 +3,7 @@ import { basicFoods } from "../constants/basicFoods";
 import {
   Food,
   FoodBeforeInsert,
+  FoodEntry,
   FoodEntryBeforeInsert,
   Meal,
   RawMealDataRow,
@@ -24,6 +25,7 @@ import {
   INSERT_OR_IGNORE_MEAL,
   INSERT_SERVING_SIZE,
   UPDATE_AMOUNT_FOOD_ENTRY,
+  UPDATE_AMOUNT_FOOD_ENTRY_WITH_SERVING_SIZE,
 } from "./sql";
 
 const db = SQLite.openDatabase("food.db");
@@ -199,21 +201,21 @@ export const insertFoodEntryToMeal = (
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
-        if ("servingSize_id" in entry && "n_servings" in entry) {
+        if ("servingSize_id" in entry && "nServings" in entry) {
           // if using a serving size from database
           tx.executeSql(
             INSERT_FOOD_TO_MEAL_WITH_SERVING_SIZE,
-            [mealId, entry.food.id, entry.n_servings, entry.servingSize_id],
+            [mealId, entry.food.id, entry.nServings, entry.servingSize_id],
             (_, result) => {
               const insertedMealFoodId = result.insertId;
               resolve(insertedMealFoodId);
             }
           );
-        } else if ("custom_amount" in entry) {
+        } else if ("customAmount" in entry) {
           // if using a custom amount instead
           tx.executeSql(
             INSERT_FOOD_TO_MEAL,
-            [mealId, entry.food.id, entry.custom_amount],
+            [mealId, entry.food.id, entry.customAmount],
             (_, result) => {
               const insertedMealFoodId = result.insertId;
               resolve(insertedMealFoodId);
@@ -249,19 +251,34 @@ export const deleteFoodEntry = (entryId: number): Promise<number> => {
 };
 
 export const updateAmountToFoodEntry = (
-  entryId: number,
-  newAmount: number
+  entryId: FoodEntry["id"],
+  entry: FoodEntryBeforeInsert
 ): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
-        tx.executeSql(
-          UPDATE_AMOUNT_FOOD_ENTRY,
-          [newAmount, entryId],
-          (_, result) => {
-            resolve(result.rowsAffected);
-          }
-        );
+        if ("servingSize_id" in entry && "nServings" in entry) {
+          // if using a serving size from database
+          tx.executeSql(
+            UPDATE_AMOUNT_FOOD_ENTRY_WITH_SERVING_SIZE,
+            [entry.nServings, entry.servingSize_id, entryId],
+            (_, result) => {
+              resolve(result.rowsAffected);
+            }
+          );
+        } else if ("customAmount" in entry) {
+          // if using a custom amount instead
+          tx.executeSql(
+            UPDATE_AMOUNT_FOOD_ENTRY,
+            [entry.customAmount, entryId],
+            (_, result) => {
+              resolve(result.rowsAffected);
+            }
+          );
+        } else
+          throw new Error(
+            "No serving size or custom amount provided for food entry"
+          );
       },
       (error) => {
         console.log(error);

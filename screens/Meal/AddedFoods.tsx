@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { MyText } from "../../shared/MyText";
 import { layout, typography } from "../../theme";
 import { FoodEntry, Meal } from "../../types";
@@ -20,10 +14,10 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
 }): JSX.Element => {
   const renderItem = ({ item }: { item: FoodEntry }) => {
     let amount: number;
-    if ("n_servings" in item && "servingSize_id" in item) {
+    if ("nServings" in item && "servingSize_id" in item) {
       amount = NaN; // TODO: get the serving size by id and calculate the amount
-    } else if ("custom_amount" in item) {
-      amount = item.custom_amount;
+    } else if ("customAmount" in item) {
+      amount = item.customAmount;
     } else {
       throw new Error("Invalid item type");
     }
@@ -38,7 +32,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
               alignItems: "center",
             }}
           >
-            <Image
+            {/* <Image
               source={{
                 uri: "https://cdn.s-cloud.fi/v1/w750_h750_q75/assets/dam-id/3R7FAxbYq5M9S1OQQvExI4.jpg",
               }}
@@ -48,7 +42,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
                 marginRight: 12,
                 resizeMode: "contain",
               }}
-            />
+            /> */}
             <View style={{ flex: 1 }}>
               <MyText style={typography.title3}>{item.food.name}</MyText>
               <MyText style={{ ...typography.secondary, marginBottom: 0 }}>

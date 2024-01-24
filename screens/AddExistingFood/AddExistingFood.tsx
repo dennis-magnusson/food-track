@@ -75,13 +75,13 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     if (servingSize === null) {
       foodEntry = {
         food: food,
-        custom_amount: getNServingsInputValueParsed(),
+        customAmount: getNServingsInputValueParsed(),
       };
     } else {
       foodEntry = {
         food: food,
         servingSize_id: servingSize.id,
-        n_servings: getNServingsInputValueParsed(),
+        nServings: getNServingsInputValueParsed(),
       };
     }
     try {

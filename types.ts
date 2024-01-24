@@ -19,11 +19,11 @@ export type FoodEntry = FoodEntryWithServingSize | FoodEntryWithCustomAmount;
 
 export type FoodEntryWithServingSize = FoodEntryBase & {
   servingSize_id: number;
-  n_servings: number;
+  nServings: number;
 };
 
 export type FoodEntryWithCustomAmount = FoodEntryBase & {
-  custom_amount: number;
+  customAmount: number;
 };
 
 export type FoodEntryBase = {
@@ -185,8 +185,15 @@ export type DayAction =
       payload: {
         entryId: number;
         mealType: MealType;
-        newAmount: number;
-      };
+      } & (
+        | {
+            customAmount: number;
+          }
+        | {
+            servingSizeId: number;
+            nServings: number;
+          }
+      );
     }
   | {
       type: "DELETE_FOOD_ENTRY";

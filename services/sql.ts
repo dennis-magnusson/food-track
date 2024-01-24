@@ -30,13 +30,13 @@ export const CREATE_TABLE_MEAL_FOODS = `
     food_id INTEGER NOT NULL,
     n_servings REAL,
     servingsize_id INTEGER,
-    custom_amount REAL,
+    customAmount REAL,
     FOREIGN KEY (servingsize_id) REFERENCES servingsize(id),
     FOREIGN KEY (meal_id) REFERENCES meal(id),
     FOREIGN KEY (food_id) REFERENCES food(id),
     CHECK (
-      (custom_amount IS NOT NULL AND servingsize_id IS NULL AND n_servings IS NULL) OR 
-      (custom_amount IS NULL AND servingsize_id IS NOT NULL AND n_servings IS NOT NULL)
+      (customAmount IS NOT NULL AND servingsize_id IS NULL AND n_servings IS NULL) OR 
+      (customAmount IS NULL AND servingsize_id IS NOT NULL AND n_servings IS NOT NULL)
     )
   )
 `;
@@ -61,7 +61,7 @@ export const INSERT_MEAL = `
 `;
 
 export const INSERT_FOOD_TO_MEAL = `
-    INSERT INTO mealfood (meal_id, food_id, custom_amount)
+    INSERT INTO mealfood (meal_id, food_id, customAmount)
     VALUES (?, ?, ?)
 `;
 
@@ -95,8 +95,16 @@ export const INSERT_OR_IGNORE_MEAL = `
   INSERT OR IGNORE INTO meal (date, type) VALUES (?, ?)
 `;
 
+export const UPDATE_AMOUNT_FOOD_ENTRY_WITH_SERVING_SIZE = `
+  UPDATE mealfood 
+  SET n_servings = ?, servingSize_id = ? 
+  WHERE id = ?
+`;
+
 export const UPDATE_AMOUNT_FOOD_ENTRY = `
-    UPDATE mealfood SET amount = ? WHERE id = ?
+  UPDATE mealfood 
+  SET customAmount = ? 
+  WHERE id = ?
 `;
 
 export const DELETE_FOOD_ENTRY = `
@@ -121,7 +129,7 @@ export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
     food.per100unit,
     mealfood.n_servings,
     mealfood.servingsize_id,
-    mealfood.custom_amount
+    mealfood.customAmount
   FROM meal 
   LEFT JOIN mealfood ON meal.id = mealfood.meal_id
   LEFT JOIN food ON mealfood.food_id = food.id
