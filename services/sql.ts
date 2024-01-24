@@ -97,13 +97,13 @@ export const INSERT_OR_IGNORE_MEAL = `
 
 export const UPDATE_AMOUNT_FOOD_ENTRY_WITH_SERVING_SIZE = `
   UPDATE mealfood 
-  SET n_servings = ?, servingSize_id = ? 
+  SET customAmount = NULL, n_servings = ?, servingsize_id = ?
   WHERE id = ?
 `;
 
 export const UPDATE_AMOUNT_FOOD_ENTRY = `
   UPDATE mealfood 
-  SET customAmount = ? 
+  SET n_servings = NULL, servingsize_id = NULL, customAmount = ?
   WHERE id = ?
 `;
 
