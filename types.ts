@@ -191,7 +191,7 @@ export type DayAction =
             customAmount: number;
           }
         | {
-            servingSizeId: number;
+            servingSize_id: number;
             nServings: number;
           }
       );
