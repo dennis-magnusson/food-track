@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { CUSTOM_SERVING_SIZE_OPTION } from "../constants/customFood";
 import { inputs, typography } from "../theme";
 import { CustomServingSize, Food, ServingSize } from "../types";
 import { MyText } from "./MyText";
@@ -54,7 +53,7 @@ const ServingSizesSheet: React.FC<ServingSizesSheetProps> = ({
           ))}
           <TouchableOpacity
             onPress={() => {
-              setServingSize(CUSTOM_SERVING_SIZE_OPTION);
+              setServingSize(null);
               sheetRef.current?.close();
             }}
             style={{ marginBottom: 10, paddingVertical: 5 }}
