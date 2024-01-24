@@ -107,8 +107,9 @@ export type SettingsStackParamList = {
 };
 
 export interface RawMealDataRow {
-  servingSize_id: number;
-  amount: number | null;
+  servingsize_id?: number;
+  customAmount?: number | null;
+  n_servings?: number | null;
   calories: number | null;
   carbs: number | null;
   date: string;

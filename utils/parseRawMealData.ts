@@ -1,4 +1,10 @@
-import { DayContextType, FoodEntry, MealType, RawMealDataRow } from "../types";
+import {
+  DayContextType,
+  Food,
+  FoodEntry,
+  MealType,
+  RawMealDataRow,
+} from "../types";
 
 function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
   var emptyMeals: DayContextType["meals"] = {
@@ -13,7 +19,9 @@ function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
     emptyMeals[mealType].id = row.meal_id as number;
 
     if (row.name) {
-      const entry: FoodEntry = {
+      const entry: Omit<FoodEntry, "food"> & {
+        food: Omit<Food, "servingSizes">;
+      } = {
         id: row.entry_id,
         meal_id: row.meal_id,
         food: {
@@ -25,9 +33,11 @@ function parseRawMealData(rawData: RawMealDataRow[]): DayContextType["meals"] {
           carbs: row.carbs,
           per100unit: row.per100unit,
         },
-        amount: row.amount,
+        ...(row.servingsize_id !== null && row.n_servings !== null
+          ? { servingSize_id: row.servingsize_id, nServings: row.n_servings }
+          : { customAmount: row.customAmount }),
       };
-      emptyMeals[mealType].entries.push(entry);
+      emptyMeals[mealType].entries.push(entry); // TODO: Fix type error
     }
   });
 
