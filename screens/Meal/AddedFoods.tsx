@@ -19,7 +19,7 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
     } else if ("customAmount" in item) {
       amount = item.customAmount;
     } else {
-      throw new Error("Invalid item type");
+      throw new Error("Invalid item type: ", item);
     }
 
     return (
