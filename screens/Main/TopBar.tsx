@@ -24,7 +24,7 @@ const TopBar: React.FC<TopBarProps> = ({ topPaddingAmount }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => alert("open date picker")}>
-        <MyText style={styles.text}>Forkful</MyText>
+        <MyText style={styles.text}>Food Track</MyText>
       </TouchableOpacity>
       <TouchableOpacity onPress={navigateSettings}>
         <View style={styles.iconContainer}>
