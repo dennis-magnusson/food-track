@@ -43,7 +43,7 @@ export function dayReducer(
           },
         },
       };
-    case "CHANGE_FOOD_AMOUNT":
+    case "CHANGE_FOOD_AMOUNT": {
       return {
         ...day,
         meals: {
@@ -51,14 +51,41 @@ export function dayReducer(
           [action.payload.mealType]: {
             ...day.meals[action.payload.mealType],
             entries: day.meals[action.payload.mealType].entries.map(
-              (foodEntry) =>
-                foodEntry.id === action.payload.entryId
-                  ? { ...foodEntry, amount: action.payload.newAmount }
-                  : foodEntry
+              (foodEntry) => {
+                if (foodEntry.id === action.payload.entryId) {
+                  const { id, meal_id, food, ...rest } = foodEntry; // destructuring needed to remove exclusive properties
+                  if ("customAmount" in action.payload) {
+                    return {
+                      id,
+                      meal_id,
+                      food,
+                      customAmount: action.payload.customAmount,
+                    };
+                  } else if (
+                    "servingSize_id" in action.payload &&
+                    "nServings" in action.payload
+                  ) {
+                    return {
+                      id,
+                      meal_id,
+                      food,
+                      servingSize_id: action.payload.servingSize_id,
+                      nServings: action.payload.nServings,
+                    };
+                  } else {
+                    throw new TypeError(
+                      "Invalid payload type in reducer 'CHANGE_FOOD_AMOUNT'"
+                    );
+                  }
+                }
+                return foodEntry;
+              }
             ),
           },
         },
       };
+    }
+
     case "DELETE_FOOD_ENTRY":
       return {
         ...day,
