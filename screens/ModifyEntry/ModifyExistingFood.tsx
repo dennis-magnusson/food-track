@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { CUSTOM_SERVING_SIZE_OPTION } from "../../constants/customFood";
-import { DayContext, DayDispatchContext } from "../../context/AppContext";
+import { DayDispatchContext } from "../../context/AppContext";
 import {
   deleteFoodEntry,
   fetchServingSizesForFood,
@@ -41,7 +41,6 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
 
   const navigation = useNavigation<ModifyFoodEntryScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
-  const day = useContext(DayContext);
 
   const { entry, mealType, mealId } = route.params;
   const food = entry.food;
@@ -89,8 +88,6 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
         nServings: getNServingsInputValueParsed(),
       };
     }
-
-    console.log("modified food entry: ", foodEntry);
 
     try {
       await updateAmountToFoodEntry(entry.id, foodEntry);
