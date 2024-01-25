@@ -44,7 +44,6 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const { meals }: DayContextType = useContext(DayContext);
-  console.log(meals.breakfast.entries);
   const navigation = useNavigation<AddCustomFoodScreenNavigationProp>();
   const filteredFoods = useMemo(() => {
     return foods.filter((food) =>
