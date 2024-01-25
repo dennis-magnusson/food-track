@@ -1,4 +1,5 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import useAmounts from "../../hooks/useAmounts";
 import { MyText } from "../../shared/MyText";
 import { layout, typography } from "../../theme";
 import { FoodEntry, Meal } from "../../types";
@@ -12,16 +13,9 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
   meal,
   handleEntryPress,
 }): JSX.Element => {
-  const renderItem = ({ item }: { item: FoodEntry }) => {
-    let amount: number;
-    if ("nServings" in item && "servingSize_id" in item) {
-      amount = NaN; // TODO: get the serving size by id and calculate the amount
-    } else if ("customAmount" in item) {
-      amount = item.customAmount;
-    } else {
-      throw new Error("Invalid item type: ", item);
-    }
+  const amounts = useAmounts(meal.entries);
 
+  const renderItem = ({ item, index }: { item: FoodEntry; index: number }) => {
     return (
       <TouchableOpacity onPress={() => handleEntryPress(item)}>
         <View></View>
@@ -46,8 +40,8 @@ const AddedFoods: React.FC<AddedFoodsProps> = ({
             <View style={{ flex: 1 }}>
               <MyText style={typography.title3}>{item.food.name}</MyText>
               <MyText style={{ ...typography.secondary, marginBottom: 0 }}>
-                {amount} {item.food.per100unit} ·{" "}
-                {Math.floor((amount / 100) * item.food.calories)} cal
+                {amounts[index]} {item.food.per100unit} ·{" "}
+                {Math.floor((amounts[index] / 100) * item.food.calories)} cal
               </MyText>
             </View>
           </View>
