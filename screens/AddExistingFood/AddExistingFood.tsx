@@ -36,7 +36,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
 }) => {
   const [nServings, setNServings] = useState<string>("1");
   const [servingSize, setServingSize] = useState<ServingSize>(null);
-  const [servingSizes, setServingSizes] = useState<ServingSize[]>([]);
+  const [servingSizes, setServingSizes] = useState<ServingSize[]>(undefined);
 
   const navigation = useNavigation<AddExistingFoodScreenNavigationProp>();
   const dispatch = useContext(DayDispatchContext);
@@ -46,7 +46,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   useEffect(() => {
     const fetchServingSizes = async () => {
       const fetchedServingSizes = await fetchServingSizesForFood(food.id);
-      setServingSizes([...servingSizes, ...fetchedServingSizes]);
+      setServingSizes([...fetchedServingSizes]);
     };
 
     fetchServingSizes();
@@ -99,7 +99,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     }
   };
 
-  if (servingSizes.length === 0) {
+  if (!servingSizes) {
     return <MyText>Loading...</MyText>;
   }
 
