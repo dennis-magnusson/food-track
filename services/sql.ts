@@ -136,3 +136,7 @@ export const FETCH_MEALS_WITH_FOODS_BY_DATE = `
   WHERE meal.date = ?
   ORDER BY meal.type, food.name
 `;
+
+export const FETCH_AMOUNT_FROM_SERVING_SIZE = `
+  SELECT amount FROM servingsize WHERE id = ?
+`;

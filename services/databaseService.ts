@@ -17,6 +17,7 @@ import {
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
   FETCH_ALL_SERVING_SIZES_FOR_FOOD,
+  FETCH_AMOUNT_FROM_SERVING_SIZE,
   FETCH_FOOD_BY_BARCODE,
   FETCH_MEALS_WITH_FOODS_BY_DATE,
   INSERT_FOOD,
@@ -181,6 +182,28 @@ export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
         tx.executeSql(
           FETCH_MEALS_WITH_FOODS_BY_DATE,
           [date],
+          (_, resultSet) => {
+            resolve(resultSet.rows._array);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      }
+    );
+  });
+};
+
+export const getAmountForServingSize = (
+  servingSize_id: number
+): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          FETCH_AMOUNT_FROM_SERVING_SIZE,
+          [servingSize_id],
           (_, resultSet) => {
             resolve(resultSet.rows._array);
           }
