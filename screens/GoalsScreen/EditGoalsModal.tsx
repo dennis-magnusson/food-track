@@ -52,13 +52,22 @@ const EditGoalsModal: React.FC<EditGoalsModalProps> = ({
   }, [nutrientGoals]);
 
   const onSave = () => {
-    updateNutrientGoals({
-      caloriesGoal: parseInt(caloriesGoal),
-      carbGoal: parseInt(carbGoal),
-      proteinGoal: parseInt(proteinGoal),
-      fatGoal: parseInt(fatGoal),
-    });
-    onCloseModal();
+    if (
+      caloriesGoal === "" ||
+      carbGoal === "" ||
+      proteinGoal === "" ||
+      fatGoal === ""
+    ) {
+      alert("Please fill in all fields");
+    } else {
+      updateNutrientGoals({
+        caloriesGoal: parseInt(caloriesGoal),
+        carbGoal: parseInt(carbGoal),
+        proteinGoal: parseInt(proteinGoal),
+        fatGoal: parseInt(fatGoal),
+      });
+      onCloseModal();
+    }
   };
 
   if (savingUpdates) {
