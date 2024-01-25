@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import useAmounts from "../../hooks/useAmounts";
 import { MyText } from "../../shared/MyText";
 import { layout, typography } from "../../theme";
 import { Meal, MealType } from "../../types";
@@ -16,7 +17,8 @@ const MealBox: React.FC<MealBoxProps> = ({
   mealData,
   handleMealPress,
 }): JSX.Element => {
-  const totalCalories = getTotals(mealData.meal).totalCalories;
+  const amounts = useAmounts(mealData.meal.entries);
+  const totalCalories = getTotals(mealData.meal, amounts).totalCalories;
 
   return (
     <TouchableOpacity

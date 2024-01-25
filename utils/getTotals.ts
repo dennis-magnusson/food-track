@@ -1,3 +1,4 @@
+import useAmounts from "../hooks/useAmounts";
 import { DayContextType, FoodEntry, Meal } from "../types";
 
 type Totals = {
@@ -7,10 +8,13 @@ type Totals = {
   totalProtein: number;
 };
 
-export function getTotals(meal: Meal): Totals;
+export function getTotals(meal: Meal, amounts: number[]): Totals;
 export function getTotals(day: DayContextType): Totals;
 
-export function getTotals(input: Meal | DayContextType): Totals {
+export function getTotals(
+  input: Meal | DayContextType,
+  amounts: (number | null)[] = []
+): Totals {
   let totalCalories = 0;
   let totalCarbs = 0;
   let totalFat = 0;
@@ -19,7 +23,8 @@ export function getTotals(input: Meal | DayContextType): Totals {
   if ((input as DayContextType).date !== undefined) {
     const day = input as DayContextType;
     Object.values(day.meals).forEach((meal: Meal) => {
-      const mealTotals = getTotals(meal); // Recursive call to get the totals of this meal
+      const amounts = useAmounts(meal.entries);
+      const mealTotals = getTotals(meal, amounts); // Recursive call to get the totals of this meal
       totalCalories += mealTotals.totalCalories;
       totalCarbs += mealTotals.totalCarbs;
       totalFat += mealTotals.totalFat;
@@ -27,15 +32,8 @@ export function getTotals(input: Meal | DayContextType): Totals {
     });
   } else {
     const meal = input as Meal;
-    meal.entries.forEach((entry: FoodEntry) => {
-      let amount = 1;
-      if ("nServings" in entry && "servingSize_id" in entry) {
-        // TODO: get amount from serving size from db
-      } else if ("customAmount" in entry) {
-        amount = entry.customAmount;
-      } else {
-        console.log("Invalid entry type");
-      }
+    meal.entries.forEach((entry: FoodEntry, index: number) => {
+      let amount = amounts[index] || 1;
       const ratio = amount / 100;
 
       totalCalories += entry.food.calories * ratio;
