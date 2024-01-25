@@ -4,7 +4,6 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { inputs, typography } from "../theme";
 import { CustomServingSize, Food, ServingSize } from "../types";
 import { MyText } from "./MyText";
-import NutritionFactsTable from "./NutritionFactsTable";
 
 interface ServingSizesSheetProps {
   sheetRef: React.RefObject<RBSheet>;
@@ -62,8 +61,6 @@ const ServingSizesSheet: React.FC<ServingSizesSheetProps> = ({
           </TouchableOpacity>
         </ScrollView>
       </RBSheet>
-
-      <NutritionFactsTable food={food} amount={currentlySelectedAmount} />
     </>
   );
 };

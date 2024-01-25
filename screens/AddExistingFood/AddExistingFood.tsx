@@ -18,6 +18,7 @@ import BackButton from "../../shared/BackButton";
 import MyButton from "../../shared/MyButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
 import { MyText } from "../../shared/MyText";
+import NutritionFactsTable from "../../shared/NutritionFactsTable";
 import ServingSizesSheet from "../../shared/ServingSizesSheet";
 import { inputs, typography } from "../../theme";
 import {
@@ -99,6 +100,10 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
     }
   };
 
+  const selectedAmount = servingSize
+    ? servingSize.amount * getNServingsInputValueParsed()
+    : getNServingsInputValueParsed();
+
   if (!servingSizes) {
     return <MyText>Loading...</MyText>;
   }
@@ -128,6 +133,7 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
               )}
             </TouchableOpacity>
           </View>
+          <NutritionFactsTable food={food} amount={selectedAmount} />
           <ServingSizesSheet
             sheetRef={refRBSheet}
             servingSizes={servingSizes}
