@@ -16,7 +16,16 @@ FoodTrack is a food tracker mobile application built with React Native and TypeS
 - Import foods directly from OpenFoodFactsAPI
 - Import & Export data
 
-### User interface
+### Demo
+
+<p float="left">
+  <img src="mockups/IMG_0306-portrait.png" width="220" />
+  <img src="mockups/IMG_0307-portrait.png" width="220" /> 
+  <img src="mockups/IMG_0308-portrait.png" width="220" />
+  <img src="mockups/IMG_0309-portrait.png" width="220" />
+  <img src="mockups/IMG_0310-portrait.png" width="220" />
+  <img src="mockups/IMG_0311-portrait.png" width="220" />
+</p>
 
 ## Built With
 
