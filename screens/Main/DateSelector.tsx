@@ -27,10 +27,10 @@ const DateSelector: React.FC<DateSelectorProps> = ({ changeDay }) => {
 
   const isoDate = parseISO(day.date);
   const readableDate = isToday(isoDate)
-    ? `Today, ${format(isoDate, "dd MMM")}`.toUpperCase()
+    ? `Today, ${format(isoDate, "dd MMM")}`
     : isYesterday(isoDate)
-    ? `Yesterday, ${format(isoDate, "dd MMM")}`.toUpperCase()
-    : format(isoDate, "EEEE, dd MMM").toUpperCase();
+    ? `Yesterday, ${format(isoDate, "dd MMM")}`
+    : format(isoDate, "EEEE, dd MMM");
 
   const handleNextPress = () => {
     changeDay(addDays(isoDate, 1));
