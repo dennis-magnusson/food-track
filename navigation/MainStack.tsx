@@ -3,7 +3,7 @@ import { BarcodeProvider } from "../context/BarcodeProvider";
 import AddCustomFoodScreen from "../screens/AddCustomFood/AddCustomFoodScreen";
 import AddExistingFoodScreen from "../screens/AddExistingFood/AddExistingFood";
 import BarcodeScannerScreen from "../screens/BarcodeScanner/BarcodeScannerScreen";
-import GoalsScreen from "../screens/GoalsScreen/GoalsScreen";
+import GoalsScreen from "../screens/Goals/GoalsScreen";
 import MainScreen from "../screens/Main/MainScreen";
 import MealScreen from "../screens/Meal/MealScreen";
 import ModifyFoodEntryScreen from "../screens/ModifyEntry/ModifyExistingFood";

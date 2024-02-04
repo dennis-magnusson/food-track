@@ -149,16 +149,10 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
               meal={meals[route.params.mealType]}
               handleEntryPress={handleEntryPress}
             />
-            <SearchBar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              isFocused={isSearching}
-              onFocus={() => setIsSearching(true)}
-              onBlur={() => setIsSearching(false)}
-            />
             <ActionButtons
               handleAddCustomFood={handleAddCustomFood}
               handleScanBarcode={handleScanBarcode}
+              handleSearch={() => setIsSearching(true)}
             />
           </>
         )}
