@@ -1,17 +1,21 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Keyboard, StyleSheet, TouchableOpacity } from "react-native";
+import MyButton from "../../shared/MyButton";
 import { MyText } from "../../shared/MyText";
-import { layout, typography } from "../../theme";
+import { colors, layout, typography } from "../../theme";
 import { Food } from "../../types";
 
 interface FoodsListProps {
   foods: Food[];
   handleFoodPress: (food: Food) => void;
+  handleAddCustomFood: () => void;
 }
 
 const SearchFoodsList: React.FC<FoodsListProps> = ({
   foods,
   handleFoodPress,
+  handleAddCustomFood,
 }): JSX.Element => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -53,17 +57,39 @@ const SearchFoodsList: React.FC<FoodsListProps> = ({
   );
 
   return (
-    <FlatList
-      data={foods}
-      renderItem={renderItem}
-      scrollEnabled={true}
-      keyboardShouldPersistTaps="always"
-      keyExtractor={(item) => item.id.toString()}
-      contentContainerStyle={[
-        styles.foodContainer,
-        { paddingBottom: keyboardHeight },
-      ]}
-    />
+    <>
+      <MyText
+        style={{
+          ...typography.title2,
+          marginLeft: 15,
+          marginTop: 10,
+          color: colors.secondaryText,
+        }}
+      >
+        Found {foods.length} foods
+      </MyText>
+
+      {foods.length === 0 ? (
+        <MyButton
+          text="Add a custom food"
+          style={{ margin: 10 }}
+          onPress={handleAddCustomFood}
+          icon={<Ionicons name="add-outline" size={24} color="white" />}
+        />
+      ) : (
+        <FlatList
+          data={foods}
+          renderItem={renderItem}
+          scrollEnabled={true}
+          keyboardShouldPersistTaps="always"
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={[
+            styles.foodContainer,
+            { paddingBottom: keyboardHeight },
+          ]}
+        />
+      )}
+    </>
   );
 };
 

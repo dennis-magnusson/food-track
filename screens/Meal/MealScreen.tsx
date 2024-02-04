@@ -133,14 +133,11 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
               onFocus={() => setIsSearching(true)}
               onBlur={() => setIsSearching(false)}
             />
-            <MyText
-              style={{ ...typography.title2, marginLeft: 15, marginTop: 10 }}
-            >
-              Search results
-            </MyText>
+
             <SearchFoodsList
               foods={filteredFoods}
               handleFoodPress={handleFoodPress}
+              handleAddCustomFood={handleAddCustomFood}
             />
           </>
         ) : (
