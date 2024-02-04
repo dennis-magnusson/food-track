@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import useAmounts from "../../hooks/useAmounts";
 import { MyText } from "../../shared/MyText";
-import { layout, typography } from "../../theme";
+import { colors, layout, typography } from "../../theme";
 import { FoodEntry, Meal } from "../../types";
 
 interface AddedFoodsProps {
@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
   nothingContainer: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
   nothingText: {
     ...typography.title2,
-    marginTop: 50,
+    color: colors.secondaryText,
   },
 });
 
