@@ -151,7 +151,10 @@ const AddCustomFoodScreen: React.FC<AddCustomFoodScreenProps> = ({
         behavior={Device.osName === "iOS" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
-        <BackButton backFunction={() => navigation.goBack()} />
+        <BackButton
+          backFunction={() => navigation.goBack()}
+          screenName="New food"
+        />
         <ScrollView style={styles.container} bounces={false}>
           <MyText style={styles.topTitle}>Food name</MyText>
           <View style={sharedStyles.row}>

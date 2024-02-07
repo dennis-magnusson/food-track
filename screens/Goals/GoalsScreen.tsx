@@ -30,6 +30,7 @@ const GoalsScreen: React.FC<GoalsScreenProps> = () => {
         backFunction={() => navigation.goBack()}
         actionFunction={openModal}
         actionIcon="options-outline"
+        screenName="Goals"
       />
       <EditGoalsModal
         visible={modalVisible}

@@ -153,7 +153,10 @@ const ModifyFoodEntryScreen: React.FC<ModifyFoodEntryScreenProps> = ({
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView>
-        <BackButton backFunction={() => navigation.goBack()} />
+        <BackButton
+          backFunction={() => navigation.goBack()}
+          screenName="Modify entry"
+        />
         <View style={styles.container}>
           <MyText style={styles.title}>{entry.food.name}</MyText>
           <View style={styles.inputContainer}>

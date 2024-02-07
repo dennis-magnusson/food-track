@@ -111,7 +111,10 @@ const AddExistingFoodScreen: React.FC<AddExistingFoodScreenProps> = ({
   return (
     <MySafeAreaView>
       <KeyboardAvoidingView>
-        <BackButton backFunction={() => navigation.goBack()} />
+        <BackButton
+          backFunction={() => navigation.goBack()}
+          screenName="Log food"
+        />
         <View style={styles.container}>
           <MyText style={styles.title}>{food.name}</MyText>
           <View style={styles.inputContainer}>

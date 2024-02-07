@@ -19,7 +19,6 @@ import {
 } from "../../services/databaseService";
 import BackButton from "../../shared/BackButton";
 import MySafeAreaView from "../../shared/MySafeAreaView";
-import { MyText } from "../../shared/MyText";
 import { typography } from "../../theme";
 import {
   AddCustomFoodScreenNavigationProp,
@@ -119,10 +118,10 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
   return (
     <MySafeAreaView>
       <View style={styles.containerInner}>
-        <BackButton backFunction={() => navigation.goBack()} />
-        <MyText style={styles.title}>
-          {capitalize(route.params.mealType)}
-        </MyText>
+        <BackButton
+          backFunction={() => navigation.goBack()}
+          screenName={capitalize(route.params.mealType)}
+        />
 
         {isSearching ? (
           <>
