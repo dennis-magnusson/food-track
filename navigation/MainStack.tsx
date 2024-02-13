@@ -3,6 +3,7 @@ import { BarcodeProvider } from "../context/BarcodeProvider";
 import AddCustomFoodScreen from "../screens/AddCustomFood/AddCustomFoodScreen";
 import AddExistingFoodScreen from "../screens/AddExistingFood/AddExistingFood";
 import BarcodeScannerScreen from "../screens/BarcodeScanner/BarcodeScannerScreen";
+import CreateRecipeScreen from "../screens/CreateRecipe/CreateRecipeScreen";
 import GoalsScreen from "../screens/Goals/GoalsScreen";
 import MainScreen from "../screens/Main/MainScreen";
 import MealScreen from "../screens/Meal/MealScreen";
@@ -33,6 +34,7 @@ const MainStack = (): JSX.Element => {
         <Stack.Screen name="BarcodeScanner" component={BarcodeScannerScreen} />
         <Stack.Screen name="Goals" component={GoalsScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="CreateRecipe" component={CreateRecipeScreen} />
       </Stack.Navigator>
     </BarcodeProvider>
   );

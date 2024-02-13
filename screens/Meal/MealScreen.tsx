@@ -149,6 +149,7 @@ const MealScreen: React.FC<MealScreenProps> = ({ route }): JSX.Element => {
               handleAddCustomFood={handleAddCustomFood}
               handleScanBarcode={handleScanBarcode}
               handleSearch={() => setIsSearching(true)}
+              handleOpenRecipes={() => navigation.navigate("CreateRecipe")}
             />
           </>
         )}

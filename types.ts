@@ -100,6 +100,7 @@ export type RootStackParamList = {
   BarcodeScanner: {};
   Goals: {};
   Settings: {};
+  CreateRecipe: {};
 };
 
 export type SettingsStackParamList = {
