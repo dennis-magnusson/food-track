@@ -7,6 +7,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = () => {
   return (
     <MySafeAreaView>
       <BackButton screenName="Create Recipe" backFunction={() => {}} />
+      <RecipeNameInput />
+      <FoodsSelector />
+      <InsertButton />
     </MySafeAreaView>
   );
 };
