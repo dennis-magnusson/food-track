@@ -51,6 +51,31 @@ export const CREATE_TABLE_SERVINGSIZE = `
   )
 `;
 
+export const CREATE_TABLE_RECIPE = `
+  CREATE TABLE IF NOT EXISTS recipe (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+  )
+`;
+
+export const CREATE_TABLE_RECIPE_FOODS = `
+  CREATE TABLE IF NOT EXISTS recipefood (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    recipe_id INTEGER NOT NULL,
+    food_id INTEGER NOT NULL,
+    n_servings REAL,
+    servingsize_id INTEGER,
+    customAmount REAL,
+    FOREIGN KEY (servingsize_id) REFERENCES servingsize(id),
+    FOREIGN KEY (recipe_id) REFERENCES recipe(id),
+    FOREIGN KEY (food_id) REFERENCES food(id),
+    CHECK (
+      (customAmount IS NOT NULL AND servingsize_id IS NULL AND n_servings IS NULL) OR 
+      (customAmount IS NULL AND servingsize_id IS NOT NULL AND n_servings IS NOT NULL)
+    )
+  )
+`;
+
 export const INSERT_FOOD = `
   INSERT INTO food (name, calories, protein, carbs, sugar, fiber, fat, salt, per100unit, barcode)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
