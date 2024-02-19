@@ -8,6 +8,7 @@ import GoalsScreen from "../screens/Goals/GoalsScreen";
 import MainScreen from "../screens/Main/MainScreen";
 import MealScreen from "../screens/Meal/MealScreen";
 import ModifyFoodEntryScreen from "../screens/ModifyEntry/ModifyExistingFood";
+import RecipesScreen from "../screens/Recipes/RecipesScreen";
 import SettingsScreen from "../screens/Settings/SettingsScreen";
 import { RootStackParamList } from "../types";
 
@@ -34,6 +35,7 @@ const MainStack = (): JSX.Element => {
         <Stack.Screen name="BarcodeScanner" component={BarcodeScannerScreen} />
         <Stack.Screen name="Goals" component={GoalsScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="Recipes" component={RecipesScreen} />
         <Stack.Screen name="CreateRecipe" component={CreateRecipeScreen} />
       </Stack.Navigator>
     </BarcodeProvider>

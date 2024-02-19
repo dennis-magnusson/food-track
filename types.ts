@@ -101,6 +101,7 @@ export type RootStackParamList = {
   Goals: {};
   Settings: {};
   CreateRecipe: {};
+  Recipes: {};
 };
 
 export type SettingsStackParamList = {
