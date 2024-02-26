@@ -1,3 +1,4 @@
+import { insertTestRecipe } from "../../services/databaseService";
 import MyButton from "../../shared/MyButton";
 
 interface InsertButtonProps {}
@@ -5,12 +6,7 @@ interface InsertButtonProps {}
 const InsertButton: React.FC<InsertButtonProps> = () => {
   return (
     <>
-      <MyButton
-        text="Create"
-        onPress={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <MyButton text="Create" onPress={insertTestRecipe} />
     </>
   );
 };
