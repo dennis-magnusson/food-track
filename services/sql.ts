@@ -54,7 +54,7 @@ export const CREATE_TABLE_SERVINGSIZE = `
 export const CREATE_TABLE_RECIPE = `
   CREATE TABLE IF NOT EXISTS recipe (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL
   )
 `;
 
