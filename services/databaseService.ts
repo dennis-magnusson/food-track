@@ -13,6 +13,8 @@ import {
   CREATE_TABLE_FOODS,
   CREATE_TABLE_MEALS,
   CREATE_TABLE_MEAL_FOODS,
+  CREATE_TABLE_RECIPE,
+  CREATE_TABLE_RECIPE_FOODS,
   CREATE_TABLE_SERVINGSIZE,
   DELETE_FOOD_ENTRY,
   FETCH_ALL_FOODS,
@@ -38,10 +40,14 @@ export const initializeDB = () => {
       tx.executeSql(CREATE_TABLE_MEALS);
       tx.executeSql(CREATE_TABLE_MEAL_FOODS);
       tx.executeSql(CREATE_TABLE_SERVINGSIZE);
+      tx.executeSql(CREATE_TABLE_RECIPE);
+      tx.executeSql(CREATE_TABLE_RECIPE_FOODS);
     },
     (error) => console.log(error)
   );
 };
+
+// FOOD
 
 export const insertAllBasicFoods = async (): Promise<void> => {
   console.log("INSERTING BASIC FOODS");
@@ -171,6 +177,8 @@ export const fetchServingSizesForFood = (id: number): any => {
   });
 };
 
+// MEAL
+
 export const fetchMealsForDate = (date: string): Promise<RawMealDataRow[]> => {
   return new Promise((resolve, reject) => {
     db.transaction(
@@ -257,6 +265,8 @@ export const insertFoodEntryToMeal = (
   });
 };
 
+// FOOD ENTRY
+
 export const deleteFoodEntry = (entryId: number): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.transaction(
@@ -310,6 +320,40 @@ export const updateAmountToFoodEntry = (
     );
   });
 };
+
+// RECIPE
+
+export const insertTestRecipe = () => {
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "INSERT INTO recipe (name) VALUES (?)",
+        ["Test Recipe"],
+        (_, result) => {
+          console.log("Inserted test recipe");
+        }
+      );
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+export const fetchAllRecipes = async () => {
+  db.transaction(
+    (tx) => {
+      tx.executeSql("SELECT * FROM recipe", [], (_, result) => {
+        console.log(result.rows._array);
+      });
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+// CLEAR DATA
 
 export const dropAllTables = () => {
   console.log("WARNING: DROPPING ALL TABLES");
