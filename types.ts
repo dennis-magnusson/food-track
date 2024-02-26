@@ -17,6 +17,12 @@ export type Food = {
 
 export type FoodEntry = FoodEntryWithServingSize | FoodEntryWithCustomAmount;
 
+export type Recipe = {
+  id: number;
+  name: string;
+  items: Omit<FoodEntry, "meal_id">[];
+};
+
 export type FoodEntryWithServingSize = FoodEntryBase & {
   servingSize_id: number;
   nServings: number;
@@ -166,6 +172,16 @@ export type GoalsScreenNavigationProp = NativeStackNavigationProp<
 export type SettingsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Settings"
+>;
+
+export type CreateRecipeScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "CreateRecipe"
+>;
+
+export type RecipesScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Recipes"
 >;
 
 export type DayAction =
