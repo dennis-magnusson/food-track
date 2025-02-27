@@ -9,13 +9,13 @@ FoodTrack is a food tracker mobile application built with React Native and TypeS
 - Add any food to your food library
 - Scan barcodes for quicker logging of previously added foods
 - Simple, user-friendly interface
-
+<!---
 ### Working to implement
 
 - Graphs for viewing your history
 - Import foods directly from OpenFoodFactsAPI
 - Import & Export data
-
+-->
 ### Demo
 
 <p float="left">
